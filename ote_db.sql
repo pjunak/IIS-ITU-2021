@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Počítač: localhost
--- Vytvořeno: Čtv 18. lis 2021, 10:31
+-- Vytvořeno: Ned 21. lis 2021, 16:43
 -- Verze serveru: 10.4.21-MariaDB
 -- Verze PHP: 8.0.12
 
@@ -18,8 +18,10 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Databáze: `iis`
+-- Databáze: `ote_db`
 --
+CREATE DATABASE IF NOT EXISTS `ote_db` DEFAULT CHARACTER SET utf8 COLLATE utf8_czech_ci;
+USE `ote_db`;
 
 -- --------------------------------------------------------
 

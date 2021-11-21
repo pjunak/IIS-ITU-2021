@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Počítač: localhost
--- Vytvořeno: Ned 21. lis 2021, 16:43
+-- Vytvořeno: Ned 21. lis 2021, 19:48
 -- Verze serveru: 10.4.21-MariaDB
 -- Verze PHP: 8.0.12
 
@@ -40,14 +40,21 @@ CREATE TABLE `firma` (
   `email` varchar(64) COLLATE utf8_czech_ci NOT NULL,
   `datum_vytvoreni` date NOT NULL,
   `ulice` varchar(32) COLLATE utf8_czech_ci NOT NULL,
-  `cislo_p` varchar(8) COLLATE utf8_czech_ci NOT NULL,
+  `cislo_p` varchar(8) COLLATE utf8_czech_ci DEFAULT NULL,
   `cislo_o` varchar(8) COLLATE utf8_czech_ci NOT NULL,
   `obec` varchar(32) COLLATE utf8_czech_ci NOT NULL,
   `psc` int(11) NOT NULL,
-  `predcisli` int(32) NOT NULL,
-  `cislo_uctu` int(11) NOT NULL,
+  `predcisli` int(11) DEFAULT NULL,
+  `cislo_uctu` int(32) NOT NULL,
   `kod_banky` enum('0100') COLLATE utf8_czech_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+
+--
+-- Vypisuji data pro tabulku `firma`
+--
+
+INSERT INTO `firma` (`rut_id`, `ean`, `nazev`, `typ_firmy`, `ic`, `web`, `email`, `datum_vytvoreni`, `ulice`, `cislo_p`, `cislo_o`, `obec`, `psc`, `predcisli`, `cislo_uctu`, `kod_banky`) VALUES(123456789, 123456789, 'Firma TEST s.r.o.', 'test', 123456, 'http://test.com', 'test@domena.cz', '2021-11-21', 'Testová', '1024', '8', 'Testov', 12345, NULL, 123456789, '0100');
+INSERT INTO `firma` (`rut_id`, `ean`, `nazev`, `typ_firmy`, `ic`, `web`, `email`, `datum_vytvoreni`, `ulice`, `cislo_p`, `cislo_o`, `obec`, `psc`, `predcisli`, `cislo_uctu`, `kod_banky`) VALUES(234567891, 234567891, 'Ravoz spol. s r.o.', 'test', 11111122, 'http://ravoz.cz', 'ravoz@ravoz.cz', '2021-11-21', 'Tovární', NULL, '40', 'Olomouc', 77900, NULL, 1111111111, '0100');
 
 -- --------------------------------------------------------
 
@@ -74,6 +81,12 @@ CREATE TABLE `osoba` (
   `pozice` varchar(32) COLLATE utf8_czech_ci NOT NULL,
   `plat` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+
+--
+-- Vypisuji data pro tabulku `osoba`
+--
+
+INSERT INTO `osoba` (`id`, `id_ucastnika`, `typ_osoby`, `jmeno`, `prijmeni`, `telefon`, `email`, `heslo`, `ulice`, `cislo_p`, `cislo_o`, `obec`, `psc`, `kancelar`, `pozice`, `plat`) VALUES(1, 123, 'disponent', 'Testovič', 'Test', 987654321, 'urednik@domena.cz', 123, 'Rúžová', '', '4', 'Rúženín', 23456, '1.20A', 'vedoucí sekce HR', 37000);
 
 -- --------------------------------------------------------
 
@@ -181,13 +194,13 @@ ALTER TABLE `vyrobna`
 -- AUTO_INCREMENT pro tabulku `firma`
 --
 ALTER TABLE `firma`
-  MODIFY `rut_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `rut_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=234567892;
 
 --
 -- AUTO_INCREMENT pro tabulku `osoba`
 --
 ALTER TABLE `osoba`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT pro tabulku `pozadavek`

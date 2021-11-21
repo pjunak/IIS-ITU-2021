@@ -16,7 +16,7 @@ session:
 
 
 database:
-	dsn: 'mysql:host=127.0.0.1;dbname=nette-rs'
+	dsn: 'mysql:host=127.0.0.1;dbname=ote_db'
 	user: root
 	password:
 	options:

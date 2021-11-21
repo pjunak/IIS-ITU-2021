@@ -1,0 +1,14 @@
+{block title}Výpis článků{/block}
+{block description}Výpis všech článků.{/block}
+{block content}
+<table>
+    <tr n:foreach="$companies as $company">
+        <td>
+            <h2><a n:href="Company: $company->rut_id">{$company->nazev}</a></h2>
+            {$company->obec}
+            <br>
+            <a n:href="editor $company->rut_id">Editovat</a>
+            <a n:href="remove $company->rut_id">Odstranit</a>
+        </td>
+    </tr>
+</table>

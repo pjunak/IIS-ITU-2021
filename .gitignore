@@ -21,4 +21,7 @@
 !.vscode/*.code-snippets
 
 # Nette cache folder
-temp/*
+temp/cache/*
+
+# Nette log folder
+log/*

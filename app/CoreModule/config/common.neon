@@ -2,13 +2,13 @@
 # Konfigurační soubor pro CoreModule.
 #
 parameters:
-    defaultArticleUrl: 'uvod' # URL výhozího článku
+    defaultCompanyRut: '123456789' # URL výhozího článku
     contactEmail: 'admin@localhost.cz' # Kontaktní email
 
 
 
 # Nastavení služeb pro CoreModule.
 services:
-    - App\CoreModule\Model\ArticleManager # Vlastní služba dále přístupná pomocí DI.
-    - App\CoreModule\Presenters\ArticlePresenter(%defaultArticleUrl%) # Předání nastavení při vytváření služby presenteru.
+    - App\CoreModule\Model\CompanyManager # Vlastní služba dále přístupná pomocí DI.
+    - App\CoreModule\Presenters\CompanyPresenter(%defaultCompanyRut%) # Předání nastavení při vytváření služby presenteru.
     - App\CoreModule\Presenters\ContactPresenter(%contactEmail%)

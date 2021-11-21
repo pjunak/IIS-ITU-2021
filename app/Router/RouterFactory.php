@@ -28,7 +28,7 @@ final class RouterFactory
         $router->addRoute('administrace', 'Core:Administration:default');
 
             $router->addRoute('<action>[/<url>]', [
-                    'presenter' => 'Core:Article',
+                    'presenter' => 'Core:Company',
                     'action' => [
                          Route::FILTER_STRICT => true,
                          Route::FILTER_TABLE => [
@@ -40,7 +40,7 @@ final class RouterFactory
                     ]
             ]);
 
-            $router->addRoute('[<url>]', 'Core:Article:default');
+            $router->addRoute('[<url>]', 'Core:Company:default');
             return $router;
     }
 }

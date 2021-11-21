@@ -1,0 +1,62 @@
+{**
+ * @param string   $basePath web base path
+ * @param array    $flashes  flash messages
+ *}
+
+{import 'components/form.latte'}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+
+    <title>{ifset title}{include title|stripHtml} | {/ifset}Nette Sandbox</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="{$basePath}/css/style.css">
+    {block head}{/block}
+</head>
+
+<body>
+    <header>
+        <h1>Jednoduchý redakční systém v Nette</h1>
+    </header>
+    <div class=container>
+        {* Výpis flash zpráv. *}
+        <div n:foreach="$flashes as $flash" n:class="alert, 'alert-' . $flash->type">{$flash->message}</div>
+
+        <nav>
+            <ul>
+                <li><a n:href=:Core:Article:>Úvod</a></li>
+                <li><a n:href=:Core:Article:list>Seznam článků</a></li>
+                <li><a n:href=:Core:Contact:>Kontakt</a></li>
+            </ul>
+        </nav>
+
+        <br style="clear: both;">
+        <article>
+            <header>
+                <h1>{include title}</h1>
+            </header>
+            <section>
+                {include content} {* Vložení obsahu do šablony. *}
+            </section>
+        </article>
+    </div>
+
+    <footer>
+    <p>
+        Ukázkový tutoriál pro jednoduchý redakční systém v Nette z programátorské sociální sítě
+        <a href="http://www.itnetwork.cz" target="_blank">itnetwork.cz</a>.
+        <a n:href=:Core:Administration:>Administrace</a>
+    </p>
+</footer>
+
+    {block scripts}
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+        <script src="https://nette.github.io/resources/js/3/netteForms.min.js"></script>
+        <script src="{$basePath}/js/main.js"></script>
+    {/block}
+</body>
+</html>

@@ -1,0 +1,41 @@
+#
+# WARNING: it is CRITICAL that this file & directory are NOT accessible directly via a web browser!
+# https://nette.org/security-warning
+#
+parameters:
+
+
+application:
+	errorPresenter: Error
+	mapping:
+		*: App\*Module\Presenters\*Presenter
+
+
+session:
+	expiration: 14 days
+
+
+database:
+	dsn: 'mysql:host=127.0.0.1;dbname=nette-rs'
+	user: root
+	password:
+	options:
+		lazy: yes
+
+
+services:
+	- App\Model\UserManager
+	- App\Forms\FormFactory
+	- App\Forms\SignInFormFactory
+	- App\Forms\SignUpFormFactory
+	- App\Router\RouterFactory::createRouter
+
+# Propojení s dalšími konfiguračními soubory.
+includes:
+    - ../app/CoreModule/config/common.neon # Načtení konfigurace z CoreModule.
+
+# Nastavení výchozích chybových hlášek pro formuláře.
+forms:
+    messages:
+        REQUIRED: 'Povinné pole.'
+        EMAIL: 'Neplatná emailová adresa.'

@@ -1,0 +1,14 @@
+{block title}Výpis článků{/block}
+{block description}Výpis všech článků.{/block}
+{block content}
+<table>
+    <tr n:foreach="$articles as $article">
+        <td>
+            <h2><a n:href="Article: $article->url">{$article->title}</a></h2>
+            {$article->description}
+            <br>
+            <a n:href="editor $article->url">Editovat</a>
+            <a n:href="remove $article->url">Odstranit</a>
+        </td>
+    </tr>
+</table>

@@ -92,8 +92,7 @@ class UserPresenter extends BasePresenter
     {
         // Vytvoření formuláře a definice jeho polí.
         $form = new Form;
-        //$form->addHidden('id');
-        $form->addText('id', 'ID osoby')->setRequired();
+        $form->addText('id', 'ID')->setDisabled();
         $form->addText('id_ucastnika', 'Identifikace účastníka')->setRequired();
         $form->addText('jmeno', 'Jméno')->setRequired();
         $form->addText('prijmeni', 'Příjmení')->setRequired();
@@ -106,7 +105,13 @@ class UserPresenter extends BasePresenter
             try {
                 $this->userManager->saveUser($values);
                 $this->flashMessage('Uživatel byl úspěšně uložen.');
-                $this->redirect('User:', $values->id_id);
+                if(isset($values->id))
+                {
+                    $this->redirect('User:', $values->id);
+                }else
+                {
+                    $this->redirect('User:list');
+                }
             } catch (UniqueConstraintViolationException $e) {
                 $this->flashMessage('Uživatel s tímto ID již existuje.');
             }

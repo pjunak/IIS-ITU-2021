@@ -1,4 +1,41 @@
 {block title}{$company->nazev}{/block}
-{block description}{$company->description}{/block}
 {block content}
-{$company->obec|noescape}
+<table>
+    <tr>
+        <th>RUT ID</th>
+        <th>{$company->rut_id}</th>
+    </tr>
+    <tr>
+        <th>EAN</th>
+        <th>{$company->ean}</th>
+    </tr>
+    <tr>
+        <th>Název</th>
+        <th>{$company->nazev}</th>
+    </tr>
+    <tr>
+        <th>IČ</th>
+        <th>{$company->ic}</th>
+    </tr>
+    <tr>
+        <th>Webová stránka</th>
+        <th>{$company->web}</th>
+    </tr>
+    <tr>
+        <th>E-mail</th>
+        <th>{$company->email}</th>
+    </tr>
+    <tr>
+        <th>Datum vytvoření firmy</th>
+        <th>{$company->datum_vytvoreni}</th>
+    </tr>
+    <tr>
+        <th>Adresa</th>
+        <th>{$company->ulice} {$company->cislo_o}/{$company->cislo_p}, {$company->psc} {$company->obec}</th>
+    </tr>
+    <tr>
+        <th>Bankovní spojení</th>
+        <th>{$company->predcisli}-{$company->cislo_uctu}/{$company->kod_banky}</th>
+    </tr>
+    
+</table>

@@ -80,7 +80,11 @@ class CompanyPresenter extends BasePresenter
         if ($rut) {
             if (!($company = $this->companyManager->getCompany($rut)))
                 $this->flashMessage('Článek nebyl nalezen.'); // Výpis chybové hlášky.
-            else $this['editorForm']->setDefaults($company); // Předání hodnot článku do editačního formuláře.
+            else 
+            {
+                $this['editorForm']->setDefaults($company); // Předání hodnot článku do editačního formuláře.
+                $this['editorForm']['datum_vytvoreni']->setDefaultValue($company->datum_vytvoreni->format('Y-m-d'));
+            }
         }
     }
 
@@ -93,11 +97,27 @@ class CompanyPresenter extends BasePresenter
         // Vytvoření formuláře a definice jeho polí.
         $form = new Form;
         $form->addHidden('rut_id');
+        $form->addInteger('ean', 'Ean')->setRequired();
         $form->addText('nazev', 'Název')->setRequired();
-        //$form->addText('rut_id', 'RÚT id')->setRequired();
-        $form->addText('ic', 'IČ')->setRequired();
+        $typy_firem = [
+            'vitr' => 'Větrná elektrárna',
+            'voda' => 'Vodní elektrárna',
+            'test' => 'Solární elektrárna',
+        ];
+        $form->addSelect('typ_firmy', 'Typ Firmy:', $typy_firem)->setDefaultValue('test')->setRequired();
+        $form->addInteger('ic', 'IČ')->setRequired();
+        $form->addText('web', 'Web')->setRequired();
+        $form->addEmail('email', 'Email')->setRequired();
+        $form->addText('datum_vytvoreni', 'Datum Vytvoření')->setHtmlType('date')->setRequired();
+        $form->addText('ulice', 'Ulice')->setRequired();
+        $form->addText('cislo_p', 'Číslo popisné')->setRequired();
+        $form->addText('cislo_o', 'Číslo orientační')->setRequired();
         $form->addText('obec', 'Obec')->setRequired();
-        //$form->addTextArea('content', 'Obsah');
+        $form->addInteger('psc', 'PSČ')->setRequired();
+        $form->addInteger('predcisli', 'Předčíslí')->setRequired();
+        $form->addInteger('cislo_uctu', 'Číslo účtu')->setRequired();
+        $kody_banky = $this->companyManager->get_enum_values();
+        $form->addSelect('kod_banky', 'Kód Banky')->setItems($kody_banky)->setRequired();
         $form->addSubmit('save', 'Uložit článek');
 
         // Funkce se vykonaná při úspěšném odeslání formuláře a zpracuje zadané hodnoty.

@@ -61,6 +61,6 @@ class CompanyManager extends DatabaseManager
      */
     public function removeCompany(string $rut)
     {
-        $this->database->table(self::TABLE_NAME)->where(self::COLUMN_URL, $rut)->delete();
+        $this->database->table(self::TABLE_NAME)->where(self::COLUMN_RUT_ID, $rut)->delete();
     }
 }

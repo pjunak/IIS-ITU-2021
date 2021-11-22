@@ -34,8 +34,8 @@ final class RouterFactory
                          Route::FILTER_TABLE => [
                               // řetězec v URL => akce presenteru
                               'seznam-clanku' => 'list',
-                              'editor' => 'editor',
-                              'odstranit' => 'remove'
+                              'editor-firma' => 'editor',
+                              'odstranit-firmu' => 'remove'
                               ]
                     ]
             ]);

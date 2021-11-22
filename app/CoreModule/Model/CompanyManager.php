@@ -21,7 +21,6 @@ class CompanyManager extends DatabaseManager
         RUT_ID = 'rut_id',
         EAN = 'ean',
         NAZEV = 'nazev',
-        TYP_FIRMY = 'typ_firmy',
         IC = 'ic',
         WEB = 'web',
         EMAIL = 'email',

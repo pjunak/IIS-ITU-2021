@@ -99,22 +99,16 @@ class CompanyPresenter extends BasePresenter
         $form->addHidden('rut_id');
         $form->addInteger('ean', 'Ean')->setRequired();
         $form->addText('nazev', 'Název')->setRequired();
-        $typy_firem = [
-            'vitr' => 'Větrná elektrárna',
-            'voda' => 'Vodní elektrárna',
-            'test' => 'Solární elektrárna',
-        ];
-        $form->addSelect('typ_firmy', 'Typ Firmy:', $typy_firem)->setDefaultValue('test')->setRequired();
         $form->addInteger('ic', 'IČ')->setRequired();
         $form->addText('web', 'Web')->setRequired();
         $form->addEmail('email', 'Email')->setRequired();
         $form->addText('datum_vytvoreni', 'Datum Vytvoření')->setHtmlType('date')->setRequired();
         $form->addText('ulice', 'Ulice')->setRequired();
-        $form->addText('cislo_p', 'Číslo popisné')->setRequired();
+        $form->addText('cislo_p', 'Číslo popisné');
         $form->addText('cislo_o', 'Číslo orientační')->setRequired();
         $form->addText('obec', 'Obec')->setRequired();
         $form->addInteger('psc', 'PSČ')->setRequired();
-        $form->addInteger('predcisli', 'Předčíslí')->setRequired();
+        $form->addInteger('predcisli', 'Předčíslí');
         $form->addInteger('cislo_uctu', 'Číslo účtu')->setRequired();
         $kody_banky = $this->companyManager->get_enum_values();
         $form->addSelect('kod_banky', 'Kód Banky')->setItems($kody_banky)->setRequired();
@@ -125,7 +119,14 @@ class CompanyPresenter extends BasePresenter
             try {
                 $this->companyManager->saveCompany($values);
                 $this->flashMessage('Článek byl úspěšně uložen.');
-                $this->redirect('Company:', $values->rut_id);
+                if(isset($values->rut_id))
+                {
+                    $this->redirect('Company:', $values->rut_id);
+                }else
+                {
+                    $this->redirect('Company:list');
+                }
+                
             } catch (UniqueConstraintViolationException $e) {
                 $this->flashMessage('Článek s touto URL adresou již existuje.');
             }

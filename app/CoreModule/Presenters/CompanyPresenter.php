@@ -110,11 +110,11 @@ class CompanyPresenter extends BasePresenter
         $form->addEmail('email', 'Email')->setRequired();
         $form->addText('datum_vytvoreni', 'Datum Vytvoření')->setHtmlType('date')->setRequired();
         $form->addText('ulice', 'Ulice')->setRequired();
-        $form->addText('cislo_p', 'Číslo popisné')->setRequired();
+        $form->addText('cislo_p', 'Číslo popisné');
         $form->addText('cislo_o', 'Číslo orientační')->setRequired();
         $form->addText('obec', 'Obec')->setRequired();
         $form->addInteger('psc', 'PSČ')->setRequired();
-        $form->addInteger('predcisli', 'Předčíslí')->setRequired();
+        $form->addInteger('predcisli', 'Předčíslí');
         $form->addInteger('cislo_uctu', 'Číslo účtu')->setRequired();
         $kody_banky = $this->companyManager->get_enum_values();
         $form->addSelect('kod_banky', 'Kód Banky')->setItems($kody_banky)->setRequired();

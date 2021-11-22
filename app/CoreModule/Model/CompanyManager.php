@@ -18,9 +18,22 @@ class CompanyManager extends DatabaseManager
     /** Konstanty pro práci s databází. */
     const
         TABLE_NAME = 'firma',
-        COLUMN_RUT_ID = 'rut_id',
-        COLUMN_NAME = 'nazev';
-        //COLUMN_URL = 'url';
+        RUT_ID = 'rut_id',
+        EAN = 'ean',
+        NAZEV = 'nazev',
+        TYP_FIRMY = 'typ_firmy',
+        IC = 'ic',
+        WEB = 'web',
+        EMAIL = 'email',
+        DATUM_VYTVORENI = 'datum_vytvoreni',
+        ULICE = 'ulice',
+        CISLO_P = 'cislo_p',
+        CISLO_O = 'cislo_o',
+        OBEC = 'obec',
+        PSC = 'psc',
+        PREDCISLI = 'predcisli',
+        CISLO_UCTU = 'predcisli',
+        KOD_BANKY = 'kod_banky';
 
     /**
      * Vrátí seznam všech firem v databázi seřazený sestupně od naposledy přidaného.
@@ -28,7 +41,7 @@ class CompanyManager extends DatabaseManager
      */
     public function getCompanies()
     {
-        return $this->database->table(self::TABLE_NAME)->order(self::COLUMN_RUT_ID . ' DESC');
+        return $this->database->table(self::TABLE_NAME)->order(self::RUT_ID . ' DESC');
     }
 
     /**
@@ -38,7 +51,7 @@ class CompanyManager extends DatabaseManager
      */
     public function getCompany($rut)
     {
-        return $this->database->table(self::TABLE_NAME)->where(self::COLUMN_RUT_ID, $rut)->fetch();
+        return $this->database->table(self::TABLE_NAME)->where(self::RUT_ID, $rut)->fetch();
     }
 
     /**
@@ -48,11 +61,11 @@ class CompanyManager extends DatabaseManager
      */
     public function saveCompany(ArrayHash $company)
     {
-        if (empty($company[self::COLUMN_RUT_ID])) {
-            unset($company[self::COLUMN_RUT_ID]);
+        if (empty($company[self::RUT_ID])) {
+            unset($company[self::RUT_ID]);
             $this->database->table(self::TABLE_NAME)->insert($company);
         } else
-            $this->database->table(self::TABLE_NAME)->where(self::COLUMN_RUT_ID, $company[self::COLUMN_RUT_ID])->update($company);
+            $this->database->table(self::TABLE_NAME)->where(self::RUT_ID, $company[self::RUT_ID])->update($company);
     }
 
     /**
@@ -61,6 +74,20 @@ class CompanyManager extends DatabaseManager
      */
     public function removeCompany(string $rut)
     {
-        $this->database->table(self::TABLE_NAME)->where(self::COLUMN_RUT_ID, $rut)->delete();
+        $this->database->table(self::TABLE_NAME)->where(self::RUT_ID, $rut)->delete();
+    }
+
+    /**
+     * Vrátí všechny možné kód bank v databázi
+     * 
+     * Zdroj: https://forum.nette.org/cs/28085-formular-addselect-hodnoty
+     */
+    public function get_enum_values()
+    {
+        $type = $this->database->query( "SHOW COLUMNS FROM ".self::TABLE_NAME." WHERE Field = 'kod_banky'" )->fetch()->Type;
+        preg_match("/^enum\(\'(.*)\'\)$/", $type, $matches);
+        $enum = explode("','", $matches[1]);
+        $pairs = array_combine($enum, $enum);
+        return $pairs;
     }
 }

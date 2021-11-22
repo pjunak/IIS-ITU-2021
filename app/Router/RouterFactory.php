@@ -27,20 +27,37 @@ final class RouterFactory
         $router->addRoute('kontakt', 'Core:Contact:default');
         $router->addRoute('administrace', 'Core:Administration:default');
 
-            $router->addRoute('<action>[/<url>]', [
-                    'presenter' => 'Core:Company',
-                    'action' => [
-                         Route::FILTER_STRICT => true,
-                         Route::FILTER_TABLE => [
-                              // řetězec v URL => akce presenteru
-                              'seznam-clanku' => 'list',
-                              'editor-firma' => 'editor',
-                              'odstranit-firmu' => 'remove'
-                              ]
-                    ]
-            ]);
+        // Firma
+        $router->addRoute('firma/<action>[/<url>]', [
+                'presenter' => 'Core:Company',
+                'action' => [
+                        Route::FILTER_STRICT => true,
+                        Route::FILTER_TABLE => [
+                            'seznam-firem' => 'list',
+                            'editor-firma' => 'editor',
+                            'odstranit-firmu' => 'remove'
+                            ]
+                ]
+        ]);
+        $router->addRoute('firma/[<url>]', 'Core:Company:default');
 
-            $router->addRoute('[<url>]', 'Core:Company:default');
-            return $router;
+        // Osoba
+        $router->addRoute('osoba/<action>[/<url>]', [
+            'presenter' => 'Core:User',
+            'action' => [
+                    Route::FILTER_STRICT => true,
+                    Route::FILTER_TABLE => [
+                        // řetězec v URL => akce presenteru
+                        'seznam-uzivatelu' => 'list',
+                        'editor-uzivatel' => 'editor',
+                        'odstranit-uzivatele' => 'remove'
+                        ]
+            ]
+        ]);
+        $router->addRoute('osoba/[<url>]', 'Core:User:default');
+
+        // Route pro uvodni stranku
+        $router->addRoute('', 'Core:Company:list');
+        return $router;
     }
 }

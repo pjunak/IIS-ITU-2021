@@ -8,7 +8,6 @@ body {
 h1 {
     text-align: center;
     color: #444444;
-    text-shadow: 3px 3px 3px #aaaaaa;
 }
 
 footer {
@@ -18,7 +17,6 @@ footer {
 }
 
 article {
-    text-shadow: 3px 3px 3px #aaaaaa;
 }
 
 nav ul {
@@ -84,4 +82,11 @@ textarea {
     border: 1px solid #9DC2F8;
     background: #DBE8F8;
     padding: 3px;
+}
+
+label.required:after {
+    display: inline-block;
+    content: '*';
+    color: red;
+    margin-left: 3px;
 }

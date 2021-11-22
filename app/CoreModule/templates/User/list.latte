@@ -1,0 +1,14 @@
+{block title}Výpis uživatelů{/block}
+{block description}Výpis všech uživatelů.{/block}
+{block content}
+<table>
+    <tr n:foreach="$users as $userFe">
+        <td>
+            <h2><a n:href="User: $userFe->id">{$userFe->jmeno} {$userFe->prijmeni}</a></h2>
+            {$userFe->telefon}
+            <br>
+            <a n:href="editor $userFe->id">Editovat</a>
+            <a n:href="remove $userFe->id">Odstranit</a>
+        </td>
+    </tr>
+</table>

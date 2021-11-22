@@ -56,6 +56,21 @@ final class RouterFactory
         ]);
         $router->addRoute('osoba/[<url>]', 'Core:User:default');
 
+        // Pozadavek
+        $router->addRoute('pozadavek/<action>[/<url>]', [
+            'presenter' => 'Core:Request',
+            'action' => [
+                    Route::FILTER_STRICT => true,
+                    Route::FILTER_TABLE => [
+                        // řetězec v URL => akce presenteru
+                        'seznam-pozadavku' => 'list',
+                        'editor-pozadavku' => 'editor',
+                        'odstranit-pozadavek' => 'remove'
+                        ]
+            ]
+        ]);
+        $router->addRoute('pozadavek/[<url>]', 'Core:Request:default');
+
         // Route pro uvodni stranku
         $router->addRoute('', 'Core:Company:list');
         return $router;

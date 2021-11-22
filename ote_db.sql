@@ -55,10 +55,12 @@ CREATE TABLE `pozadavek` (
   `datum_vytvoreni` date NOT NULL,
   `datum_uzavreni` date NOT NULL,
   `predmet` varchar(128) COLLATE utf8_czech_ci NOT NULL,
-  `status` enum('test') COLLATE utf8_czech_ci NOT NULL,
+  `status` enum('podan','vyrizen','uzavren') COLLATE utf8_czech_ci NOT NULL,
   `obsah_pozadavku` text COLLATE utf8_czech_ci NOT NULL,
   `odpoved` text COLLATE utf8_czech_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+
+INSERT INTO `pozadavek` (`id`, `datum_vytvoreni`, `datum_uzavreni`, `predmet`, `status`, `obsah_pozadavku`, `odpoved`) VALUES(1, '2021-11-21', '2021-11-24', 'Věc: uzavření smlouvy', 'vyrizen', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Duis bibendum, lectus ut viverra rhoncus, dolor nunc faucibus libero, eget facilisis enim ipsum id lacus. Maecenas sollicitudin. Vestibulum erat nulla, ullamcorper nec, rutrum non, nonummy ac, erat. Aenean id metus id velit ullamcorper pulvinar. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.', 'Sed elit dui, pellentesque a, faucibus vel, interdum nec, diam. Etiam bibendum elit eget erat. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut tempus purus at lorem. Etiam commodo dui eget wisi. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam posuere lacus quis dolor. Aenean vel massa quis mauris vehicula lacinia.');
 
 DROP TABLE IF EXISTS `vykaz`;
 CREATE TABLE `vykaz` (
@@ -72,6 +74,8 @@ CREATE TABLE `vykaz` (
   `spotreba_z_toho_lokalni` int(11) NOT NULL,
   `spotreba_z_toho_odber` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+
+INSERT INTO `vykaz` (`id`, `od`, `do`, `datum_cas_zadani_vykazu`, `svorkova_vyroba_elektriny`, `vlastni_spotreba_elektriny`, `celkova_konecna_spotreba`, `spotreba_z_toho_lokalni`, `spotreba_z_toho_odber`) VALUES(1, '2021-10-01', '2021-10-31', '2021-11-01 08:15:23', 23, 10, 8, 2, 6);
 
 DROP TABLE IF EXISTS `vyrobna`;
 CREATE TABLE `vyrobna` (
@@ -89,17 +93,19 @@ CREATE TABLE `vyrobna` (
   `parcela` varchar(16) COLLATE utf8_czech_ci NOT NULL,
   `gps_n` decimal(15,5) NOT NULL,
   `gps_e` decimal(15,5) NOT NULL,
-  `druh_vyrobny` enum('test') COLLATE utf8_czech_ci NOT NULL,
+  `druh_vyrobny` enum('slunecni','slunecni_budova','vodni','precerpavaci','jaderna','plyn','geotermalni','vetrna','biomasa') COLLATE utf8_czech_ci NOT NULL,
   `vyrobni_EAN` int(11) NOT NULL,
   `EAN_vyrobny` int(11) NOT NULL,
   `vykon_zdroje` int(11) NOT NULL,
-  `napetova_hladina` int(11) NOT NULL,
-  `zpusob_pripojeni` enum('test') COLLATE utf8_czech_ci NOT NULL,
-  `vykaz_za_opm` int(11) NOT NULL,
-  `druh_podpory` enum('test') COLLATE utf8_czech_ci NOT NULL,
+  `napetova_hladina` enum('0,4','3','6','10','22','35','110','220','400','ostatni') COLLATE utf8_czech_ci NOT NULL,
+  `zpusob_pripojeni` enum('primo','neprimo','ostrovni_vyroba') COLLATE utf8_czech_ci NOT NULL,
+  `vykaz_za_opm` enum('ano','ne') COLLATE utf8_czech_ci NOT NULL,
+  `druh_podpory` enum('bonus_rocni','bonus_hodinovy','povinny_vykup','bez_podpory') COLLATE utf8_czech_ci NOT NULL,
   `datum_prvniho_pripojeni` date NOT NULL,
   `datum_uvedeni_do_provozu` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+
+INSERT INTO `vyrobna` (`id`, `id_vyrobniho_zdroje`, `id_site`, `kratky_nazev`, `ulice`, `cislo_p`, `cislo_o`, `kraj`, `okres`, `obec`, `psc`, `parcela`, `gps_n`, `gps_e`, `druh_vyrobny`, `vyrobni_EAN`, `EAN_vyrobny`, `vykon_zdroje`, `napetova_hladina`, `zpusob_pripojeni`, `vykaz_za_opm`, `druh_podpory`, `datum_prvniho_pripojeni`, `datum_uvedeni_do_provozu`) VALUES(1, 1, 1, 'výrobna 1', 'Rúžová', '1024', '8', 1, 1, 'Olomouc', 77900, '235/15', '18.45550', '27.00530', 'slunecni', 1001, 2002, 35, '110', 'primo', 'ano', 'bonus_rocni', '2021-09-01', '2021-09-02');
 
 
 ALTER TABLE `firma`
@@ -109,6 +115,9 @@ ALTER TABLE `osoba`
   ADD PRIMARY KEY (`id`);
 
 ALTER TABLE `pozadavek`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `vykaz`
   ADD PRIMARY KEY (`id`);
 
 ALTER TABLE `vyrobna`
@@ -122,10 +131,13 @@ ALTER TABLE `osoba`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 ALTER TABLE `pozadavek`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+ALTER TABLE `vykaz`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 ALTER TABLE `vyrobna`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

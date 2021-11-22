@@ -3,7 +3,7 @@
 #
 parameters:
     defaultCompanyRut: '123456789' # URL výhozího článku
-    contactEmail: 'admin@localhost.cz' # Kontaktní email
+    contactEmail: 'kristianherman@seznam.cz' # Kontaktní email
 
 
 

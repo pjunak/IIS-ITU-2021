@@ -96,9 +96,9 @@ class RequestPresenter extends BasePresenter
     {
         // Vytvoření formuláře a definice jeho polí.
         $form = new Form;
-        $form->addText('id', 'ID požadavku')->setRequired();
-        $form->addText('datum_vytvoreni', 'Datum Vytvoření')->setHtmlType('date')->setRequired();
-        $form->addText('datum_uzavreni', 'Datum Uzavření')->setHtmlType('date')->setRequired();
+        $form->addHidden('id');
+        $form->addText('datum_vytvoreni', 'Datum vytvoření')->setHtmlType('date')->setRequired();
+        $form->addText('datum_uzavreni', 'Datum uzavření')->setHtmlType('date')->setRequired();
         $form->addText('predmet', 'Předmět')->setRequired();
         $stavy = [ //Zatím pro případné testování, TODO nepůjde nastavit zde.
             'podan' => 'Podán',
@@ -107,8 +107,8 @@ class RequestPresenter extends BasePresenter
         ];
         $form->addSelect('staus', ':', $stavy)->setDefaultValue('podan')->setRequired();
 
-        $form->addTextArea('obsah_pozadavku', 'Obsah Požadavku')->setRequired();
-        $form->addTextArea('odpoved', 'odpověď')->setRequired(); // Opět, nebude nastavována zde.
+        $form->addTextArea('obsah_pozadavku', 'Obsah požadavku')->setRequired();
+        $form->addTextArea('odpoved', 'Odpověď')->setRequired(); // Opět, nebude nastavována zde.
         $form->addSubmit('save', 'Uložit požadavek');
 
         // Funkce se vykonaná při úspěšném odeslání formuláře a zpracuje zadané hodnoty.

@@ -115,7 +115,7 @@ class RequestPresenter extends BasePresenter
         $form->onSuccess[] = function (Form $form, ArrayHash $values) {
             try {
                 $this->requestManager->saveRequest($values);
-                $this->flashMessage('Request byl úspěšně uložen.');
+                $this->flashMessage('Požadavek byl úspěšně uložen.');
                 if(isset($values->id))
                 {
                     $this->redirect('Request:', $values->id);

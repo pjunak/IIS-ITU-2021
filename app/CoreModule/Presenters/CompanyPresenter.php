@@ -99,12 +99,6 @@ class CompanyPresenter extends BasePresenter
         $form->addHidden('rut_id');
         $form->addInteger('ean', 'Ean')->setRequired();
         $form->addText('nazev', 'Název')->setRequired();
-        $typy_firem = [
-            'vitr' => 'Větrná elektrárna',
-            'voda' => 'Vodní elektrárna',
-            'test' => 'Solární elektrárna',
-        ];
-        $form->addSelect('typ_firmy', 'Typ Firmy:', $typy_firem)->setDefaultValue('test')->setRequired();
         $form->addInteger('ic', 'IČ')->setRequired();
         $form->addText('web', 'Web')->setRequired();
         $form->addEmail('email', 'Email')->setRequired();
@@ -125,7 +119,14 @@ class CompanyPresenter extends BasePresenter
             try {
                 $this->companyManager->saveCompany($values);
                 $this->flashMessage('Článek byl úspěšně uložen.');
-                $this->redirect('Company:', $values->rut_id);
+                if(isset($values->rut_id))
+                {
+                    $this->redirect('Company:', $values->rut_id);
+                }else
+                {
+                    $this->redirect('Company:list');
+                }
+                
             } catch (UniqueConstraintViolationException $e) {
                 $this->flashMessage('Článek s touto URL adresou již existuje.');
             }

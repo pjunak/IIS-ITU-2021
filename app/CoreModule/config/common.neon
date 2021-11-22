@@ -4,6 +4,7 @@
 parameters:
     defaultCompanyRut: '123456789' # URL výhozího článku
     defaultUserId: '1'
+    defaultRequestId: '1'
     contactEmail: 'kristianherman@seznam.cz' # Kontaktní email
 
 
@@ -12,7 +13,9 @@ parameters:
 services:
     - App\CoreModule\Model\CompanyManager # Vlastní služba dále přístupná pomocí DI.
     - App\CoreModule\Model\UserManager
+    - App\CoreModule\Model\RequestManager
 
     - App\CoreModule\Presenters\CompanyPresenter(%defaultCompanyRut%) # Předání nastavení při vytváření služby presenteru.
     - App\CoreModule\Presenters\ContactPresenter(%contactEmail%)
     - App\CoreModule\Presenters\UserPresenter(%defaultUserId%)
+    - App\CoreModule\Presenters\RequestPresenter(%defaultRequestId%)

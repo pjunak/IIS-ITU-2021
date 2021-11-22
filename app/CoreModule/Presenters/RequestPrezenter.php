@@ -96,7 +96,6 @@ class RequestPresenter extends BasePresenter
     {
         // Vytvoření formuláře a definice jeho polí.
         $form = new Form;
-        $form->addHidden('id');
         $form->addText('id', 'ID požadavku')->setRequired();
         $form->addText('datum_vytvoreni', 'Datum Vytvoření')->setHtmlType('date')->setRequired();
         $form->addText('datum_uzavreni', 'Datum Uzavření')->setHtmlType('date')->setRequired();

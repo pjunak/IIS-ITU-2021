@@ -4,7 +4,7 @@
 <table>
     <tr n:foreach="$requests as $requestFe">
         <td>
-            <h2><a n:href="User: $requestFe->id">{$userFe->predmet}</a></h2>
+            <h2><a n:href="User: $requestFe->id">{$requestFe->predmet}</a></h2>
             <br>
             <a n:href="editor $requestFe->id">Editovat</a>
             <a n:href="remove $requestFe->id">Odstranit</a>

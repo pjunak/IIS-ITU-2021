@@ -126,9 +126,8 @@ class CompanyPresenter extends BasePresenter
                 {
                     $this->redirect('Company:list');
                 }
-                
             } catch (UniqueConstraintViolationException $e) {
-                $this->flashMessage('Článek s touto URL adresou již existuje.');
+                $this->flashMessage('Firma s tímto ID již existuje.');
             }
         };
 

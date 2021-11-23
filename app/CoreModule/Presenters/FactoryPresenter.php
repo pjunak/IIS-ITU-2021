@@ -55,7 +55,7 @@ class FactoryPresenter extends BasePresenter
     /** Načte a předá seznam článků do šablony. */
     public function renderList()
     {
-        $this->template->factorys = $this->factoryManager->getFactorys();
+        $this->template->factories = $this->factoryManager->getFactories();
     }
 
     /**
@@ -83,8 +83,8 @@ class FactoryPresenter extends BasePresenter
             else 
             {
                 $this['editorForm']->setDefaults($factory); // Předání hodnot článku do editačního formuláře.
-                $this['editorForm']['datum_prvniho_pripojeni']->setDefaultValue($factory->od->format('Y-m-d'));
-                $this['editorForm']['datum_uvedeni_do_provozu']->setDefaultValue($factory->do->format('Y-m-d'));
+                $this['editorForm']['datum_prvniho_pripojeni']->setDefaultValue($factory->datum_prvniho_pripojeni->format('Y-m-d'));
+                $this['editorForm']['datum_uvedeni_do_provozu']->setDefaultValue($factory->datum_uvedeni_do_provozu->format('Y-m-d'));
             }
         }
     }
@@ -99,7 +99,7 @@ class FactoryPresenter extends BasePresenter
         // Vytvoření formuláře a definice jeho polí.
         $form = new Form;
         $form->addHidden('id');
-        $form->addInteger('id_vyrbniho_zdroje', 'Od')->setRequired();
+        $form->addInteger('id_vyrobniho_zdroje', 'ID výrobního zdroje')->setRequired();
         $form->addInteger('id_site', 'ID sítě')->setRequired();
         $form->addText('kratky_nazev', 'Krátký název')->setRequired();
         $form->addText('ulice', 'Ulice')->setRequired();
@@ -112,20 +112,20 @@ class FactoryPresenter extends BasePresenter
         $form->addText('parcela', 'Parcela')->setRequired();
         $form->addText('gps_n', 'GPS N')->addRule(Form::FLOAT, 'Zadejte číslo')->setNullable()->setRequired();
         $form->addText('gps_e', 'GPS E')->addRule(Form::FLOAT, 'Zadejte číslo')->setNullable()->setRequired();
-        $druhy_vyroben = $this->FactoryManager->get_enum_values('druh_vyrobny');
+        $druhy_vyroben = $this->factoryManager->get_types_of_factory('druh_vyrobny');
         $form->addSelect('druh_vyrobny', 'Druh výrobny')->setItems($druhy_vyroben)->setRequired();
         $form->addInteger('vyrobni_EAN', 'Výrobní EAN')->setRequired();
         $form->addInteger('EAN_vyrobny', 'EAN výrobny')->setRequired();
         $form->addInteger('vykon_zdroje', 'Výkon zdroje')->setRequired();
-        $napetove_hladiny = $this->FactoryManager->get_enum_values('napetova_hladina');
+        $napetove_hladiny = $this->factoryManager->get_types_of_factory('napetova_hladina');
         $form->addSelect('napetova_hladina', 'Napěťová hladina')->setItems($napetove_hladiny)->setRequired();
-        $zpusoby_pripojeni = $this->FactoryManager->get_enum_values('zpusob_pripojeni');
+        $zpusoby_pripojeni = $this->factoryManager->get_types_of_factory('zpusob_pripojeni');
         $form->addSelect('zpusob_pripojeni', 'Způsob připojení')->setItems($zpusoby_pripojeni)->setRequired();
-        $ano_ne = $this->FactoryManager->get_enum_values('vykazy_za_opm');
+        $ano_ne = $this->factoryManager->get_types_of_factory('vykaz_za_opm');
         $form->addSelect('vykazy_za_opm', 'Výkaz za OPM')->setItems($ano_ne)->setRequired();
-        $druhy_podpory = $this->FactoryManager->get_enum_values('druh_podpory');
+        $druhy_podpory = $this->factoryManager->get_types_of_factory('druh_podpory');
         $form->addSelect('druh_podpory', 'Druh podpory')->setItems($druhy_podpory)->setRequired();
-        $form->addTest('datum_prvniho_pripojeni', 'Datum prvního připojení')->setHtmlType('date')->setRequired();
+        $form->addText('datum_prvniho_pripojeni', 'Datum prvního připojení')->setHtmlType('date')->setRequired();
         $form->addText('datum_uvedeni_do_provozu', 'Datum uvedení do provozu')->setHtmlType('date')->setRequired();
         $form->addSubmit('save', 'Uložit firmu');
 

@@ -1,0 +1,13 @@
+{block title}Výpis výkazů{/block}
+{block description}Výpis všech výkazů.{/block}
+{block content}
+<table>
+    <tr n:foreach="$reports as $reportFe">
+        <td>
+            <h2><a n:href="Report: $reportFe->id">{$reportFe->id}</a></h2>
+            <br>
+            <a n:href="editor $reportFe->id">Editovat</a>
+            <a n:href="remove $reportFe->id">Odstranit</a>
+        </td>
+    </tr>
+</table>

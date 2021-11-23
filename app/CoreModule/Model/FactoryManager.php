@@ -46,7 +46,7 @@ class FactoryManager extends DatabaseManager
      * Vrátí seznam všech výroben v databázi seřazený sestupně od naposledy přidaného.
      * @return Selection seznam všech firem
      */
-    public function getFactorys()
+    public function getFactories()
     {
         return $this->database->table(self::TABLE_NAME)->order(self::ID . ' DESC');
     }
@@ -84,7 +84,7 @@ class FactoryManager extends DatabaseManager
      */
     public function get_types_of_factory($field)
     {
-        $type = $this->database->query( "SHOW COLUMNS FROM ".self::TABLE_NAME." WHERE Field = ''{$field}'" )->fetch()->Type;
+        $type = $this->database->query( "SHOW COLUMNS FROM ".self::TABLE_NAME." WHERE Field = '{$field}'" )->fetch()->Type;
         preg_match("/^enum\(\'(.*)\'\)$/", $type, $matches);
         $enum = explode("','", $matches[1]);
         $pairs = array_combine($enum, $enum);

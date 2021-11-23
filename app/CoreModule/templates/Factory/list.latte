@@ -2,12 +2,12 @@
 {block description}Výpis všech výroben.{/block}
 {block content}
 <table>
-    <tr n:foreach="$requests as $factory">
+    <tr n:foreach="$factories as $factoryFe">
         <td>
-            <h2><a n:href="Factory: $Factory->id">{$Factory->predmet}</a></h2>
+            <h2><a n:href="Factory: $factoryFe->id">{$factoryFe->kratky_nazev}</a></h2>
             <br>
-            <a n:href="editor $factory->id">Editovat</a>
-            <a n:href="remove $factory->id">Odstranit</a>
+            <a n:href="editor $factoryFe->id">Editovat</a>
+            <a n:href="remove $factoryFe->id">Odstranit</a>
         </td>
     </tr>
 </table>

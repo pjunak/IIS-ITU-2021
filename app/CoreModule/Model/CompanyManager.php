@@ -79,7 +79,9 @@ class CompanyManager extends DatabaseManager
     /**
      * Vrátí všechny možné kód bank v databázi
      * 
-     * Zdroj: https://forum.nette.org/cs/28085-formular-addselect-hodnoty
+     * Zdroje:
+     * https://forum.nette.org/cs/28085-formular-addselect-hodnoty
+     * https://stackoverflow.com/questions/2350052/how-can-i-get-enum-possible-values-in-a-mysql-database
      */
     public function get_enum_values()
     {

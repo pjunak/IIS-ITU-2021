@@ -10,7 +10,7 @@ use Nette\Database\Table\Selection;
 use Nette\Utils\ArrayHash;
 
 /**
- * Model pro správu osob v redakčním systému.
+ * Model pro správu požadavků v redakčním systému.
  * @package App\CoreModule\Model
  */
 class RequestManager extends DatabaseManager

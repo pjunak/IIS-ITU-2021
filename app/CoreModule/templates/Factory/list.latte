@@ -1,0 +1,13 @@
+{block title}Výpis výroben{/block}
+{block description}Výpis všech výroben.{/block}
+{block content}
+<table>
+    <tr n:foreach="$requests as $factory">
+        <td>
+            <h2><a n:href="Factory: $Factory->id">{$Factory->predmet}</a></h2>
+            <br>
+            <a n:href="editor $factory->id">Editovat</a>
+            <a n:href="remove $factory->id">Odstranit</a>
+        </td>
+    </tr>
+</table>

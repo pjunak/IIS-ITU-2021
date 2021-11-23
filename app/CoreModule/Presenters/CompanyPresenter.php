@@ -79,7 +79,7 @@ class CompanyPresenter extends BasePresenter
     {
         if ($rut) {
             if (!($company = $this->companyManager->getCompany($rut)))
-                $this->flashMessage('Článek nebyl nalezen.'); // Výpis chybové hlášky.
+                $this->flashMessage('Firma nebyla nalezena.'); // Výpis chybové hlášky.
             else 
             {
                 $this['editorForm']->setDefaults($company); // Předání hodnot článku do editačního formuláře.

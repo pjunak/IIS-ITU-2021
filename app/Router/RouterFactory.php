@@ -71,6 +71,36 @@ final class RouterFactory
         ]);
         $router->addRoute('pozadavek/[<url>]', 'Core:Request:default');
 
+        // Výpis
+        $router->addRoute('vypis/<action>[/<url>]', [
+            'presenter' => 'Core:Report',
+            'action' => [
+                    Route::FILTER_STRICT => true,
+                    Route::FILTER_TABLE => [
+                        // řetězec v URL => akce presenteru
+                        'seznam-vypisu' => 'list',
+                        'editor-vypisu' => 'editor',
+                        'odstranit-vypis' => 'remove'
+                        ]
+            ]
+        ]);
+        $router->addRoute('vypis/[<url>]', 'Core:Report:default');
+
+        // Vyrobna
+        $router->addRoute('vyrobna/<action>[/<url>]', [
+            'presenter' => 'Core:Factory',
+            'action' => [
+                    Route::FILTER_STRICT => true,
+                    Route::FILTER_TABLE => [
+                        // řetězec v URL => akce presenteru
+                        'seznam-vyroben' => 'list',
+                        'editor-vyroben' => 'editor',
+                        'odstranit-vyrobnu' => 'remove'
+                        ]
+            ]
+        ]);
+        $router->addRoute('vyrobna/[<url>]', 'Core:Factory:default');
+
         // Route pro uvodni stranku
         $router->addRoute('', 'Core:Company:list');
         return $router;

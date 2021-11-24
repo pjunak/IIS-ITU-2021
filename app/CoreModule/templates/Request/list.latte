@@ -6,8 +6,8 @@
         <td>
             <h2><a n:href="Request: $requestFe->id">{$requestFe->predmet}</a></h2>
             <br>
-            <a n:href="editor $requestFe->id">Editovat</a>
-            <a n:href="remove $requestFe->id">Odstranit</a>
+            <a class="btn-action" n:href="editor $requestFe->id"><i class="fas fa-edit"></i> Editovat</a>
+            <a class="btn-action" onclick="return confirm('Opravdu chcete tento výpis smazat?');" n:href="remove $requestFe->id"><i class="fas fa-trash-alt"></i> Odstranit</a>
         </td>
     </tr>
 </table>

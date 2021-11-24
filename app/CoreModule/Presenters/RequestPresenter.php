@@ -105,7 +105,7 @@ class RequestPresenter extends BasePresenter
             'vyrizen' => 'Vyřízen',
             'uzavren' => 'Uzavřen',
         ];
-        $form->addSelect('staus', ':', $stavy)->setDefaultValue('podan')->setRequired();
+        $form->addSelect('staus', 'Status:', $stavy)->setDefaultValue('podan')->setRequired();
 
         $form->addTextArea('obsah_pozadavku', 'Obsah požadavku')->setRequired();
         $form->addTextArea('odpoved', 'Odpověď')->setRequired(); // Opět, nebude nastavována zde.

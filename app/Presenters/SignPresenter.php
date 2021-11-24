@@ -6,6 +6,7 @@ namespace App\Presenters;
 
 use App\Forms;
 use Nette\Application\UI\Form;
+use Nette\Security\User;
 
 
 final class SignPresenter extends BasePresenter
@@ -15,15 +16,26 @@ final class SignPresenter extends BasePresenter
 
 	private Forms\SignInFormFactory $signInFactory;
 
-	private Forms\SignUpFormFactory $signUpFactory;
+	private $user;
 
-
-	public function __construct(Forms\SignInFormFactory $signInFactory, Forms\SignUpFormFactory $signUpFactory)
+	public function __construct(Forms\SignInFormFactory $signInFactory)
 	{
 		$this->signInFactory = $signInFactory;
-		$this->signUpFactory = $signUpFactory;
 	}
 
+	public function startUp()
+	{
+		parent::startUp();
+
+		$this->user = $this->getUser();
+
+		// Pokud uzivatel klikne na prihlaseni a jiz je prihlasen
+		if ($this->isLinkCurrent('Sign:in') && $this->user->isLoggedIn())
+		{
+			$this->flashMessage('Již jste přihlášen!', "danger");
+			$this->forward('Administration:');
+		}
+	}
 
 	/**
 	 * Sign-in form factory.
@@ -32,24 +44,13 @@ final class SignPresenter extends BasePresenter
 	{
 		return $this->signInFactory->create(function (): void {
 			$this->restoreRequest($this->backlink);
-			$this->redirect('Administration:');
+			$this->forward('Administration:');
 		});
 	}
-
-
-	/**
-	 * Sign-up form factory.
-	 */
-	protected function createComponentSignUpForm(): Form
-	{
-		return $this->signUpFactory->create(function (): void {
-			$this->redirect('Administration:');
-		});
-	}
-
 
 	public function actionOut(): void
 	{
 		$this->getUser()->logout();
+		$this->session->destroy();
 	}
 }

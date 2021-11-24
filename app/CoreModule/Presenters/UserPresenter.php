@@ -46,10 +46,10 @@ class UserPresenter extends BasePresenter
         if (!$id) $id = $this->defaultUserId; // Pokud není zadaná URL, vezme se URL výchozího článku.
 
         // Pokusí se načíst článek s danou URL a pokud nebude nalezen vyhodí chybu 404.
-        if (!($user = $this->userManager->getUser($id)))
+        if (!($userFe = $this->userManager->getUser($id)))
             $this->error(); // Vyhazuje výjimku BadRequestException.
 
-        $this->template->user = $user; // Předá článek do šablony.
+        $this->template->userFe = $userFe; // Předá článek do šablony.
     }
 
     /** Načte a předá seznam článků do šablony. */

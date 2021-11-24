@@ -27,7 +27,6 @@ final class RouterFactory
         $router->addRoute('kontakt', 'Core:Contact:default');
         $router->addRoute('administrace', 'Administration:default');
         $router->addRoute('prihlaseni', 'Sign:in');
-        $router->addRoute('registrace', 'Sign:up');
         $router->addRoute('odhlaseni', 'Sign:out');
 
         // Firma
@@ -105,7 +104,7 @@ final class RouterFactory
         $router->addRoute('vyrobna/[<url>]', 'Core:Factory:default');
 
         // Route pro uvodni stranku
-        $router->addRoute('', 'Core:Company:list');
+        $router->addRoute('', 'Sign:in');
         return $router;
     }
 }

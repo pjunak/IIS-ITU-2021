@@ -1,7 +1,7 @@
 body {
-    font-family: verdana, serif;
+    font-family: 'Roboto', sans-serif;
     font-size: 14px;
-    width: 900px;
+    width: 1200px;
     margin: 0 auto;
 }
 
@@ -23,23 +23,39 @@ nav ul {
     list-style-type: none;
 }
 
+/*
 nav li {
     float: left;
     margin-right: 15px;
 }
+*/
+
+ul.navbar-nav.mr-auto
+{
+    padding-left: 0;
+}
+
+nav
+{
+    background-color: #1A3873;
+}
+
+nav li.nav-item
+{
+    padding: 1em 0;
+    margin-right: 0;
+}
 
 nav a {
-    background: #6FA4F8;
-    color: white;
-    padding: 5px 10px;
-    border-radius: 10px;
+    color: #fff;
     text-decoration: none;
     border: none;
+    padding: 0 1em
 }
 
 nav a:hover {
-    background: #2976f8;
-    color: #EEEEEE;
+    color: #fff;
+    background-color: #43b9c2;
     text-decoration: none;
 }
 
@@ -89,4 +105,45 @@ label.required:after {
     content: '*';
     color: red;
     margin-left: 3px;
+}
+
+header
+{
+    display: flex;
+    justify-content: space-between;
+    padding: 1em;
+}
+
+header .logo,
+header .description
+{
+    display: inline-block;
+}
+
+header .logo img
+{
+    width: 200px;
+    height: auto;
+}
+
+header .description
+{
+    font-size: 1.5em;
+    color: #444;
+}
+
+header .right-side
+{
+    display: flex;
+    align-items: center;
+}
+
+header .inline-item
+{
+    margin-left: 1em;
+}
+
+header .inline-item:not(:last-child)
+{
+    margin-right: 1em;
 }

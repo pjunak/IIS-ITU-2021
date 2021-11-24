@@ -32,6 +32,15 @@ CREATE TABLE `firma` (
 
 INSERT INTO `firma` (`rut_id`, `ean`, `nazev`, `ic`, `dic`, `web`, `email`, `datum_vytvoreni`, `ulice`, `cislo_p`, `cislo_o`, `obec`, `psc`, `predcisli`, `cislo_uctu`, `kod_banky`) VALUES(123456789, 123456789, 'Firma TEST s.r.o.', 123456, NULL, 'http://test.com', 'test@domena.cz', '2021-11-21', 'Testová', '1024', '8', 'Testov', 12345, NULL, 123456789, '0100');
 
+DROP TABLE IF EXISTS `firma_osoba`;
+CREATE TABLE `firma_osoba` (
+  `id` int(11) NOT NULL,
+  `firma` int(11) NOT NULL,
+  `osoba` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+
+INSERT INTO `firma_osoba` (`id`, `firma`, `osoba`) VALUES(1, 123456789, 1);
+
 DROP TABLE IF EXISTS `osoba`;
 CREATE TABLE `osoba` (
   `id` int(11) NOT NULL,
@@ -113,6 +122,9 @@ INSERT INTO `vyrobna` (`id`, `id_vyrobniho_zdroje`, `id_site`, `kratky_nazev`, `
 ALTER TABLE `firma`
   ADD PRIMARY KEY (`rut_id`);
 
+ALTER TABLE `firma_osoba`
+  ADD PRIMARY KEY (`id`);
+
 ALTER TABLE `osoba`
   ADD PRIMARY KEY (`id`);
 
@@ -128,6 +140,9 @@ ALTER TABLE `vyrobna`
 
 ALTER TABLE `firma`
   MODIFY `rut_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=234567892;
+
+ALTER TABLE `firma_osoba`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 ALTER TABLE `osoba`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;

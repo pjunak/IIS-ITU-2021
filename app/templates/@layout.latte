@@ -15,28 +15,60 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="{$basePath}/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
     {block head}{/block}
 </head>
 
 <body>
     <header>
-        <h1>Jednoduchý redakční systém v Nette</h1>
+        <div class="left-side">
+            <div class="logo"><a n:href=:Sign:in><img src="{$basePath}/img/Logo_OTE.jpg"></a></div>
+            <div class="description">Spojujeme trhy a příležitosti</div>
+        </div>
+        <div class="right-side">
+                {if !$presenter->isLinkCurrent(':Sign:')}
+                    {if $user->isLoggedIn()}
+                        <span class="inline-item"><i class="fas fa-user"></i> <a n:href=":Core:User:default $user->id">{$user->getIdentity()->jmeno} {$user->getIdentity()->prijmeni}</a></span>
+                            <span class="inline-item"><a n:href=":Sign:out">Odhlásit <i class="fas fa-sign-out-alt"></i></a></span>
+                    {else}
+                        <span class="inline-item"><a n:href=":Sign:in"><i class="fas fa-sign-in-alt"></i> Přihlásit se</a></span>
+                    {/if}
+                {/if}
+                |
+                <span class="inline-item"><a target="_blank" href="#">Nápověda portálu</a></span>
+                |
+                <span class="inline-item"><a target="_blank" href="#">EN</a></span>
+            </ul>
+        </div>
     </header>
+
+    <!-- Menu pro prihlasene -->
+    <nav n:if="$user->isLoggedIn()" class="collapse navbar-collapse">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item"><a class="nav-link" n:href=:Administration:>Úvod</a></li>
+            <li class="nav-item"><a class="nav-link" n:href=:Core:Company:list>Seznam firem</a></li>
+            <li class="nav-item"><a class="nav-link" n:href=:Core:User:list>Seznam uživatelů</a></li>
+            <li class="nav-item"><a class="nav-link" n:href=:Core:Request:list>Seznam požadavků</a></li>
+            <li class="nav-item"><a class="nav-link" n:href=:Core:Report:list>Seznam výkazů</a></li>
+            <li class="nav-item"><a class="nav-link" n:href=:Core:Factory:list>Seznam výroben</a></li>
+            <li class="nav-item"><a class="nav-link" n:href=:Core:Contact:>Kontakt</a></li>
+        </ul>
+    </nav>
+
+    <!-- Menu pro odhlasene -->
+    <nav n:if="!$user->isLoggedIn()" class="collapse navbar-collapse">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item"><a class="nav-link" n:href=:Sign:in><i class="fas fa-home"></i> Úvod</a></li>
+            <li class="nav-item"><a class="nav-link" href="https://www.ote-cr.cz/cs">Aktuality OTE</a></li>
+            <li class="nav-item"><a class="nav-link" href="https://www.ote-cr.cz/cs/o-spolecnosti/zakladni-udaje">O společnosti OTE</a></li>
+        </ul>
+    </nav>
+
     <div class=container>
         {* Výpis flash zpráv. *}
         <div n:foreach="$flashes as $flash" n:class="alert, 'alert-' . $flash->type">{$flash->message}</div>
-
-        <nav>
-            <ul>
-                <li><a n:href=:Core:Company:>Úvod</a></li>
-                <li><a n:href=:Core:Company:list>Seznam firem</a></li>
-                <li><a n:href=:Core:User:list>Seznam uživatelů</a></li>
-                <li><a n:href=:Core:Request:list>Seznam požadavků</a></li>
-                <li><a n:href=:Core:Report:list>Seznam výkazů</a></li>
-                <li><a n:href=:Core:Factory:list>Seznam výroben</a></li>
-                <li><a n:href=:Core:Contact:>Kontakt</a></li>
-            </ul>
-        </nav>
 
         <br style="clear: both;">
         <article>
@@ -51,9 +83,7 @@
 
     <footer>
     <p>
-        Ukázkový tutoriál pro jednoduchý redakční systém v Nette z programátorské sociální sítě
-        <a href="http://www.itnetwork.cz" target="_blank">itnetwork.cz</a>.
-        <a n:href=:Administration:>Administrace</a>
+        &copy; 2021 Informační systém OTE, a.s., &bull; Projekt do předmětu IIS (Informační systémy), ak. rok 2021/22. &bull; &#123;xcasek01, xherma33, xjunak01&#125;@stud.fit.vutbr.cz
     </p>
 </footer>
 

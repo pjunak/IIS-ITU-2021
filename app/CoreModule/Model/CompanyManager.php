@@ -54,7 +54,7 @@ class CompanyManager extends DatabaseManager
         return $this->database->table(self::TABLE_NAME)->where(self::RUT_ID, $rut)->fetch();
     }
 
-    public function getCompanyByUser($userID)
+    public function getCompaniesByUser($userID)
     {
         if($userID == NULL)
         {

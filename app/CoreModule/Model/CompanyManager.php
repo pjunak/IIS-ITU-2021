@@ -58,7 +58,7 @@ class CompanyManager extends DatabaseManager
     {
         if($userID == NULL)
         {
-            return getCompanies();
+            return $this->getCompanies();
         }
         else
         {

@@ -1,2 +1,50 @@
 {block title}{$report->id}{/block}
 {block content}
+<div>
+    <div>   
+        <a class="btn-action" n:href="editor $report->id"><i class="fas fa-edit"></i> Editovat</a>
+        <a class="btn-action" onclick="return confirm('Opravdu chcete tento výpis smazat?');" n:href="remove $report->id"><i class="fas fa-trash-alt"></i> Odstranit</a>
+    </div>
+    <div>   
+        <label>ID</label>
+        <input type="number" value="{$report->id}" disabled>
+    </div>
+    <div>   
+        <label>Od</label> <!--TODO |date:'Y-m-d' z nějakého důvodu nefunguje -->
+        <input type="date" value="{$report->od|date:'Y-m-d'}" disabled>
+    </div>
+    <div>   
+        <label>Do</label> <!--TODO |date:'Y-m-d' z nějakého důvodu nefunguje -->
+        <input type="date" value="{$report->do|date:'Y-m-d'}" disabled>
+    </div>
+    <div>   
+        <label>Datum a čas zadání výkazu</label>
+        <input type="datetime" value="{$report->datum_cas_zadani_vykazu}" disabled>
+    </div>
+    <div>   
+        <label>Svorková výroba elektřiny</label>
+        <input type="number" value="{$report->svorkova_vyroba_elektriny}" disabled>
+        <span class="unit">kWh</span>
+    </div>
+    <div>   
+        <label>Vlastní spotřeba elektřiny</label>
+        <input type="number" value="{$report->vlastni_spotreba_elektriny}" disabled>
+        <span class="unit">kWh</span>
+    </div>
+    <div>   
+        <label>Celková spotřeba elektřiny</label>
+        <input type="number" value="{$report->celkova_konecna_spotreba}" disabled>
+        <span class="unit">kWh</span>
+    </div>
+    <div>   
+        <label>Spotřeba z toho lokální</label>
+        <input type="number" value="{$report->spotreba_z_toho_lokalni}" disabled>
+        <span class="unit">kWh</span>
+    </div>
+    <div>   
+        <label>Spotřeba z toho odběr</label>
+        <input type="number" value="{$report->spotreba_z_toho_odber}" disabled>
+        <span class="unit">kWh</span>
+    </div>
+    </div>
+</div>

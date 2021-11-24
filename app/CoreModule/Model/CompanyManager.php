@@ -22,6 +22,7 @@ class CompanyManager extends DatabaseManager
         EAN = 'ean',
         NAZEV = 'nazev',
         IC = 'ic',
+        DIC = 'dic',
         WEB = 'web',
         EMAIL = 'email',
         DATUM_VYTVORENI = 'datum_vytvoreni',
@@ -51,6 +52,19 @@ class CompanyManager extends DatabaseManager
     public function getCompany($rut)
     {
         return $this->database->table(self::TABLE_NAME)->where(self::RUT_ID, $rut)->fetch();
+    }
+
+    public function getCompanyByUser($userID)
+    {
+        if($userID == NULL)
+        {
+            return getCompanies();
+        }
+        else
+        {
+            return $this->database->query("SELECT * FROM firma WHERE rut_id IN (SELECT firma FROM firma_osoba WHERE osoba = $userID)");
+        }
+        
     }
 
     /**

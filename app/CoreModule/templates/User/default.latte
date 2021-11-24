@@ -1,5 +1,54 @@
 {block title}{$userFe->jmeno} {$userFe->prijmeni}{/block}
-{block description}Pozice: {$userFe->pozice}{/block}
 {block content}
-{$userFe->telefon}
-{$userFe->email}
+<div>
+    <div>   
+        <a class="btn-action" n:href="editor $userFe->id"><i class="fas fa-edit"></i> Editovat</a>
+        <a class="btn-action" onclick="return confirm('Opravdu chcete tohoto uživatele smazat?');" n:href="remove $userFe->id"><i class="fas fa-trash-alt"></i> Odstranit</a>
+    </div>
+    <div>   
+        <label>Id</label>
+        <input type="number" value="{$userFe->id}" disabled>
+    </div>
+    <div>   
+        <label>ID účastníka</label>
+        <input type="number" value="{$userFe->id_ucastnika}" disabled>
+    </div>
+    <div>   
+        <label for="typ_osoby">Typ osoby</label>
+        <select id="typ_osoby" disabled>
+            <option value="">{$userFe->typ_osoby}</option>
+        </select>
+    </div>
+    <div>   
+        <label>Jméno</label>
+        <input type="text" value="{$userFe->jmeno}" disabled>
+    </div>
+    <div>   
+        <label>Příjmení</label>
+        <input type="text" value="{$userFe->prijmeni}" disabled>
+    </div>
+    <div>   
+        <label>Telefon</label>
+        <input type="tel" value="{$userFe->telefon}" disabled>
+    </div>
+    <div>   
+        <label>Email</label>
+        <input type="email" value="{$userFe->email}" disabled>
+    </div>
+    <div>   
+        <label>Heslo</label> <!-- TODO Heslo se nebude ukazovat, pouze pro kontrolu prozatím -->
+        <input type="text" value="{$userFe->heslo}" disabled>
+    </div>
+    <div>   
+        <label>Kancelář</label>
+        <input type="text" value="{$userFe->kancelar}" disabled>
+    </div>
+    <div>   
+        <label>Pozice</label>
+        <input type="text" value="{$userFe->pozice}" disabled>
+    </div>
+    <div>   
+        <label>Plat</label>
+        <input type="number" value="{$userFe->plat}" disabled>
+    </div>
+</div>

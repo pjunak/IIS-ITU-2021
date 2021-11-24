@@ -24,6 +24,9 @@ class UserPresenter extends BasePresenter
     /** @var UserManager Model pro správu s článků. */
     private UserManager $userManager;
 
+    /** @var user Pro identifikaci uživatele */
+    private $user;
+
     /**
      * Konstruktor s nastavením URL výchozího článku a injektovaným modelem pro správu článků.
      * @param string         $defaultUserId URL výchozího článku
@@ -36,6 +39,16 @@ class UserPresenter extends BasePresenter
         $this->userManager = $userManager;
     }
 
+    public function startup()
+    {
+        parent::startup();
+        $this->user = $this->getUser();
+        if (!$this->user->isLoggedIn())
+        {
+            $this->redirect(':Sign:in');
+        }
+    }
+    
     /**
      * Načte a předá článek do šablony podle jeho URL.
      * @param string|null $id URL článku

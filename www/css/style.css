@@ -147,3 +147,12 @@ header .inline-item:not(:last-child)
 {
     margin-right: 1em;
 }
+
+td, th
+{
+    padding-right: 16px;
+}
+
+.btn-action {
+    color: blue;
+}

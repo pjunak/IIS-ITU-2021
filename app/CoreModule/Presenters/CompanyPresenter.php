@@ -11,7 +11,7 @@ use Nette\Application\BadRequestException;
 use Nette\Application\UI\Form;
 use Nette\Database\UniqueConstraintViolationException;
 use Nette\Utils\ArrayHash;
-
+use Nette\Security\User;
 /**
  * Presenter pro vykreslování článků.
  * @package App\CoreModule\Presenters
@@ -24,6 +24,9 @@ class CompanyPresenter extends BasePresenter
     /** @var CompanyManager Model pro správu s článků. */
     private CompanyManager $companyManager;
 
+    /** @var user Pro identifikaci uživatele */
+    private $user;
+
     /**
      * Konstruktor s nastavením URL výchozího článku a injektovaným modelem pro správu článků.
      * @param string         $defaultCompanyRut URL výchozího článku
@@ -34,6 +37,16 @@ class CompanyPresenter extends BasePresenter
         parent::__construct();
         $this->defaultCompanyRut = $defaultCompanyRut;
         $this->companyManager = $companyManager;
+    }
+
+    public function startup()
+    {
+        parent::startup();
+        $this->user = $this->getUser();
+        if (!$this->user->isLoggedIn())
+        {
+            $this->redirect(':Sign:in');
+        }
     }
 
     /**
@@ -55,7 +68,14 @@ class CompanyPresenter extends BasePresenter
     /** Načte a předá seznam článků do šablony. */
     public function renderList()
     {
-        $this->template->companies = $this->companyManager->getCompanies();
+        if($this->user->isInRole('disponent'))
+        {
+            $this->template->companies = $this->companyManager->getCompanies($this->user->getID());
+        }
+        else
+        {
+            $this->template->companies = $this->companyManager->getCompanies(NULL);
+        }
     }
 
     /**
@@ -94,12 +114,15 @@ class CompanyPresenter extends BasePresenter
      */
     protected function createComponentEditorForm()
     {
+        $helparr = array();
+
         // Vytvoření formuláře a definice jeho polí.
         $form = new Form;
         $form->addHidden('rut_id');
-        $form->addInteger('ean', 'Ean')->setRequired();
+        array_push($helparr, $form->addInteger('ean', 'Ean'));
         $form->addText('nazev', 'Název')->setRequired();
-        $form->addInteger('ic', 'IČ')->setRequired();
+        array_push($helparr, $form->addInteger('ic', 'IČ')->setRequired());
+        array_push($helparr, $form->addInteger('dic', 'DIČ'));
         $form->addText('web', 'Web')->setRequired();
         $form->addEmail('email', 'Email')->setRequired();
         $form->addText('datum_vytvoreni', 'Datum Vytvoření')->setHtmlType('date')->setRequired();
@@ -114,6 +137,16 @@ class CompanyPresenter extends BasePresenter
         $form->addSelect('kod_banky', 'Kód Banky')->setItems($kody_banky)->setRequired();
         $form->addSubmit('save', 'Uložit článek');
 
+        foreach($helparr as $unit)
+        {
+            if($this->user->isInRole('urednik') || $this->user->isInRole('reditel'))
+            {
+                $unit->setRequired();
+            }else
+            {
+                $unit->setDisabled();
+            }
+        }
         // Funkce se vykonaná při úspěšném odeslání formuláře a zpracuje zadané hodnoty.
         $form->onSuccess[] = function (Form $form, ArrayHash $values) {
             try {

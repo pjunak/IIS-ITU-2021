@@ -70,11 +70,11 @@ class CompanyPresenter extends BasePresenter
     {
         if($this->user->isInRole('disponent'))
         {
-            $this->template->companies = $this->companyManager->getCompanies($this->user->getID());
+            $this->template->companies = $this->companyManager->getCompanyByUser($this->user->getID());
         }
         else
         {
-            $this->template->companies = $this->companyManager->getCompanies(NULL);
+            $this->template->companies = $this->companyManager->getCompanyByUser(NULL);
         }
     }
 

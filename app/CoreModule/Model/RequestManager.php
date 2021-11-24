@@ -19,6 +19,7 @@ class RequestManager extends DatabaseManager
     const
         TABLE_NAME = 'pozadavek',
         ID = 'id',
+        ID_OSOBY = 'id_osoby',
         DATUM_VYTVORENI = 'datum_vytvoreni',
         DATUM_UZAVRENI = 'datum_uzavreni',
         PREDMET = 'predmet',
@@ -43,7 +44,15 @@ class RequestManager extends DatabaseManager
      */
     public function getRequest($id)
     {
-        return $this->database->table(self::TABLE_NAME)->where(self::ID, $id)->fetch();
+        $request = $this->database->query('
+            SELECT pozadavek.*, osoba.jmeno, osoba.prijmeni
+            FROM pozadavek
+            LEFT JOIN osoba ON pozadavek.id_osoby = osoba.id
+            WHERE pozadavek.id = ?
+        ', $id)->fetch();
+
+        //return $this->database->table(self::TABLE_NAME)->where(self::ID, $id)->fetch();
+        return $request;
     }
 
     /**

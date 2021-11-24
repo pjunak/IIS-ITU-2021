@@ -23,6 +23,9 @@ class ContactPresenter extends BasePresenter
     /** @var Mailer Služba Nette pro odesílání emailů. */
     private Mailer $mailer;
 
+    /** @var user Pro identifikaci uživatele */
+    private $user;
+
     /**
      * Konstruktor s nastavením kontaktního emailu a injektovanou Nette službou pro odesílání emailů.
      * @param string  $contactEmail kontaktní email
@@ -33,6 +36,12 @@ class ContactPresenter extends BasePresenter
         parent::__construct();
         $this->contactEmail = $contactEmail;
         $this->mailer = $mailer;
+    }
+
+    public function startup()
+    {
+        parent::startup();
+        $this->user = $this->getUser();
     }
 
     /**

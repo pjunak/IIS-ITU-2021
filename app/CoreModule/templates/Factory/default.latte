@@ -1,4 +1,112 @@
 {block title}{$factory->kratky_nazev}{/block}
-{block description}{/block}
 {block content}
-Ulice: {$factory->ulice}
+<div>
+    <div>   
+        <a class="btn-action" n:href="editor $factory->id"><i class="fas fa-edit"></i> Editovat</a>
+        <a class="btn-action" onclick="return confirm('Opravdu chcete tuto výrobnu smazat?');" n:href="remove $factory->id"><i class="fas fa-trash-alt"></i> Odstranit</a>
+    </div>
+    <div>   
+        <label>ID</label>
+        <input type="number" value="{$factory->id}" disabled>
+    </div>
+    <div> 
+        <label>ID výrobního zdroje</label>
+        <input type="number" value="{$factory->id_vyrobniho_zdroje}" disabled>
+    </div>
+        <label>ID sítě</label>
+        <input type="number" value="{$factory->id_site}" disabled>
+    <div> 
+        <label>Krátký název</label>
+        <input type="text" value="{$factory->kratky_nazev}" disabled>
+    </div>
+    <div> 
+        <label>Ulice</label>
+        <input type="text" value="{$factory->ulice}" disabled>
+    </div>
+    <div> 
+        <label>Číslo popisné</label>
+        <input type="text" value="{$factory->cislo_p}" disabled>
+    </div>
+    <div> 
+        <label>Orientační číslo</label>
+        <input type="text" value="{$factory->cislo_o}" disabled>
+    </div>
+    <div> 
+        <label>Kraj</label>
+        <input type="number" value="{$factory->kraj}" disabled>
+    </div>
+    <div> 
+        <label>Okres</label>
+        <input type="number" value="{$factory->okres}" disabled>
+    </div>
+    <div> 
+        <label>Obec</label>
+        <input type="text" value="{$factory->obec}" disabled>
+    </div>
+    <div> 
+        <label>PSČ</label>
+        <input type="number" value="{$factory->psc}" disabled>
+    </div>
+    <div> 
+        <label>Parcela</label>
+        <input type="text" value="{$factory->parcela}" disabled>
+    </div>
+    <div> 
+        <label>Zeměpisná šířka</label>
+        <input type="number" value="{$factory->gps_n}" disabled>
+    </div>
+    <div> 
+        <label>Zeměpisná délka</label>
+        <input type="number" value="{$factory->gps_e}" disabled>
+    </div>
+    <div>
+        <label for="druh_vyrobny">Druh výrobny</label>
+        <select id="druh_vyrobny" disabled>
+            <option value="">{$factory->druh_vyrobny}</option>
+        </select>
+    </div>
+    <div> 
+        <label>Výrobní EAN</label>
+        <input type="number" value="{$factory->vyrobni_EAN}" disabled>
+    </div>
+    <div> 
+        <label>EAN výrobny</label>
+        <input type="number" value="{$factory->EAN_vyrobny}" disabled>
+    </div>
+    <div> 
+        <label>Výkon zdroje</label>
+        <input type="number" value="{$factory->vykon_zdroje}" disabled>
+    </div>
+    <div> 
+        <label for="napetova_hladina">Napěťová hladina</label>
+        <select id="napetova_hladina" disabled>
+            <option value="">{$factory->napetova_hladina}</option>
+        </select>
+    </div>
+    <div> 
+        <label for="zpusob_pripojeni">Způsob zapojení</label>
+        <select id="zpusob_pripojeni" disabled>
+            <option value="">{$factory->zpusob_pripojeni}</option>
+        </select>
+    </div>
+    <div> 
+        <label for="vykaz_za_opm">Výkaz za OPM</label>
+        <select id="vykaz_za_opm" disabled>
+            <option value="">{$factory->vykaz_za_opm}</option>
+        </select>
+    </div>
+    <div> 
+        <label for="druh_podpory">Druh podpory</label>
+        <select id="druh_podpory" disabled>
+            <option value="">{$factory->druh_podpory}</option>
+        </select>
+    </div>
+    <div> 
+        <label>Datum prvního připojení</label>
+        <input type="date" value="{$factory->datum_prvniho_pripojeni|date:'Y-m-d'}" disabled>
+    </div>
+    <div> 
+        <label>Datum uvedení do provozu</label>
+        <input type="date" value="{$factory->datum_uvedeni_do_provozu|date:'Y-m-d'}" disabled>
+    </div>
+</div>

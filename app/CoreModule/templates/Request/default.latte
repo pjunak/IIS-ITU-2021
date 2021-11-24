@@ -1,5 +1,38 @@
 {block title}{$request->predmet}{/block}
-{block description}{/block}
 {block content}
-<b>Předmět: {$request->predmet}</b><br>
-Jméno a příjmení: {$request->jmeno} {$request->jmeno}
+<div>
+    <div>   
+        <a class="btn-action" n:href="editor $request->id"><i class="fas fa-edit"></i> Editovat</a>
+        <a class="btn-action" onclick="return confirm('Opravdu chcete tento výpis smazat?');" n:href="remove $request->id"><i class="fas fa-trash-alt"></i> Odstranit</a>
+    </div>
+    <div>   
+        <label>Id</label>
+        <input type="number" value="{$request->id}" disabled>
+    </div>
+    <div>   
+        <label>Datum vytvoření</label>
+        <input type="date" value="{$request->datum_vytvoreni|date:'Y-m-d'}" disabled>
+    </div>
+    <div>   
+        <label>Datum uzavření</label>
+        <input type="date" value="{$request->datum_uzavreni|date:'Y-m-d'}" disabled>
+    </div>
+    <div>   
+        <label>Předmět</label>
+        <input type="text" value="{$request->predmet}" disabled>
+    </div>
+    <div>
+        <label for="status">Status/label>
+        <select id="status" disabled>
+            <option value="">{$request->status}</option>
+        </select>
+    </div>
+    <div>   
+        <label>Obsah požadavku</label><br>
+        <textarea rows="5" cols="50" disabled>{$request->obsah_pozadavku}</textarea>
+    </div>
+    <div>   
+        <label>Odpověď</label><br>
+        <textarea rows="5" cols="50" disabled>{$request->odpoved}</textarea>
+    </div>
+</div>

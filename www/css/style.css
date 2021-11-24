@@ -94,3 +94,7 @@ label.required:after {
 td, th {
     padding-right: 16px;
 }
+
+.btn-action {
+    color: blue;
+}

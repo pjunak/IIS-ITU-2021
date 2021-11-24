@@ -1,5 +1,54 @@
 {block title}{$user->jmeno} {$user->prijmeni}{/block}
-{block description}Pozice: {$user->pozice}{/block}
 {block content}
-{$user->telefon}
-{$user->email}
+<div>
+    <div>   
+        <a class="btn-action" n:href="editor $user->id"><i class="fas fa-edit"></i> Editovat</a>
+        <a class="btn-action" onclick="return confirm('Opravdu chcete tohoto uživatele smazat?');" n:href="remove $user->id"><i class="fas fa-trash-alt"></i> Odstranit</a>
+    </div>
+    <div>   
+        <label>Id</label>
+        <input type="number" value="{$user->id}" disabled>
+    </div>
+    <div>   
+        <label>ID účastníka</label>
+        <input type="number" value="{$user->id_ucastnika}" disabled>
+    </div>
+    <div>   
+        <label for="typ_osoby">Typ osoby</label>
+        <select id="typ_osoby" disabled>
+            <option value="">{$user->typ_osoby}</option>
+        </select>
+    </div>
+    <div>   
+        <label>Jméno</label>
+        <input type="text" value="{$user->jmeno}" disabled>
+    </div>
+    <div>   
+        <label>Příjmení</label>
+        <input type="text" value="{$user->prijmeni}" disabled>
+    </div>
+    <div>   
+        <label>Telefon</label>
+        <input type="tel" value="{$user->telefon}" disabled>
+    </div>
+    <div>   
+        <label>Email</label>
+        <input type="email" value="{$user->email}" disabled>
+    </div>
+    <div>   
+        <label>Heslo</label> <!-- TODO Heslo se nebude ukazovat, pouze pro kontrolu prozatím -->
+        <input type="text" value="{$user->heslo}" disabled>
+    </div>
+    <div>   
+        <label>Kancelář</label>
+        <input type="text" value="{$user->kancelar}" disabled>
+    </div>
+    <div>   
+        <label>Pozice</label>
+        <input type="text" value="{$user->pozice}" disabled>
+    </div>
+    <div>   
+        <label>Plat</label>
+        <input type="number" value="{$user->plat}" disabled>
+    </div>
+</div>

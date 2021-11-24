@@ -24,6 +24,9 @@ class ReportPresenter extends BasePresenter
     /** @var ReportManager Model pro správu s článků. */
     private ReportManager $reportManager;
 
+    /** @var user Pro identifikaci uživatele */
+    private $user;
+
     /**
      * Konstruktor s nastavením URL výchozího článku a injektovaným modelem pro správu článků.
      * @param string         $defaultReportId URL výchozího článku
@@ -36,6 +39,16 @@ class ReportPresenter extends BasePresenter
         $this->reportManager = $reportManager;
     }
 
+    public function startup()
+    {
+        parent::startup();
+        $this->user = $this->getUser();
+        if (!$this->user->isLoggedIn())
+        {
+            $this->redirect(':Sign:in');
+        }
+    }
+    
     /**
      * Načte a předá článek do šablony podle jeho URL.
      * @param string|null $id URL článku

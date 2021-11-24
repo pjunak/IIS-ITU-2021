@@ -24,6 +24,9 @@ class RequestPresenter extends BasePresenter
     /** @var RequestManager Model pro správu s článků. */
     private RequestManager $requestManager;
 
+    /** @var user Pro identifikaci uživatele */
+    private $user;
+
     /**
      * Konstruktor s nastavením URL výchozího článku a injektovaným modelem pro správu článků.
      * @param string         $defaultRequestId URL výchozího článku
@@ -36,6 +39,16 @@ class RequestPresenter extends BasePresenter
         $this->requestManager = $requestManager;
     }
 
+    public function startup()
+    {
+        parent::startup();
+        $this->user = $this->getUser();
+        if (!$this->user->isLoggedIn())
+        {
+            $this->redirect(':Sign:in');
+        }
+    }
+    
     /**
      * Načte a předá článek do šablony podle jeho URL.
      * @param string|null $id URL článku

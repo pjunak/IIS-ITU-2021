@@ -22,6 +22,7 @@ class CompanyManager extends DatabaseManager
         EAN = 'ean',
         NAZEV = 'nazev',
         IC = 'ic',
+        DIC = 'dic',
         WEB = 'web',
         EMAIL = 'email',
         DATUM_VYTVORENI = 'datum_vytvoreni',

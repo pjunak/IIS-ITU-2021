@@ -43,15 +43,17 @@ CREATE TABLE `osoba` (
   `email` varchar(32) COLLATE utf8_czech_ci NOT NULL,
   `heslo` bigint(20) NOT NULL,
   `kancelar` varchar(32) COLLATE utf8_czech_ci DEFAULT NULL,
-  `pozice` varchar(32) COLLATE utf8_czech_ci NOT NULL,
-  `plat` int(11) NOT NULL
+  `pozice` varchar(32) COLLATE utf8_czech_ci DEFAULT NULL,
+  `plat` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
-INSERT INTO `osoba` (`id`, `id_ucastnika`, `typ_osoby`, `jmeno`, `prijmeni`, `telefon`, `email`, `heslo`, `kancelar`, `pozice`, `plat`) VALUES(1, 123, 'disponent', 'Testovič', 'Test', 987654321, 'urednik@domena.cz', 123, '1.20A', 'vedoucí sekce HR', 37000);
+INSERT INTO `osoba` (`id`, `id_ucastnika`, `typ_osoby`, `jmeno`, `prijmeni`, `telefon`, `email`, `heslo`, `kancelar`, `pozice`, `plat`) VALUES(1, 123, 'disponent', 'Testovič', 'Test', 987654321, 'disponent@domena.cz', 123, NULL, NULL, NULL);
+INSERT INTO `osoba` (`id`, `id_ucastnika`, `typ_osoby`, `jmeno`, `prijmeni`, `telefon`, `email`, `heslo`, `kancelar`, `pozice`, `plat`) VALUES(2, 2, 'urednik', 'Úředník', 'Přísný', 456789123, 'urednik@domena.cz', 321, '1.20A', 'vedoucí sekce HR', 37000);
 
 DROP TABLE IF EXISTS `pozadavek`;
 CREATE TABLE `pozadavek` (
   `id` int(11) NOT NULL,
+  `id_osoby` int(11) NOT NULL,
   `datum_vytvoreni` date NOT NULL,
   `datum_uzavreni` date NOT NULL,
   `predmet` varchar(128) COLLATE utf8_czech_ci NOT NULL,
@@ -60,7 +62,7 @@ CREATE TABLE `pozadavek` (
   `odpoved` text COLLATE utf8_czech_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
-INSERT INTO `pozadavek` (`id`, `datum_vytvoreni`, `datum_uzavreni`, `predmet`, `status`, `obsah_pozadavku`, `odpoved`) VALUES(1, '2021-11-21', '2021-11-24', 'Věc: uzavření smlouvy', 'vyrizen', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Duis bibendum, lectus ut viverra rhoncus, dolor nunc faucibus libero, eget facilisis enim ipsum id lacus. Maecenas sollicitudin. Vestibulum erat nulla, ullamcorper nec, rutrum non, nonummy ac, erat. Aenean id metus id velit ullamcorper pulvinar. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.', 'Sed elit dui, pellentesque a, faucibus vel, interdum nec, diam. Etiam bibendum elit eget erat. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut tempus purus at lorem. Etiam commodo dui eget wisi. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam posuere lacus quis dolor. Aenean vel massa quis mauris vehicula lacinia.');
+INSERT INTO `pozadavek` (`id`, `id_osoby`, `datum_vytvoreni`, `datum_uzavreni`, `predmet`, `status`, `obsah_pozadavku`, `odpoved`) VALUES(1, 1, '2021-11-21', '2021-11-24', 'Věc: uzavření smlouvy', 'vyrizen', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Duis bibendum, lectus ut viverra rhoncus, dolor nunc faucibus libero, eget facilisis enim ipsum id lacus. Maecenas sollicitudin. Vestibulum erat nulla, ullamcorper nec, rutrum non, nonummy ac, erat. Aenean id metus id velit ullamcorper pulvinar. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.', 'Sed elit dui, pellentesque a, faucibus vel, interdum nec, diam. Etiam bibendum elit eget erat. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut tempus purus at lorem. Etiam commodo dui eget wisi. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam posuere lacus quis dolor. Aenean vel massa quis mauris vehicula lacinia.');
 
 DROP TABLE IF EXISTS `vykaz`;
 CREATE TABLE `vykaz` (
@@ -128,7 +130,7 @@ ALTER TABLE `firma`
   MODIFY `rut_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=234567892;
 
 ALTER TABLE `osoba`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 ALTER TABLE `pozadavek`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;

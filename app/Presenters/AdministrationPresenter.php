@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\CoreModule\Presenters;
+namespace App\Presenters;
 
 use App\Presenters\BasePresenter;
 
@@ -12,4 +12,12 @@ use App\Presenters\BasePresenter;
  */
 class AdministrationPresenter extends BasePresenter
 {
+    public function startup(): void
+    {
+        parent::startup();
+
+        if (!$this->getUser()->isLoggedIn()) {
+            $this->redirect('Sign:in');
+        }
+    }
 }

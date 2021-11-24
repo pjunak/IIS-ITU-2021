@@ -25,7 +25,10 @@ final class RouterFactory
     {
         $router = new RouteList;
         $router->addRoute('kontakt', 'Core:Contact:default');
-        $router->addRoute('administrace', 'Core:Administration:default');
+        $router->addRoute('administrace', 'Administration:default');
+        $router->addRoute('prihlaseni', 'Sign:in');
+        $router->addRoute('registrace', 'Sign:up');
+        $router->addRoute('odhlaseni', 'Sign:out');
 
         // Firma
         $router->addRoute('firma/<action>[/<url>]', [

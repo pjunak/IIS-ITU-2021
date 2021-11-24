@@ -90,3 +90,7 @@ label.required:after {
     color: red;
     margin-left: 3px;
 }
+
+td, th {
+    padding-right: 16px;
+}

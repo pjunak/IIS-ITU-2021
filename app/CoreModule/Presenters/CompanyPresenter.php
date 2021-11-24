@@ -55,7 +55,14 @@ class CompanyPresenter extends BasePresenter
     /** Načte a předá seznam článků do šablony. */
     public function renderList()
     {
-        $this->template->companies = $this->companyManager->getCompanies();
+        if($this->user->isInRole('disponent'))
+        {
+            $this->template->companies = $this->companyManager->getCompanies($this->user->getID());
+        }
+        else
+        {
+            $this->template->companies = $this->companyManager->getCompanies(NULL);
+        }
     }
 
     /**

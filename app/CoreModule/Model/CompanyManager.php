@@ -53,6 +53,19 @@ class CompanyManager extends DatabaseManager
         return $this->database->table(self::TABLE_NAME)->where(self::RUT_ID, $rut)->fetch();
     }
 
+    public function getCompanyByUser($userID)
+    {
+        if($userID == NULL)
+        {
+            return getCompanies();
+        }
+        else
+        {
+            return $this->database->query("SELECT * FROM firma WHERE rut_id IN (SELECT firma FROM firma_osoba WHERE osoba = $userID)");
+        }
+        
+    }
+
     /**
      * Uloží firmu do systému.
      * Pokud není nastaveno ID vloží novou firmu, jinak provede editaci firmy s daným ID.

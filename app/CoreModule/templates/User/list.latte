@@ -7,8 +7,8 @@
             <h2><a n:href="User: $userFe->id">{$userFe->jmeno} {$userFe->prijmeni}</a></h2>
             {$userFe->telefon}
             <br>
-            <a n:href="editor $userFe->id">Editovat</a>
-            <a n:href="remove $userFe->id">Odstranit</a>
+            <a class="btn-action" n:href="editor $userFe->id"><i class="fas fa-edit"></i> Editovat</a>
+            <a class="btn-action" onclick="return confirm('Opravdu chcete tohoto uživatele smazat?');" n:href="remove $userFe->id"><i class="fas fa-trash-alt"></i> Odstranit</a>
         </td>
     </tr>
 </table>

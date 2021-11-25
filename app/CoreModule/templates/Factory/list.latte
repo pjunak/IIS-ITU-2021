@@ -6,8 +6,8 @@
         <td>
             <h2><a n:href="Factory: $factoryFe->id">{$factoryFe->kratky_nazev}</a></h2>
             <br>
-            <a n:href="editor $factoryFe->id">Editovat</a>
-            <a n:href="remove $factoryFe->id">Odstranit</a>
+            <a class="btn-action" n:href="editor $factoryFe->id"><i class="fas fa-edit"></i> Editovat</a>
+            <a class="btn-action" onclick="return confirm('Opravdu chcete tuto výrobnu smazat?');" n:href="remove $factoryFe->id"><i class="fas fa-trash-alt"></i> Odstranit</a>
         </td>
     </tr>
 </table>

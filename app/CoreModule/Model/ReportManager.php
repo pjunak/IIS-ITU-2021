@@ -17,7 +17,10 @@ class ReportManager extends DatabaseManager
 {
     /** Konstanty pro práci s databází. */
     const
-        TABLE_NAME = 'vykaz',
+        TABLE_NAME = 'iis_vykaz',
+        TABLE_OSOBA = 'iis_osoba',
+        TABLE_VYKAZ = 'iis_vykaz',
+        TABLE_VYROBNA = 'iis_vyrobna',
         ID = 'id',
         OD = 'od',
         DO = 'do',
@@ -37,9 +40,9 @@ class ReportManager extends DatabaseManager
     {
         //return $this->database->table(self::TABLE_NAME)->order(self::ID . ' DESC');
         return $this->database->query('
-        SELECT vykaz.*, osoba.jmeno, osoba.prijmeni
-        FROM vykaz
-        LEFT JOIN osoba ON vykaz.id_osoby = osoba.id
+        SELECT '.self::TABLE_NAME.'.*, '.self::TABLE_OSOBA.'.jmeno, '.self::TABLE_OSOBA.'.prijmeni
+        FROM '.self::TABLE_VYKAZ.'
+        LEFT JOIN '.self::TABLE_OSOBA.' ON '.self::TABLE_VYKAZ.'.id_osoby = '.self::TABLE_OSOBA.'.id
         ')->fetchAll();
     }
 
@@ -52,11 +55,11 @@ class ReportManager extends DatabaseManager
     {
         //return $this->database->table(self::TABLE_NAME)->where(self::ID, $id)->fetch();
         return $this->database->query('
-            SELECT vykaz.*, osoba.jmeno, osoba.prijmeni, vyrobna.kratky_nazev
-            FROM vykaz
-            LEFT JOIN osoba ON vykaz.id_osoby = osoba.id
-            LEFT JOIN vyrobna ON vykaz.id_osoby = vyrobna.id
-            WHERE vykaz.id = ?
+            SELECT '.self::TABLE_VYKAZ.'.*, '.self::TABLE_OSOBA.'.jmeno, '.self::TABLE_OSOBA.'.prijmeni, '.self::TABLE_VYROBNA.'.kratky_nazev
+            FROM '.self::TABLE_VYKAZ.'
+            LEFT JOIN '.self::TABLE_OSOBA.' ON '.self::TABLE_VYKAZ.'.id_osoby = '.self::TABLE_OSOBA.'.id
+            LEFT JOIN '.self::TABLE_VYROBNA.' ON '.self::TABLE_VYKAZ.'.id_osoby = '.self::TABLE_VYROBNA.'.id
+            WHERE '.self::TABLE_VYKAZ.'.id = ?
         ', $id)->fetch();
     }
 

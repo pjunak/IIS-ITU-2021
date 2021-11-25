@@ -1,0 +1,8 @@
+Jak zprovoznit web na serveru?
+
+1) nastavit connection (3PC vlevo nahoře) na Krstiánův server ve FileZille. Přístupové údaje na DC.
+    -port netřeba -v 'advanced' nastavit přímo složku /www/iis/
+2) z levého adresáře ve FileZille postupně uploadovat složky (nahradit)
+3) nikdy nepřepisovat .htaccess ve složce www/ a nikdy nepřepisovat config/
+    -pokud se to posere, tak je záloha na DC
+4) na server bude stačit pravděpodobně kopírovat jen složky app/ a www/css/

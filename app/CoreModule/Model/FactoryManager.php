@@ -17,7 +17,7 @@ class FactoryManager extends DatabaseManager
 {
     /** Konstanty pro práci s databází. */
     const
-        TABLE_NAME = 'vyrobna',
+        TABLE_NAME = 'iis_vyrobna',
         ID = 'id',
         ID_VYROBNIHO_ZDROJE = 'id_vyrobniho_zdroje',
         ID_SITE = 'id_site',

@@ -17,7 +17,8 @@ class CompanyManager extends DatabaseManager
 {
     /** Konstanty pro práci s databází. */
     const
-        TABLE_NAME = 'firma',
+        TABLE_NAME = 'iis_firma',
+        JOINED_TABLES_NAME = 'iis_firma_osoba',
         RUT_ID = 'rut_id',
         EAN = 'ean',
         NAZEV = 'nazev',
@@ -62,7 +63,7 @@ class CompanyManager extends DatabaseManager
         }
         else
         {
-            return $this->database->query("SELECT * FROM firma WHERE rut_id IN (SELECT firma FROM firma_osoba WHERE osoba = $userID)");
+            return $this->database->query("SELECT * FROM ".self::TABLE_NAME." WHERE rut_id IN (SELECT firma FROM ".self::JOINED_TABLES_NAME." WHERE osoba = $userID)");
         }
         
     }

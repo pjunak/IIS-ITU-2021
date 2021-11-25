@@ -17,7 +17,7 @@ class UserManager extends DatabaseManager
 {
     /** Konstanty pro práci s databází. */
     const
-        TABLE_NAME = 'osoba',
+        TABLE_NAME = 'iis_osoba',
         ID = 'id',
         ID_UCASTNIKA = 'id_ucastnika',
         TYP_OSOBY = 'typ_osoby',

@@ -17,7 +17,8 @@ class RequestManager extends DatabaseManager
 {
     /** Konstanty pro práci s databází. */
     const
-        TABLE_NAME = 'pozadavek',
+        TABLE_NAME = 'iis_pozadavek',
+        TABLE_OSOBA = 'iis_osoba',
         ID = 'id',
         ID_OSOBY = 'id_osoby',
         DATUM_VYTVORENI = 'datum_vytvoreni',
@@ -35,9 +36,9 @@ class RequestManager extends DatabaseManager
     public function getRequests()
     {
         return $this->database->query('
-        SELECT pozadavek.*, osoba.jmeno, osoba.prijmeni
-        FROM pozadavek
-        LEFT JOIN osoba ON pozadavek.id_osoby = osoba.id
+        SELECT '.self::TABLE_NAME.'.*, '.self::TABLE_OSOBA.'.jmeno, '.self::TABLE_OSOBA.'.prijmeni
+        FROM '.self::TABLE_NAME.'
+        LEFT JOIN '.self::TABLE_OSOBA.' ON '.self::TABLE_NAME.'.id_osoby = '.self::TABLE_OSOBA.'.id
         ')->fetchAll();
     }
 
@@ -49,10 +50,10 @@ class RequestManager extends DatabaseManager
     public function getRequest($id)
     {
         $request = $this->database->query('
-            SELECT pozadavek.*, osoba.jmeno, osoba.prijmeni
-            FROM pozadavek
-            LEFT JOIN osoba ON pozadavek.id_osoby = osoba.id
-            WHERE pozadavek.id = ?
+            SELECT '.self::TABLE_NAME.'.*, '.self::TABLE_OSOBA.'.jmeno, '.self::TABLE_OSOBA.'.prijmeni
+            FROM '.self::TABLE_NAME.'
+            LEFT JOIN '.self::TABLE_OSOBA.' ON '.self::TABLE_NAME.'.id_osoby = '.self::TABLE_OSOBA.'.id
+            WHERE '.self::TABLE_NAME.'.id = ?
         ', $id)->fetch();
 
         //return $this->database->table(self::TABLE_NAME)->where(self::ID, $id)->fetch();

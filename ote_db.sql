@@ -31,6 +31,7 @@ CREATE TABLE `firma` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 INSERT INTO `firma` (`rut_id`, `ean`, `nazev`, `ic`, `dic`, `web`, `email`, `datum_vytvoreni`, `ulice`, `cislo_p`, `cislo_o`, `obec`, `psc`, `predcisli`, `cislo_uctu`, `kod_banky`) VALUES(123456789, 123456789, 'Firma TEST s.r.o.', 123456, NULL, 'http://test.com', 'test@domena.cz', '2021-11-21', 'Testová', '1024', '8', 'Testov', 12345, NULL, 123456789, '0100');
+INSERT INTO `firma` (`rut_id`, `ean`, `nazev`, `ic`, `dic`, `web`, `email`, `datum_vytvoreni`, `ulice`, `cislo_p`, `cislo_o`, `obec`, `psc`, `predcisli`, `cislo_uctu`, `kod_banky`) VALUES(234567892, 1234659, 'Ravoz spol s.r.o.', 111, 2222, 'web.cz', 'mail@mail.cz', '2021-11-26', 'ulice', '1', '2', 'Obec', 12345, 100, 100025242, '0100');
 
 DROP TABLE IF EXISTS `firma_osoba`;
 CREATE TABLE `firma_osoba` (
@@ -40,6 +41,7 @@ CREATE TABLE `firma_osoba` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 INSERT INTO `firma_osoba` (`id`, `firma`, `osoba`) VALUES(1, 123456789, 1);
+INSERT INTO `firma_osoba` (`id`, `firma`, `osoba`) VALUES(2, 234567892, 2);
 
 DROP TABLE IF EXISTS `osoba`;
 CREATE TABLE `osoba` (
@@ -50,14 +52,15 @@ CREATE TABLE `osoba` (
   `prijmeni` varchar(64) COLLATE utf8_czech_ci NOT NULL,
   `telefon` int(11) NOT NULL,
   `email` varchar(32) COLLATE utf8_czech_ci NOT NULL,
-  `heslo` bigint(20) NOT NULL,
+  `login` varchar(64) COLLATE utf8_czech_ci NOT NULL,
+  `heslo` varchar(255) COLLATE utf8_czech_ci NOT NULL,
   `kancelar` varchar(32) COLLATE utf8_czech_ci DEFAULT NULL,
   `pozice` varchar(32) COLLATE utf8_czech_ci DEFAULT NULL,
   `plat` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
-INSERT INTO `osoba` (`id`, `id_ucastnika`, `typ_osoby`, `jmeno`, `prijmeni`, `telefon`, `email`, `heslo`, `kancelar`, `pozice`, `plat`) VALUES(1, 123, 'disponent', 'Testovič', 'Test', 987654321, 'disponent@domena.cz', 123, NULL, NULL, NULL);
-INSERT INTO `osoba` (`id`, `id_ucastnika`, `typ_osoby`, `jmeno`, `prijmeni`, `telefon`, `email`, `heslo`, `kancelar`, `pozice`, `plat`) VALUES(2, 2, 'urednik', 'Úředník', 'Přísný', 456789123, 'urednik@domena.cz', 321, '1.20A', 'vedoucí sekce HR', 37000);
+INSERT INTO `osoba` (`id`, `id_ucastnika`, `typ_osoby`, `jmeno`, `prijmeni`, `telefon`, `email`, `login`, `heslo`, `kancelar`, `pozice`, `plat`) VALUES(1, 123, 'disponent', 'Testovič', 'Test', 987654321, 'disponent@domena.cz', 'disponent', '$2y$10$s7g4/iWFBXAYAv6pnF3l3OqElI728GdeCtQpDH/bQgskYO6IjDCt2', NULL, NULL, NULL);
+INSERT INTO `osoba` (`id`, `id_ucastnika`, `typ_osoby`, `jmeno`, `prijmeni`, `telefon`, `email`, `login`, `heslo`, `kancelar`, `pozice`, `plat`) VALUES(2, 2, 'urednik', 'Úředník', 'Přísný', 456789123, 'urednik@domena.cz', 'urednik', '$2y$10$nKEHyQbiqip.jqYYhU7dUeeFgpsH0VG5Wa1y4ifCHzJ8Sr.XasCQq', '1.20A', 'vedoucí sekce HR', 37000);
 
 DROP TABLE IF EXISTS `pozadavek`;
 CREATE TABLE `pozadavek` (
@@ -71,11 +74,13 @@ CREATE TABLE `pozadavek` (
   `odpoved` text COLLATE utf8_czech_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
-INSERT INTO `pozadavek` (`id`, `id_osoby`, `datum_vytvoreni`, `datum_uzavreni`, `predmet`, `status`, `obsah_pozadavku`, `odpoved`) VALUES(1, 1, '2021-11-21', '2021-11-24', 'Věc: uzavření smlouvy', 'vyrizen', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Duis bibendum, lectus ut viverra rhoncus, dolor nunc faucibus libero, eget facilisis enim ipsum id lacus. Maecenas sollicitudin. Vestibulum erat nulla, ullamcorper nec, rutrum non, nonummy ac, erat. Aenean id metus id velit ullamcorper pulvinar. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.', 'Sed elit dui, pellentesque a, faucibus vel, interdum nec, diam. Etiam bibendum elit eget erat. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut tempus purus at lorem. Etiam commodo dui eget wisi. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam posuere lacus quis dolor. Aenean vel massa quis mauris vehicula lacinia.');
+INSERT INTO `pozadavek` (`id`, `id_osoby`, `datum_vytvoreni`, `datum_uzavreni`, `predmet`, `status`, `obsah_pozadavku`, `odpoved`) VALUES(1, 1, '2021-11-21', '2021-11-24', 'Věc: uzavření smlouvy', 'podan', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Duis bibendum, lectus ut viverra rhoncus, dolor nunc faucibus libero, eget facilisis enim ipsum id lacus. Maecenas sollicitudin. Vestibulum erat nulla, ullamcorper nec, rutrum non, nonummy ac, erat. Aenean id metus id velit ullamcorper pulvinar. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.', 'Sed elit dui, pellentesque a, faucibus vel, interdum nec, diam. Etiam bibendum elit eget erat. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut tempus purus at lorem. Etiam commodo dui eget wisi. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam posuere lacus quis dolor. Aenean vel massa quis mauris vehicula lacinia.');
 
 DROP TABLE IF EXISTS `vykaz`;
 CREATE TABLE `vykaz` (
   `id` int(11) NOT NULL,
+  `id_osoby` int(11) NOT NULL,
+  `id_vyrobny` int(11) NOT NULL,
   `od` date NOT NULL,
   `do` date NOT NULL,
   `datum_cas_zadani_vykazu` datetime NOT NULL,
@@ -86,7 +91,7 @@ CREATE TABLE `vykaz` (
   `spotreba_z_toho_odber` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
-INSERT INTO `vykaz` (`id`, `od`, `do`, `datum_cas_zadani_vykazu`, `svorkova_vyroba_elektriny`, `vlastni_spotreba_elektriny`, `celkova_konecna_spotreba`, `spotreba_z_toho_lokalni`, `spotreba_z_toho_odber`) VALUES(1, '2021-10-01', '2021-10-31', '2021-11-01 08:15:23', 23, 10, 8, 2, 6);
+INSERT INTO `vykaz` (`id`, `id_osoby`, `id_vyrobny`, `od`, `do`, `datum_cas_zadani_vykazu`, `svorkova_vyroba_elektriny`, `vlastni_spotreba_elektriny`, `celkova_konecna_spotreba`, `spotreba_z_toho_lokalni`, `spotreba_z_toho_odber`) VALUES(1, 1, 1, '2021-10-01', '2021-10-31', '2021-11-01 08:15:23', 23, 10, 8, 2, 6);
 
 DROP TABLE IF EXISTS `vyrobna`;
 CREATE TABLE `vyrobna` (
@@ -139,10 +144,10 @@ ALTER TABLE `vyrobna`
 
 
 ALTER TABLE `firma`
-  MODIFY `rut_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=234567892;
+  MODIFY `rut_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=234567893;
 
 ALTER TABLE `firma_osoba`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 ALTER TABLE `osoba`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;

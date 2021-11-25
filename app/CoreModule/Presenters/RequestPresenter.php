@@ -133,7 +133,7 @@ class RequestPresenter extends BasePresenter
             'vyrizen' => 'Vyřízen',
             'uzavren' => 'Uzavřen',
         ];
-        $form->addSelect('staus', 'Status:', $stavy)->setDefaultValue('podan')->setRequired();
+        $form->addSelect('status', 'Status:', $stavy)->setDefaultValue('podan')->setRequired();
 
         // da se vyuzit pro odpoved
         //if (!$this->getAction() == "reply")

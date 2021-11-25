@@ -135,7 +135,7 @@ class FactoryPresenter extends BasePresenter
         $zpusoby_pripojeni = $this->factoryManager->get_types_of_factory('zpusob_pripojeni');
         $form->addSelect('zpusob_pripojeni', 'Způsob připojení')->setItems($zpusoby_pripojeni)->setRequired();
         $ano_ne = $this->factoryManager->get_types_of_factory('vykaz_za_opm');
-        $form->addSelect('vykazy_za_opm', 'Výkaz za OPM')->setItems($ano_ne)->setRequired();
+        $form->addSelect('vykaz_za_opm', 'Výkaz za OPM')->setItems($ano_ne)->setRequired();
         $druhy_podpory = $this->factoryManager->get_types_of_factory('druh_podpory');
         $form->addSelect('druh_podpory', 'Druh podpory')->setItems($druhy_podpory)->setRequired();
         $form->addText('datum_prvniho_pripojeni', 'Datum prvního připojení')->setHtmlType('date')->setRequired();

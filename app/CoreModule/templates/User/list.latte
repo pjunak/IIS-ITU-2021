@@ -1,15 +1,39 @@
-{block title}Výpis osob{/block}
-{block description}Výpis všech osob.{/block}
-{block content}
-<table>
-    <tr n:foreach="$users as $userFe">
-        <td>
-            <h2><a n:href="User: $userFe->id">{$userFe->jmeno} {$userFe->prijmeni}</a></h2>
-            <div>{$userFe->telefon}</div>
-            <div>
-            <a class="btn-action" n:href="editor $userFe->id"><i class="fas fa-edit"></i> Editovat</a>
-            <a class="btn-action" onclick="return confirm('Opravdu chcete tohoto uživatele smazat?');" n:href="remove $userFe->id"><i class="fas fa-trash-alt"></i> Odstranit</a>
-            </div>
-        </td>
-    </tr>
-</table>
+{block title}
+{if $user->isInRole('disponent')}
+    Uživatel nemá mít k této záložce přístup.
+{elseif $user->isInRole('urednik')}
+    Přehled uživatelů
+{else}
+    Přehled uživatelů a úředníků
+{/if}
+{/block}
+{block content}   
+    {if $user->isInRole('disponent')}
+        Uživatel nemá mít k této záložce přístup.
+    {else}
+        <table class="list-entities">
+        <tr>
+            <th>ID</th>
+            <th>Jméno a příjmení</th>
+            <th>ID účastníka</th>
+            <th>Telefonní číslo</th>
+            <th>E-mailová adresa</th>
+        </tr>
+        <tr n:foreach="$users as $thisUser">
+            {if $thisUser->typ_osoby == 'disponent' || ($user->isInRole('reditel') && $thisUser->typ_osoby != 'reditel')}
+            <td>{$thisUser->id}</td>
+            <td><span class="company-name-link"><a n:href="User: $thisUser->id">{$thisUser->jmeno} {$thisUser->prijmeni}</a></span></td>
+            <td>{$thisUser->id_ucastnika}</td>
+            <td>{$thisUser->telefon}</td>
+            <td>{$thisUser->email}</td>
+            {/if}
+        </tr>
+    </table>
+    <a class="btn-action" n:href="editor"><i class="fas fa-user-plus"></i> Vložit uživatele</a>
+    {if $user->isInRole('reditel')}<a class="btn-action" n:href="editor"><i class="fas fa-user-plus"></i> Vložit úředníka</a>{/if}
+    {/if}
+{/block}
+
+{*
+<a class="btn-action" onclick="return confirm('Opravdu chcete tohoto uživatele smazat?');" n:href="remove $userFe->id"><i class="fas fa-trash-alt"></i> Odstranit</a>
+*}

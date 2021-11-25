@@ -1,10 +1,9 @@
 {block title}
-    {if $user->isInRole('disponent')}
-        Vaše firmy
-    {else}
-        Všechny registrované firmy
-    {/if}
-
+{if $user->isInRole('disponent')}
+    Vaše firmy
+{else}
+    Přehled všech registrovaných firem
+{/if}
 {/block}
 {block content}   
     <table class="list-entities">

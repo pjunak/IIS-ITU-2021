@@ -1,4 +1,10 @@
-{block title}Vaše firmy{/block}
+{block title}
+{if $user->isInRole('disponent')}
+    Vaše firmy
+{else}
+    Přehled všech registrovaných firem
+{/if}
+{/block}
 {block content}   
     <table>
         <tr>

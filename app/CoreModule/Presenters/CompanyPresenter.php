@@ -120,28 +120,28 @@ class CompanyPresenter extends BasePresenter
         $form = new Form;
         $form->addHidden('rut_id');
         array_push($helparr, $form->addInteger('ean', 'Ean'));
-        $form->addText('nazev', 'Název')->setRequired();
-        array_push($helparr, $form->addInteger('ic', 'IČ')->setRequired());
-        array_push($helparr, $form->addInteger('dic', 'DIČ'));
-        $form->addText('web', 'Web')->setRequired();
-        $form->addEmail('email', 'Email')->setRequired();
-        $form->addText('datum_vytvoreni', 'Datum Vytvoření')->setHtmlType('date')->setRequired();
-        $form->addText('ulice', 'Ulice')->setRequired();
+        $form->addText('nazev', 'Název')->setRequired('%label je nutné vyplnit');
+        array_push($helparr, $form->addInteger('ic', 'IČ'));
+        $form->addInteger('dic', 'DIČ');
+        $form->addText('web', 'Web')->setRequired('%label je nutné vyplnit');
+        $form->addEmail('email', 'Email')->setRequired('%label je nutné vyplnit');
+        $form->addText('datum_vytvoreni', 'Datum Vytvoření')->setHtmlType('date')->setRequired('%label je nutné vyplnit');
+        $form->addText('ulice', 'Ulice')->setRequired('%label je nutné vyplnit');
         $form->addText('cislo_p', 'Číslo popisné');
-        $form->addText('cislo_o', 'Číslo orientační')->setRequired();
-        $form->addText('obec', 'Obec')->setRequired();
-        $form->addInteger('psc', 'PSČ')->setRequired();
+        $form->addText('cislo_o', 'Číslo orientační')->setRequired('%label je nutné vyplnit');
+        $form->addText('obec', 'Obec')->setRequired('%label je nutné vyplnit');
+        $form->addInteger('psc', 'PSČ')->setRequired('%label je nutné vyplnit')->setHtmlAttribute('placeholder', '77700')->addRule($form::LENGTH, 'Délka %label  je %d',5);
         $form->addInteger('predcisli', 'Předčíslí');
-        $form->addInteger('cislo_uctu', 'Číslo účtu')->setRequired();
+        $form->addInteger('cislo_uctu', 'Číslo účtu')->setRequired('%label je nutné vyplnit');
         $kody_banky = $this->companyManager->get_enum_values();
-        $form->addSelect('kod_banky', 'Kód Banky')->setItems($kody_banky)->setRequired();
+        $form->addSelect('kod_banky', 'Kód Banky')->setItems($kody_banky)->setRequired('%label je nutné vyplnit');
         $form->addSubmit('save', 'Uložit článek');
 
         foreach($helparr as $unit)
         {
             if($this->user->isInRole('urednik') || $this->user->isInRole('reditel'))
             {
-                $unit->setRequired();
+                $unit->setRequired('%label je nutné vyplnit');
             }else
             {
                 $unit->setDisabled();

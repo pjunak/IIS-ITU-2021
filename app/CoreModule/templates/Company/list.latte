@@ -7,7 +7,7 @@
             <th>IČO</th>
         </tr>
         <tr n:foreach="$companies as $company">
-            <td><h4><a n:href="Company: $company->rut_id">{$company->nazev}</a></h4></td>
+            <td><span class="klikaci_nazev_firmy"><a n:href="Company: $company->rut_id">{$company->nazev}</a></span></td>
             <td>{$company->rut_id}</td>
             <td>{$company->ic}</td>
         </tr>

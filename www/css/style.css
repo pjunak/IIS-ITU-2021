@@ -1,19 +1,12 @@
 body {
     font-family: 'Roboto', sans-serif;
     font-size: 14px;
-    width: 1200px;
     margin: 0 auto;
 }
 
 h1 {
-    text-align: center;
     color: #444444;
-}
-
-footer {
-    font-size: 11px;
-    text-align: center;
-    padding-top: 20px;
+    margin-bottom: 1em;
 }
 
 article {
@@ -35,9 +28,11 @@ ul.navbar-nav.mr-auto
     padding-left: 0;
 }
 
-nav
+nav.navbar-collapse.collapse
 {
     background-color: #1A3873;
+    width: 1200px;
+    margin: 0 auto;
 }
 
 nav li.nav-item
@@ -60,20 +55,22 @@ nav a:hover {
 }
 
 input[type="submit"] {
-    background: #6FA4F8;
+    background: #1A3873;
     color: white;
     padding: 5px 10px;
-    border-radius: 10px;
     border: 0;
 }
 
 input[type="submit"]:hover {
-    background: #2976f8;
+    background: #43b9c2;
     color: #EEEEEE;
     cursor: pointer;
 }
 
-input[type="text"], input[type="email"], input[type="password"] {
+input[type="text"], input[type="email"], input[type="url"],
+input[type="password"], input[type="number"], input[type="date"],
+input[type="datetime"]
+{
     width: 250px;
     border-radius: 5px;
     border: 1px solid #aaaaaa;
@@ -83,7 +80,6 @@ input[type="text"], input[type="email"], input[type="password"] {
 input[type="submit"] {
     padding: 10px 25px;
     display: block;
-    margin: 20px auto 0;
     font-weight: bold;
 }
 
@@ -107,8 +103,10 @@ label.required:after {
     margin-left: 3px;
 }
 
-header
+header.main-header
 {
+    width: 1200px;
+    margin: 0 auto;
     display: flex;
     justify-content: space-between;
     padding: 1em;
@@ -153,6 +151,49 @@ td, th
     padding-right: 16px;
 }
 
+.btn-bar
+{
+    margin: 1em 0;
+}
+
 .btn-action {
-    color: blue;
+    color: white;
+    background-color: #1A3873;
+    padding: 10px;
+    display: inline-block;
+}
+
+.btn-action:hover,
+.btn-action:focus
+{
+    color: white;
+    background-color: #43b9c2;
+    text-decoration: none;
+}
+
+input:disabled, 
+textarea:read-only,
+[contenteditable]:read-only {
+  pointer-events: none;
+  background-color: #EBEBE4 !important;
+  color: #444;
+}
+
+.default-output td
+{
+    padding-bottom: 0.5em;
+}
+
+footer
+{
+    font-size: 11px;
+    text-align: center;
+    padding: 5px 0;
+    background-color: #ddd;
+    margin-top: 1em;
+}
+
+footer p
+{
+    margin-bottom: 0;
 }

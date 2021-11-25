@@ -101,6 +101,19 @@ class RequestPresenter extends BasePresenter
         }
     }
 
+    public function actionReply(string $id = null)
+    {
+        if ($id) {
+            if (!($request = $this->requestManager->getRequest($id)))
+                $this->flashMessage('Request nebyl nalezen.'); // Výpis chybové hlášky.
+            else 
+            {
+                $this['editorForm']->setDefaults($request); // Předání hodnot článku do editačního formuláře.
+                $this['editorForm']['datum_vytvoreni']->setDefaultValue($request->datum_vytvoreni->format('Y-m-d'));
+            }
+        }
+    }
+
     /**
      * Vytváří a vrací formulář pro editaci článků.
      * @return Form formulář pro editaci článků
@@ -110,6 +123,8 @@ class RequestPresenter extends BasePresenter
         // Vytvoření formuláře a definice jeho polí.
         $form = new Form;
         $form->addHidden('id');
+
+
         $form->addText('datum_vytvoreni', 'Datum vytvoření')->setHtmlType('date')->setRequired();
         $form->addText('datum_uzavreni', 'Datum uzavření')->setHtmlType('date')->setRequired();
         $form->addText('predmet', 'Předmět')->setRequired();
@@ -120,7 +135,11 @@ class RequestPresenter extends BasePresenter
         ];
         $form->addSelect('staus', 'Status:', $stavy)->setDefaultValue('podan')->setRequired();
 
-        $form->addTextArea('obsah_pozadavku', 'Obsah požadavku')->setRequired();
+        // da se vyuzit pro odpoved
+        //if (!$this->getAction() == "reply")
+        
+        $form->addTextArea('obsah_pozadavku', 'Obsah požadavku')->setRequired();            
+
         $form->addTextArea('odpoved', 'Odpověď')->setRequired(); // Opět, nebude nastavována zde.
         $form->addSubmit('save', 'Uložit požadavek');
 

@@ -1,13 +1,33 @@
 {block title}Výpis uživatelů{/block}
 {block description}Výpis všech uživatelů.{/block}
 {block content}
-<table>
+<table class="list-entities">
+    <tr>
+        <th>Link</th>
+        <th>Zadal</th>
+        <th>Datum vytvoření</th>
+        <th>Předmět</th>
+        <th>Stav požadavku</th>
+        {if $user->isInRole('urednik') || $user->isInRole('reditel')}
+        <th></th>
+        {/if}
+    </tr>
     <tr n:foreach="$requests as $requestFe">
+        <td><span class="company-name-link"><a n:href="Request: $requestFe->id">{$requestFe->id}</a></span></td>
+        <td>{$requestFe->jmeno} {$requestFe->prijmeni}</td>
+        <td>{$requestFe->datum_vytvoreni|date:'j. n. Y'}</td>
+        <td>{$requestFe->predmet}</td>
         <td>
-            <h2><a n:href="Request: $requestFe->id">{$requestFe->predmet}</a></h2>
-            <br>
-            <a class="btn-action" n:href="editor $requestFe->id"><i class="fas fa-edit"></i> Editovat</a>
-            <a class="btn-action" onclick="return confirm('Opravdu chcete tento výpis smazat?');" n:href="remove $requestFe->id"><i class="fas fa-trash-alt"></i> Odstranit</a>
+            {if $requestFe->status == 'podan'}
+                Podán
+            {elseif $requestFe->status == 'vyrizen'}
+                Vyřízen
+            {elseif $requestFe->status == 'uzavren'}
+                Uzavřen
+            {/if}
         </td>
+        {if $requestFe->status == 'podan' && ($user->isInRole('urednik') || $user->isInRole('reditel'))}
+        <td><a n:href=":reply $requestFe->id">Odpovědět na požadavek &raquo;</a></td>
+        {/if}
     </tr>
 </table>

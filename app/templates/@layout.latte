@@ -23,7 +23,7 @@
 </head>
 
 <body>
-    <header>
+    <header class="main-header">
         <div class="left-side">
             <div class="logo"><a n:href=:Sign:in><img src="{$basePath}/img/Logo_OTE.jpg"></a></div>
             <div class="description">Spojujeme trhy a příležitosti</div>
@@ -31,7 +31,7 @@
         <div class="right-side">
                 {if !$presenter->isLinkCurrent(':Sign:')}
                     {if $user->isLoggedIn()}
-                        <span class="inline-item"><i class="fas fa-user"></i> <a n:href=":Core:User:default $user->id">{$user->getIdentity()->jmeno} {$user->getIdentity()->prijmeni}</a></span>
+                        <span class="inline-item"><a n:href=":Core:User:default $user->id"><i class="fas fa-user"></i> {$user->getIdentity()->jmeno} {$user->getIdentity()->prijmeni}</a></span>
                             <span class="inline-item"><a n:href=":Sign:out">Odhlásit <i class="fas fa-sign-out-alt"></i></a></span>
                     {else}
                         <span class="inline-item"><a n:href=":Sign:in"><i class="fas fa-sign-in-alt"></i> Přihlásit se</a></span>
@@ -50,7 +50,7 @@
         <ul class="navbar-nav mr-auto">
             <li class="nav-item"><a class="nav-link" n:href=:Administration:>Úvod</a></li>
             <li class="nav-item"><a class="nav-link" n:href=:Core:Company:list>Seznam firem</a></li>
-            <li class="nav-item"><a class="nav-link" n:href=:Core:User:list>Seznam uživatelů</a></li>
+            <li class="nav-item"><a class="nav-link" n:href=:Core:User:list>Seznam osob</a></li>
             <li class="nav-item"><a class="nav-link" n:href=:Core:Request:list>Seznam požadavků</a></li>
             <li class="nav-item"><a class="nav-link" n:href=:Core:Report:list>Seznam výkazů</a></li>
             <li class="nav-item"><a class="nav-link" n:href=:Core:Factory:list>Seznam výroben</a></li>

@@ -1,13 +1,20 @@
-{block title}Vaše firmy{/block}
+{block title}
+    {if $user->isInRole('disponent')}
+        Vaše firmy
+    {else}
+        Všechny registrované firmy
+    {/if}
+
+{/block}
 {block content}   
-    <table>
+    <table class="list-entities">
         <tr>
             <th>Název</th>
             <th>RÚT ID</th>
             <th>IČO</th>
         </tr>
         <tr n:foreach="$companies as $company">
-            <td><span class="klikaci_nazev_firmy"><a n:href="Company: $company->rut_id">{$company->nazev}</a></span></td>
+            <td><span class="company-name-link"><a n:href="Company: $company->rut_id">{$company->nazev}</a></span></td>
             <td>{$company->rut_id}</td>
             <td>{$company->ic}</td>
         </tr>

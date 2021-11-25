@@ -29,6 +29,9 @@ final class SignInFormFactory
 	{
 		$form = $this->factory->create();
 
+		$form->addText('username', 'Login:')
+			->setRequired('Prosím zadejte vaše uživatelské jméno.');
+
 		$form->addPassword('password', 'Certifikát:')
 			->setRequired('Prosím zadejte vaše heslo.');
 
@@ -39,7 +42,7 @@ final class SignInFormFactory
 		$form->onSuccess[] = function (Form $form, \stdClass $values) use ($onSuccess): void {
 			try {
 				$this->user->setExpiration($values->remember ? '14 days' : '20 minutes');
-				$this->user->login('username', $values->password);
+				$this->user->login($values->username, $values->password);
 			} catch (Nette\Security\AuthenticationException $e) {
 				$form->addError('Zadaný certifikát je neplatný, zkuste to prosím znovu.');
 				return;

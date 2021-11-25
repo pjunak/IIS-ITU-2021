@@ -1,7 +1,7 @@
 {block title}{$userFe->jmeno} {$userFe->prijmeni}{/block}
 {block content}
-<div>
-    <div>   
+<div class="default-output">
+    <div class="btn-bar">    
         <a class="btn-action" n:href="editor $userFe->id"><i class="fas fa-edit"></i> Editovat</a>
         <a class="btn-action" onclick="return confirm('Opravdu chcete tohoto uživatele smazat?');" n:href="remove $userFe->id"><i class="fas fa-trash-alt"></i> Odstranit</a>
     </div>
@@ -34,10 +34,6 @@
     <div>   
         <label>Email</label>
         <input type="email" value="{$userFe->email}" disabled>
-    </div>
-    <div>   
-        <label>Heslo</label> <!-- TODO Heslo se nebude ukazovat, pouze pro kontrolu prozatím -->
-        <input type="text" value="{$userFe->heslo}" disabled>
     </div>
     <div>   
         <label>Kancelář</label>

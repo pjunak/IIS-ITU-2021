@@ -35,7 +35,12 @@ class ReportManager extends DatabaseManager
      */
     public function getReports()
     {
-        return $this->database->table(self::TABLE_NAME)->order(self::ID . ' DESC');
+        //return $this->database->table(self::TABLE_NAME)->order(self::ID . ' DESC');
+        return $this->database->query('
+        SELECT vykaz.*, osoba.jmeno, osoba.prijmeni
+        FROM vykaz
+        LEFT JOIN osoba ON vykaz.id_osoby = osoba.id
+        ')->fetchAll();
     }
 
     /**
@@ -45,7 +50,14 @@ class ReportManager extends DatabaseManager
      */
     public function getReport($id)
     {
-        return $this->database->table(self::TABLE_NAME)->where(self::ID, $id)->fetch();
+        //return $this->database->table(self::TABLE_NAME)->where(self::ID, $id)->fetch();
+        return $this->database->query('
+            SELECT vykaz.*, osoba.jmeno, osoba.prijmeni, vyrobna.kratky_nazev
+            FROM vykaz
+            LEFT JOIN osoba ON vykaz.id_osoby = osoba.id
+            LEFT JOIN vyrobna ON vykaz.id_osoby = vyrobna.id
+            WHERE vykaz.id = ?
+        ', $id)->fetch();
     }
 
     /**

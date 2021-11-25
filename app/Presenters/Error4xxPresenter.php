@@ -21,8 +21,8 @@ final class Error4xxPresenter extends BasePresenter
 	public function renderDefault(Nette\Application\BadRequestException $exception): void
 	{
 		// load template 403.latte or 404.latte or ... 4xx.latte
-		$file = __DIR__ . "/templates/Error/{$exception->getCode()}.latte";
-		$file = is_file($file) ? $file : __DIR__ . '/templates/Error/4xx.latte';
+		$file = dirname(__DIR__, 1) . "/templates/Error/{$exception->getCode()}.latte";
+		$file = is_file($file) ? $file : dirname(__DIR__, 1) . '/templates/Error/4xx.latte';
 		$this->template->setFile($file);
 	}
 }

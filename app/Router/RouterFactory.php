@@ -67,6 +67,7 @@ final class RouterFactory
                         // řetězec v URL => akce presenteru
                         'seznam-pozadavku' => 'list',
                         'editor-pozadavku' => 'editor',
+                        'odpovedet' => 'reply',
                         'odstranit-pozadavek' => 'remove'
                         ]
             ]
@@ -74,7 +75,7 @@ final class RouterFactory
         $router->addRoute('pozadavek/[<url>]', 'Core:Request:default');
 
         // Výpis
-        $router->addRoute('vypis/<action>[/<url>]', [
+        $router->addRoute('vykaz/<action>[/<url>]', [
             'presenter' => 'Core:Report',
             'action' => [
                     Route::FILTER_STRICT => true,
@@ -86,7 +87,7 @@ final class RouterFactory
                         ]
             ]
         ]);
-        $router->addRoute('vypis/[<url>]', 'Core:Report:default');
+        $router->addRoute('vykaz/[<url>]', 'Core:Report:default');
 
         // Vyrobna
         $router->addRoute('vyrobna/<action>[/<url>]', [

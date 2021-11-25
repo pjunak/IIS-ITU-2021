@@ -34,7 +34,11 @@ class RequestManager extends DatabaseManager
      */
     public function getRequests()
     {
-        return $this->database->table(self::TABLE_NAME)->order(self::ID . ' DESC');
+        return $this->database->query('
+        SELECT pozadavek.*, osoba.jmeno, osoba.prijmeni
+        FROM pozadavek
+        LEFT JOIN osoba ON pozadavek.id_osoby = osoba.id
+        ')->fetchAll();
     }
 
     /**

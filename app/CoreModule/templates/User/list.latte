@@ -1,14 +1,15 @@
-{block title}Výpis uživatelů{/block}
-{block description}Výpis všech uživatelů.{/block}
+{block title}Výpis osob{/block}
+{block description}Výpis všech osob.{/block}
 {block content}
 <table>
     <tr n:foreach="$users as $userFe">
         <td>
             <h2><a n:href="User: $userFe->id">{$userFe->jmeno} {$userFe->prijmeni}</a></h2>
-            {$userFe->telefon}
-            <br>
+            <div>{$userFe->telefon}</div>
+            <div>
             <a class="btn-action" n:href="editor $userFe->id"><i class="fas fa-edit"></i> Editovat</a>
             <a class="btn-action" onclick="return confirm('Opravdu chcete tohoto uživatele smazat?');" n:href="remove $userFe->id"><i class="fas fa-trash-alt"></i> Odstranit</a>
+            </div>
         </td>
     </tr>
 </table>

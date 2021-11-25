@@ -32,7 +32,6 @@ final class SignPresenter extends BasePresenter
 		// Pokud uzivatel klikne na prihlaseni a jiz je prihlasen
 		if ($this->isLinkCurrent('Sign:in') && $this->user->isLoggedIn())
 		{
-			$this->flashMessage('Již jste přihlášen!', "danger");
 			$this->forward('Administration:');
 		}
 	}

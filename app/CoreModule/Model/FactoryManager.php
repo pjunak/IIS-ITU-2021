@@ -82,7 +82,7 @@ class FactoryManager extends DatabaseManager
      * https://forum.nette.org/cs/28085-formular-addselect-hodnoty
      * https://stackoverflow.com/questions/2350052/how-can-i-get-enum-possible-values-in-a-mysql-database
      */
-    public function get_types_of_factory($field)
+    public function get_enum_values($field)
     {
         $type = $this->database->query( "SHOW COLUMNS FROM ".self::TABLE_NAME." WHERE Field = '{$field}'" )->fetch()->Type;
         preg_match("/^enum\(\'(.*)\'\)$/", $type, $matches);

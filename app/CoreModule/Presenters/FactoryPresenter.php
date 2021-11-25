@@ -125,18 +125,29 @@ class FactoryPresenter extends BasePresenter
         $form->addText('parcela', 'Parcela')->setRequired();
         $form->addText('gps_n', 'GPS N')->addRule(Form::FLOAT, 'Zadejte číslo')->setNullable()->setRequired();
         $form->addText('gps_e', 'GPS E')->addRule(Form::FLOAT, 'Zadejte číslo')->setNullable()->setRequired();
-        $druhy_vyroben = $this->factoryManager->get_types_of_factory('druh_vyrobny');
+        $druhy_vyroben = $this->factoryManager->get_typget_enum_valueses_of_factory('druh_vyrobny');
         $form->addSelect('druh_vyrobny', 'Druh výrobny')->setItems($druhy_vyroben)->setRequired();
         $form->addInteger('vyrobni_EAN', 'Výrobní EAN')->setRequired();
         $form->addInteger('EAN_vyrobny', 'EAN výrobny')->setRequired();
         $form->addInteger('vykon_zdroje', 'Výkon zdroje')->setRequired();
-        $napetove_hladiny = $this->factoryManager->get_types_of_factory('napetova_hladina');
+        $napetove_hladiny = [
+            '0,4' => '0,4',
+            '3' => '3',
+            '6' => '6',
+            '10' => '10',
+            '22' => '22',
+            '35' => '35',
+            '110' => '110',
+            '220' => '220',
+            '400' => '400',
+            'ostatní' => 'ostatní'
+        ];
         $form->addSelect('napetova_hladina', 'Napěťová hladina')->setItems($napetove_hladiny)->setRequired();
-        $zpusoby_pripojeni = $this->factoryManager->get_types_of_factory('zpusob_pripojeni');
+        $zpusoby_pripojeni = $this->factoryManager->get_enum_values('zpusob_pripojeni');
         $form->addSelect('zpusob_pripojeni', 'Způsob připojení')->setItems($zpusoby_pripojeni)->setRequired();
-        $ano_ne = $this->factoryManager->get_types_of_factory('vykaz_za_opm');
+        $ano_ne = $this->factoryManager->get_enum_values('vykaz_za_opm');
         $form->addSelect('vykaz_za_opm', 'Výkaz za OPM')->setItems($ano_ne)->setRequired();
-        $druhy_podpory = $this->factoryManager->get_types_of_factory('druh_podpory');
+        $druhy_podpory = $this->factoryManager->get_enum_values('druh_podpory');
         $form->addSelect('druh_podpory', 'Druh podpory')->setItems($druhy_podpory)->setRequired();
         $form->addText('datum_prvniho_pripojeni', 'Datum prvního připojení')->setHtmlType('date')->setRequired();
         $form->addText('datum_uvedeni_do_provozu', 'Datum uvedení do provozu')->setHtmlType('date')->setRequired();

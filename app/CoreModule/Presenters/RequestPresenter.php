@@ -131,7 +131,7 @@ class RequestPresenter extends BasePresenter
         $stavy = [ //Zatím pro případné testování, TODO nepůjde nastavit zde.
             'podan' => 'Podán',
             'vyrizen' => 'Vyřízen',
-            'uzavren' => 'Uzavřen',
+            'uzavren' => 'Uzavřen'  
         ];
         $form->addSelect('status', 'Status:', $stavy)->setDefaultValue('podan')->setRequired();
 

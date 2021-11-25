@@ -131,9 +131,9 @@ class RequestPresenter extends BasePresenter
         $stavy = [ //Zatím pro případné testování, TODO nepůjde nastavit zde.
             'podan' => 'Podán',
             'vyrizen' => 'Vyřízen',
-            'uzavren' => 'Uzavřen',
+            'uzavren' => 'Uzavřen'  
         ];
-        $form->addSelect('staus', 'Status:', $stavy)->setDefaultValue('podan')->setRequired();
+        $form->addSelect('status', 'Status:', $stavy)->setDefaultValue('podan')->setRequired();
 
         // da se vyuzit pro odpoved
         //if (!$this->getAction() == "reply")

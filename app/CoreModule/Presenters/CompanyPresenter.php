@@ -133,7 +133,46 @@ class CompanyPresenter extends BasePresenter
         $form->addInteger('psc', 'PSČ')->setRequired('%label je nutné vyplnit')->setHtmlAttribute('placeholder', '77700')->addRule($form::LENGTH, 'Délka %label  je %d',5);
         $form->addInteger('predcisli', 'Předčíslí');
         $form->addInteger('cislo_uctu', 'Číslo účtu')->setRequired('%label je nutné vyplnit');
-        $kody_banky = $this->companyManager->get_enum_values();
+        //$kody_banky = $this->companyManager->get_enum_values();
+        //print_r($kody_banky);
+        
+        $kody_banky = [
+            '0100' => '0100',
+            '0300' => '0300',
+            '0600' => '0600',
+            '0710' => '0710',
+            '0800' => '0800',
+            '2010' => '2010',
+            '2070' => '2070',
+            '2100' => '2100',
+            '2250' => '2250',
+            '2260' => '2260',
+            '2600' => '2600',
+            '2700' => '2700',
+            '3030' => '3030',
+            '3040' => '3040',
+            '3050' => '3050',
+            '3500' => '3500',
+            '4000' => '4000',
+            '4300' => '4300',
+            '5500' => '5500',
+            '5800' => '5800',
+            '6000' => '6000',
+            '6100' => '6100',
+            '6210' => '6210',
+            '6300' => '6300',
+            '6700' => '6700',
+            '6800' => '6800',
+            '7950' => '7950',
+            '7960' => '7960',
+            '7970' => '7970',
+            '7980' => '7980',
+            '7990' => '7990',
+            '8060' => '8060',
+            '8090' => '8090',
+            '8211' => '8211'
+        ];
+        
         $form->addSelect('kod_banky', 'Kód Banky')->setItems($kody_banky)->setRequired('%label je nutné vyplnit');
         $form->addSubmit('save', 'Uložit článek');
 

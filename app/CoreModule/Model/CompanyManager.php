@@ -90,20 +90,4 @@ class CompanyManager extends DatabaseManager
     {
         $this->database->table(self::TABLE_NAME)->where(self::RUT_ID, $rut)->delete();
     }
-
-    /**
-     * Vrátí všechny možné kód bank v databázi
-     * 
-     * Zdroje:
-     * https://forum.nette.org/cs/28085-formular-addselect-hodnoty
-     * https://stackoverflow.com/questions/2350052/how-can-i-get-enum-possible-values-in-a-mysql-database
-     */
-    public function get_enum_values()
-    {
-        $type = $this->database->query( "SHOW COLUMNS FROM ".self::TABLE_NAME." WHERE Field = 'kod_banky'" )->fetch()->Type;
-        preg_match("/^enum\(\'(.*)\'\)$/", $type, $matches);
-        $enum = explode("','", $matches[1]);
-        $pairs = array_combine($enum, $enum);
-        return $pairs;
-    }
 }

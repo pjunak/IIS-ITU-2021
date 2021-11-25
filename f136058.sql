@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Počítač: localhost
--- Vytvořeno: Čtv 25. lis 2021, 14:52
+-- Vytvořeno: Čtv 25. lis 2021, 19:03
 -- Verze serveru: 10.4.21-MariaDB
 -- Verze PHP: 8.0.12
 
@@ -44,7 +44,7 @@ CREATE TABLE `iis_firma` (
   `psc` int(11) NOT NULL,
   `predcisli` int(11) DEFAULT NULL,
   `cislo_uctu` int(32) NOT NULL,
-  `kod_banky` enum('0100','0300','0600','0710','0800','2010','2070','2100','2250','2260','2600','2700','3030','3040','3050','3500','4000','4300','5500','5800','6000','6100','6210','6300','6700','6800','7950','7960','7970','7980','7990','8060','8090','8211') COLLATE utf8_czech_ci NOT NULL
+  `kod_banky` varchar(4) COLLATE utf8_czech_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 --
@@ -52,7 +52,7 @@ CREATE TABLE `iis_firma` (
 --
 
 INSERT INTO `iis_firma` (`rut_id`, `ean`, `nazev`, `ic`, `dic`, `web`, `email`, `datum_vytvoreni`, `ulice`, `cislo_p`, `cislo_o`, `obec`, `psc`, `predcisli`, `cislo_uctu`, `kod_banky`) VALUES(123456789, 123456789, 'Firma TEST s.r.o.', 123456, NULL, 'http://test.com', 'test@domena.cz', '2021-11-21', 'Testová', '1024', '8', 'Testov', 12345, NULL, 123456789, '0100');
-INSERT INTO `iis_firma` (`rut_id`, `ean`, `nazev`, `ic`, `dic`, `web`, `email`, `datum_vytvoreni`, `ulice`, `cislo_p`, `cislo_o`, `obec`, `psc`, `predcisli`, `cislo_uctu`, `kod_banky`) VALUES(234567892, 1234659, 'Ravoz spol s.r.o.', 111, 2222, 'web.cz', 'mail@mail.cz', '2021-11-26', 'ulice', '1', '2', 'Obec', 12345, 100, 100025242, '0100');
+INSERT INTO `iis_firma` (`rut_id`, `ean`, `nazev`, `ic`, `dic`, `web`, `email`, `datum_vytvoreni`, `ulice`, `cislo_p`, `cislo_o`, `obec`, `psc`, `predcisli`, `cislo_uctu`, `kod_banky`) VALUES(234567892, 1234659, 'Ravoz spol s.r.o.', 111, 2222, 'web.cz', 'mail@mail.cz', '2021-11-26', 'ulice', '1', '2', 'Obec', 12345, 100, 100025242, '2260');
 
 -- --------------------------------------------------------
 
@@ -125,7 +125,7 @@ CREATE TABLE `iis_pozadavek` (
 -- Vypisuji data pro tabulku `iis_pozadavek`
 --
 
-INSERT INTO `iis_pozadavek` (`id`, `id_osoby`, `datum_vytvoreni`, `datum_uzavreni`, `predmet`, `status`, `obsah_pozadavku`, `odpoved`) VALUES(1, 1, '2021-11-21', '2021-11-24', 'Věc: uzavření smlouvy', 'podan', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Duis bibendum, lectus ut viverra rhoncus, dolor nunc faucibus libero, eget facilisis enim ipsum id lacus. Maecenas sollicitudin. Vestibulum erat nulla, ullamcorper nec, rutrum non, nonummy ac, erat. Aenean id metus id velit ullamcorper pulvinar. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.', 'Sed elit dui, pellentesque a, faucibus vel, interdum nec, diam. Etiam bibendum elit eget erat. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut tempus purus at lorem. Etiam commodo dui eget wisi. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam posuere lacus quis dolor. Aenean vel massa quis mauris vehicula lacinia.');
+INSERT INTO `iis_pozadavek` (`id`, `id_osoby`, `datum_vytvoreni`, `datum_uzavreni`, `predmet`, `status`, `obsah_pozadavku`, `odpoved`) VALUES(1, 1, '2021-11-21', '2021-11-23', 'Věc: uzavření smlouvy', 'vyrizen', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Duis bibendum, lectus ut viverra rhoncus, dolor nunc faucibus libero, eget facilisis enim ipsum id lacus. Maecenas sollicitudin. Vestibulum erat nulla, ullamcorper nec, rutrum non, nonummy ac, erat. Aenean id metus id velit ullamcorper pulvinar. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.', 'Běžte do háje');
 
 -- --------------------------------------------------------
 
@@ -180,7 +180,7 @@ CREATE TABLE `iis_vyrobna` (
   `vyrobni_EAN` int(11) NOT NULL,
   `EAN_vyrobny` int(11) NOT NULL,
   `vykon_zdroje` int(11) NOT NULL,
-  `napetova_hladina` enum('0,4','3','6','10','22','35','110','220','400','ostatni') COLLATE utf8_czech_ci NOT NULL,
+  `napetova_hladina` varchar(10) COLLATE utf8_czech_ci NOT NULL,
   `zpusob_pripojeni` enum('primo','neprimo','ostrovni_vyroba') COLLATE utf8_czech_ci NOT NULL,
   `vykaz_za_opm` enum('ano','ne') COLLATE utf8_czech_ci NOT NULL,
   `druh_podpory` enum('bonus_rocni','bonus_hodinovy','povinny_vykup','bez_podpory') COLLATE utf8_czech_ci NOT NULL,

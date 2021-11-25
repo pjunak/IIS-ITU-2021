@@ -106,11 +106,11 @@ class UserPresenter extends BasePresenter
         // Vytvoření formuláře a definice jeho polí.
         $form = new Form;
         $form->addText('id', 'ID')->setDisabled();
-        $form->addText('id_ucastnika', 'Identifikace účastníka')->setRequired();
-        $form->addText('jmeno', 'Jméno')->setRequired();
-        $form->addText('prijmeni', 'Příjmení')->setRequired();
-        $form->addInteger('telefon', 'Telefonní číslo')->setRequired();
-        $form->addEmail('email', 'E-mail')->setRequired();
+        $form->addText('id_ucastnika', 'Identifikace účastníka')->setRequired()->setHtmlAttribute('placeholder', '12345678901')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);
+        $form->addText('jmeno', 'Jméno')->setRequired()->setHtmlAttribute('placeholder', 'Jan')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',64);
+        $form->addText('prijmeni', 'Příjmení')->setRequired()->setHtmlAttribute('placeholder', 'Novák')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',64);
+        $form->addInteger('telefon', 'Telefonní číslo')->setRequired()->setHtmlAttribute('placeholder', '111222333')->addRule($form::LENGTH, 'Délka %label je %d',9);
+        $form->addEmail('email', 'E-mail')->setRequired()->setHtmlAttribute('placeholder', 'muj.email@email.cz')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',32);
         $form->addSubmit('save', 'Uložit uživatele');
 
         // Funkce se vykonaná při úspěšném odeslání formuláře a zpracuje zadané hodnoty.

@@ -111,15 +111,17 @@ class ReportPresenter extends BasePresenter
         // Vytvoření formuláře a definice jeho polí.
         $form = new Form;
         $form->addHidden('id');
+        $form->addInteger('id_osoby', 'ID osoby')->setRequired()->setHtmlAttribute('placeholder', '123456')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);
+        $form->addInteger('id_osoby', 'ID výrobny')->setRequired()->setHtmlAttribute('placeholder', '123456')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);
         $form->addText('od', 'Od')->setHtmlType('date')->setRequired();
         $form->addText('do', 'Do')->setHtmlType('date')->setRequired();
         //TODO Datum zadání výkazu bude nastavováno systémem, prozatím pro testovací účely ponechánu, bude addhidden
         $form->addText('datum_zadani_vykazu', 'Datum zadání výkazu')->setHtmlType('datetime-local')->setRequired();
-        $form->addInteger('svorkova_vyroba_elektriny', 'Svorková výroba elektřiny')->setRequired();
-        $form->addInteger('vlastni_spotreba_elektriny', 'Vlastní spotřeba elektřiny')->setRequired();
-        $form->addInteger('celkova_konecna_spotreba', 'Celková spotřeba elektřiny')->setRequired();
-        $form->addInteger('spotreba_z_toho_lokalni', 'Spotřeba z toho lokální')->setRequired();
-        $form->addInteger('spotreba_z_toho_odber', 'Spotřeba z toho odběr')->setRequired();
+        $form->addInteger('svorkova_vyroba_elektriny', 'Svorková výroba elektřiny')->setRequired()->setHtmlAttribute('placeholder', '12500')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);
+        $form->addInteger('vlastni_spotreba_elektriny', 'Vlastní spotřeba elektřiny')->setRequired()->setHtmlAttribute('placeholder', '7000')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);;
+        $form->addInteger('celkova_konecna_spotreba', 'Celková spotřeba elektřiny')->setRequired()->setHtmlAttribute('placeholder', '9500')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);;
+        $form->addInteger('spotreba_z_toho_lokalni', 'Spotřeba z toho lokální')->setRequired()->setHtmlAttribute('placeholder', '2500')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);;
+        $form->addInteger('spotreba_z_toho_odber', 'Spotřeba z toho odběr')->setRequired()->setHtmlAttribute('placeholder', '4500')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);;
         $form->addSubmit('save', 'Uložit výkaz');
 
         // Funkce se vykonaná při úspěšném odeslání formuláře a zpracuje zadané hodnoty.

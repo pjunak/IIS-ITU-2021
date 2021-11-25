@@ -48,20 +48,30 @@
     <!-- Menu pro prihlasene -->
     <nav n:if="$user->isLoggedIn()" class="collapse navbar-collapse">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item"><a class="nav-link" n:href=:Administration:>Úvod</a></li>
-            <li class="nav-item"><a class="nav-link" n:href=:Core:Company:list>Seznam firem</a></li>
-            <li class="nav-item"><a class="nav-link" n:href=:Core:User:list>Seznam osob</a></li>
-            <li class="nav-item"><a class="nav-link" n:href=:Core:Request:list>Seznam požadavků</a></li>
-            <li class="nav-item"><a class="nav-link" n:href=:Core:Report:list>Seznam výkazů</a></li>
-            <li class="nav-item"><a class="nav-link" n:href=:Core:Factory:list>Seznam výroben</a></li>
-            <li class="nav-item"><a class="nav-link" n:href=:Core:Contact:>Kontakt</a></li>
+            <li class="nav-item"><a class="nav-link" n:href=:Administration:><i class="fas fa-home"></i></a></li>
+                {if $user->isInRole('disponent')}
+                <!-- Menu pro disponenta -->
+                    <li class="nav-item"><a class="nav-link" n:href=:Core:Company:list>Moje firmy</a></li>
+                    <li class="nav-item"><a class="nav-link" n:href=:Core:Factory:list>Výrobny</a></li>
+                    <li class="nav-item"><a class="nav-link" n:href=:Core:Report:list>Měsíční výkazy</a></li>
+                    <li class="nav-item"><a class="nav-link" n:href=:Core:Request:list>Požadavky</a></li>
+                    <li class="nav-item"><a class="nav-link" n:href=:Core:Contact:>Kontakt</a></li>
+                {else}
+                <!-- Menu pro urednika/reditele -->
+                    <li class="nav-item"><a class="nav-link" n:href=:Core:Company:list>Seznam firem</a></li>
+                    <li class="nav-item"><a class="nav-link" n:href=:Core:User:list>Seznam osob</a></li>
+                    <li class="nav-item"><a class="nav-link" n:href=:Core:Factory:list>Seznam výroben</a></li>
+                    <li class="nav-item"><a class="nav-link" n:href=:Core:Report:list>Seznam výkazů</a></li>
+                    <li class="nav-item"><a class="nav-link" n:href=:Core:Request:list>Seznam požadavků</a></li>
+                    <li class="nav-item"><a class="nav-link" n:href=:Core:Contact:>Kontakt</a></li>
+                {/if}
         </ul>
     </nav>
 
     <!-- Menu pro odhlasene -->
     <nav n:if="!$user->isLoggedIn()" class="collapse navbar-collapse">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item"><a class="nav-link" n:href=:Sign:in><i class="fas fa-home"></i> Úvod</a></li>
+            <li class="nav-item"><a class="nav-link" n:href=:Sign:in><i class="fas fa-home"></i></a></li>
             <li class="nav-item"><a class="nav-link" href="https://www.ote-cr.cz/cs">Aktuality OTE</a></li>
             <li class="nav-item"><a class="nav-link" href="https://www.ote-cr.cz/cs/o-spolecnosti/zakladni-udaje">O společnosti OTE</a></li>
         </ul>

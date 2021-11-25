@@ -38,8 +38,8 @@ CREATE TABLE `iis_firma` (
   `email` varchar(64) COLLATE utf8_czech_ci DEFAULT NULL,
   `datum_vytvoreni` date NOT NULL,
   `ulice` varchar(32) COLLATE utf8_czech_ci NOT NULL,
-  `cislo_p` varchar(8) COLLATE utf8_czech_ci DEFAULT NULL,
-  `cislo_o` varchar(8) COLLATE utf8_czech_ci NOT NULL,
+  `cislo_p` varchar(8) COLLATE utf8_czech_ci NOT NULL,
+  `cislo_o` varchar(8) COLLATE utf8_czech_ci DEFAULT NULL,
   `obec` varchar(32) COLLATE utf8_czech_ci NOT NULL,
   `psc` int(11) NOT NULL,
   `predcisli` int(11) DEFAULT NULL,
@@ -51,8 +51,9 @@ CREATE TABLE `iis_firma` (
 -- Vypisuji data pro tabulku `iis_firma`
 --
 
-INSERT INTO `iis_firma` (`rut_id`, `ean`, `nazev`, `ic`, `dic`, `web`, `email`, `datum_vytvoreni`, `ulice`, `cislo_p`, `cislo_o`, `obec`, `psc`, `predcisli`, `cislo_uctu`, `kod_banky`) VALUES(123456789, 123456789, 'Firma TEST s.r.o.', 123456, NULL, 'http://test.com', 'test@domena.cz', '2021-11-21', 'Testová', '1024', '8', 'Testov', 12345, NULL, 123456789, '0100');
-INSERT INTO `iis_firma` (`rut_id`, `ean`, `nazev`, `ic`, `dic`, `web`, `email`, `datum_vytvoreni`, `ulice`, `cislo_p`, `cislo_o`, `obec`, `psc`, `predcisli`, `cislo_uctu`, `kod_banky`) VALUES(234567892, 1234659, 'Ravoz spol s.r.o.', 111, 2222, 'web.cz', 'mail@mail.cz', '2021-11-26', 'ulice', '1', '2', 'Obec', 12345, 100, 100025242, '2260');
+INSERT INTO `iis_firma` (`rut_id`, `ean`, `nazev`, `ic`, `dic`, `web`, `email`, `datum_vytvoreni`, `ulice`, `cislo_p`, `cislo_o`, `obec`, `psc`, `predcisli`, `cislo_uctu`, `kod_banky`) VALUES(123456789, 88163, 'Firma TEST s.r.o.', 12345678, NULL, 'http://test.com', 'test@domena.cz', '2021-11-21', 'Testová', '1024', '8', 'Testov', 12345, NULL, 123456789, '0100');
+INSERT INTO `iis_firma` (`rut_id`, `ean`, `nazev`, `ic`, `dic`, `web`, `email`, `datum_vytvoreni`, `ulice`, `cislo_p`, `cislo_o`, `obec`, `psc`, `predcisli`, `cislo_uctu`, `kod_banky`) VALUES(234567892, 12349, 'Ravoz spol s.r.o.', 62181825, 62181825, 'web.cz', 'mail@mail.cz', '2021-11-26', 'U Višně', '1', NULL, 'Višňová', 12345, 100, 100025242, '2260');
+INSERT INTO `iis_firma` (`rut_id`, `ean`, `nazev`, `ic`, `dic`, `web`, `email`, `datum_vytvoreni`, `ulice`, `cislo_p`, `cislo_o`, `obec`, `psc`, `predcisli`, `cislo_uctu`, `kod_banky`) VALUES(518468138, 84687, 'SolarBaron a.s.', 55118844, 55118844, 'http://grukesh.tk', 'xcasek01@vutbr.cz', '2018-02-15', 'Smetanova', '985', '43', 'Olomouc', 77900, NULL, 562874695, '2010');
 
 -- --------------------------------------------------------
 
@@ -73,6 +74,8 @@ CREATE TABLE `iis_firma_osoba` (
 
 INSERT INTO `iis_firma_osoba` (`id`, `firma`, `osoba`) VALUES(1, 123456789, 1);
 INSERT INTO `iis_firma_osoba` (`id`, `firma`, `osoba`) VALUES(2, 234567892, 2);
+INSERT INTO `iis_firma_osoba` (`id`, `firma`, `osoba`) VALUES(3, 518468138, 5);
+INSERT INTO `iis_firma_osoba` (`id`, `firma`, `osoba`) VALUES(4, 518468138, 6);
 
 -- --------------------------------------------------------
 
@@ -100,8 +103,12 @@ CREATE TABLE `iis_osoba` (
 -- Vypisuji data pro tabulku `iis_osoba`
 --
 
-INSERT INTO `iis_osoba` (`id`, `id_ucastnika`, `typ_osoby`, `jmeno`, `prijmeni`, `telefon`, `email`, `login`, `heslo`, `kancelar`, `pozice`, `plat`) VALUES(1, 123, 'disponent', 'Testovič', 'Test', 987654321, 'disponent@domena.cz', 'disponent', '$2y$10$s7g4/iWFBXAYAv6pnF3l3OqElI728GdeCtQpDH/bQgskYO6IjDCt2', NULL, NULL, NULL);
-INSERT INTO `iis_osoba` (`id`, `id_ucastnika`, `typ_osoby`, `jmeno`, `prijmeni`, `telefon`, `email`, `login`, `heslo`, `kancelar`, `pozice`, `plat`) VALUES(2, 2, 'urednik', 'Úředník', 'Přísný', 456789123, 'urednik@domena.cz', 'urednik', '$2y$10$nKEHyQbiqip.jqYYhU7dUeeFgpsH0VG5Wa1y4ifCHzJ8Sr.XasCQq', '1.20A', 'vedoucí sekce HR', 37000);
+INSERT INTO `iis_osoba` (`id`, `id_ucastnika`, `typ_osoby`, `jmeno`, `prijmeni`, `telefon`, `email`, `login`, `heslo`, `kancelar`, `pozice`, `plat`) VALUES(1, 1230, 'disponent', 'Testovič', 'Test', 987654321, 'testovic@seznam.cz', 'disponent', '$2y$10$s7g4/iWFBXAYAv6pnF3l3OqElI728GdeCtQpDH/bQgskYO6IjDCt2', NULL, NULL, NULL);
+INSERT INTO `iis_osoba` (`id`, `id_ucastnika`, `typ_osoby`, `jmeno`, `prijmeni`, `telefon`, `email`, `login`, `heslo`, `kancelar`, `pozice`, `plat`) VALUES(5, 6185, 'disponent', 'Andrej', 'Babiš', 332584666, 'anton.bures@google.com', 'disponent', '$2y$10$s7g4/iWFBXAYAv6pnF3l3OqElI728GdeCtQpDH/bQgskYO6IjDCt2', NULL, NULL, NULL);
+INSERT INTO `iis_osoba` (`id`, `id_ucastnika`, `typ_osoby`, `jmeno`, `prijmeni`, `telefon`, `email`, `login`, `heslo`, `kancelar`, `pozice`, `plat`) VALUES(6, 4832, 'disponent', 'Ivan', 'Bartoš', 458693248, 'bartos@post.cz', 'disponent', '$2y$10$s7g4/iWFBXAYAv6pnF3l3OqElI728GdeCtQpDH/bQgskYO6IjDCt2', NULL, NULL, NULL);
+INSERT INTO `iis_osoba` (`id`, `id_ucastnika`, `typ_osoby`, `jmeno`, `prijmeni`, `telefon`, `email`, `login`, `heslo`, `kancelar`, `pozice`, `plat`) VALUES(2, 2000, 'urednik', 'Úředník', 'Přísný', 456789123, 'urednik.prisny@ote.cz', 'urednik', '$2y$10$nKEHyQbiqip.jqYYhU7dUeeFgpsH0VG5Wa1y4ifCHzJ8Sr.XasCQq', '1.20A', 'vedoucí sekce HR', 37000);
+INSERT INTO `iis_osoba` (`id`, `id_ucastnika`, `typ_osoby`, `jmeno`, `prijmeni`, `telefon`, `email`, `login`, `heslo`, `kancelar`, `pozice`, `plat`) VALUES(3, 3482, 'urednik', 'Pavel', 'Novotný', 777777265, 'pavel.novotny@ote.cz', 'urednik', '$2y$10$nKEHyQbiqip.jqYYhU7dUeeFgpsH0VG5Wa1y4ifCHzJ8Sr.XasCQq', '4.00C', 'technická podpora', 41200);
+INSERT INTO `iis_osoba` (`id`, `id_ucastnika`, `typ_osoby`, `jmeno`, `prijmeni`, `telefon`, `email`, `login`, `heslo`, `kancelar`, `pozice`, `plat`) VALUES(4, 1658, 'reditel', 'Alexander', 'Veliký', 775588446, 'alexander.veliky@ote.cz', 'reditel', '$2y$10$nKEHyQbiqip.jqYYhU7dUeeFgpsH0VG5Wa1y4ifCHzJ8Sr.XasCQq', '19.1B', 'Ředitel OTE', 69000);
 
 -- --------------------------------------------------------
 

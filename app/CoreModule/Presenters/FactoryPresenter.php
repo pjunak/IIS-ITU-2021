@@ -125,7 +125,7 @@ class FactoryPresenter extends BasePresenter
         $form->addText('parcela', 'Parcela')->setRequired()->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',16);
         $form->addText('gps_n', 'GPS N')->addRule(Form::FLOAT, 'Zadejte číslo')->setNullable()->setRequired()->setHtmlAttribute('placeholder', '345,123')->addRule($form::RANGE, 'Délka %label je od %d do %d',[5,21]);
         $form->addText('gps_e', 'GPS E')->addRule(Form::FLOAT, 'Zadejte číslo')->setNullable()->setRequired()->setHtmlAttribute('placeholder', '123,123')->addRule($form::RANGE, 'Délka %label je od %d do %d',[5,21]);
-        $druhy_vyroben = $this->factoryManager->get_typget_enum_valueses_of_factory('druh_vyrobny');
+        $druhy_vyroben = $this->factoryManager->get_enum_values('druh_vyrobny');
         $form->addSelect('druh_vyrobny', 'Druh výrobny')->setItems($druhy_vyroben)->setRequired();
         $form->addInteger('vyrobni_EAN', 'Výrobní EAN')->setRequired()->setHtmlAttribute('placeholder', '123456')->addRule($form::RANGE, 'Délka %label je %d',[3,11]);
         $form->addInteger('EAN_vyrobny', 'EAN výrobny')->setRequired()->setHtmlAttribute('placeholder', '123456')->addRule($form::RANGE, 'Délka %label je mezi %d a %d',[3,11]);

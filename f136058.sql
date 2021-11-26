@@ -172,6 +172,7 @@ CREATE TABLE `iis_vyrobna` (
   `id` int(11) NOT NULL,
   `id_vyrobniho_zdroje` int(11) NOT NULL,
   `id_site` int(11) NOT NULL,
+  `id_firmy` int(11) NOT NULL,
   `kratky_nazev` varchar(64) COLLATE utf8_czech_ci NOT NULL,
   `ulice` varchar(32) COLLATE utf8_czech_ci NOT NULL,
   `cislo_p` varchar(8) COLLATE utf8_czech_ci NOT NULL,
@@ -199,7 +200,7 @@ CREATE TABLE `iis_vyrobna` (
 -- Vypisuji data pro tabulku `iis_vyrobna`
 --
 
-INSERT INTO `iis_vyrobna` (`id`, `id_vyrobniho_zdroje`, `id_site`, `kratky_nazev`, `ulice`, `cislo_p`, `cislo_o`, `kraj`, `okres`, `obec`, `psc`, `parcela`, `gps_n`, `gps_e`, `druh_vyrobny`, `vyrobni_EAN`, `EAN_vyrobny`, `vykon_zdroje`, `napetova_hladina`, `zpusob_pripojeni`, `vykaz_za_opm`, `druh_podpory`, `datum_prvniho_pripojeni`, `datum_uvedeni_do_provozu`) VALUES(1, 1, 1, 'výrobna 1', 'Rúžová', '1024', '8', 1, 1, 'Olomouc', 77900, '235/15', '18.45550', '27.00530', 'slunecni', 1001, 2002, 35, '110', 'primo', 'ano', 'bonus_rocni', '2021-09-01', '2021-09-02');
+INSERT INTO `iis_vyrobna` (`id`, `id_vyrobniho_zdroje`, `id_site`, `id_firmy`, `kratky_nazev`, `ulice`, `cislo_p`, `cislo_o`, `kraj`, `okres`, `obec`, `psc`, `parcela`, `gps_n`, `gps_e`, `druh_vyrobny`, `vyrobni_EAN`, `EAN_vyrobny`, `vykon_zdroje`, `napetova_hladina`, `zpusob_pripojeni`, `vykaz_za_opm`, `druh_podpory`, `datum_prvniho_pripojeni`, `datum_uvedeni_do_provozu`) VALUES(1, 1, 1, 123456789,'výrobna 1', 'Rúžová', '1024', '8', 1, 1, 'Olomouc', 77900, '235/15', '18.45550', '27.00530', 'slunecni', 1001, 2002, 35, '110', 'primo', 'ano', 'bonus_rocni', '2021-09-01', '2021-09-02');
 
 --
 -- Indexy pro exportované tabulky

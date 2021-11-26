@@ -111,8 +111,8 @@ class ReportPresenter extends BasePresenter
         // Vytvoření formuláře a definice jeho polí.
         $form = new Form;
         $form->addHidden('id');
-        $form->addInteger('id_osoby', 'ID osoby')->setRequired()->setHtmlAttribute('placeholder', '123456')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);
-        $form->addInteger('id_osoby', 'ID výrobny')->setRequired()->setHtmlAttribute('placeholder', '123456')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);
+        $form->addInteger('id_osoby', 'ID osoby')->setRequired();
+        $form->addInteger('id_osoby', 'ID výrobny')->setRequired();
         $form->addText('od', 'Od')->setHtmlType('date')->setRequired();
         $form->addText('do', 'Do')->setHtmlType('date')->setRequired();
         //TODO Datum zadání výkazu bude nastavováno systémem, prozatím pro testovací účely ponechánu, bude addhidden

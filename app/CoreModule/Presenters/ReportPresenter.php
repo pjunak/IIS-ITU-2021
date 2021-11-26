@@ -27,6 +27,10 @@ class ReportPresenter extends BasePresenter
     /** @var user Pro identifikaci uživatele */
     private $user;
 
+    /** @var vybrana_vyrobna Pro identifikaci uživatele */
+    private $vybrana_vyrobna;
+
+
     /**
      * Konstruktor s nastavením URL výchozího článku a injektovaným modelem pro správu článků.
      * @param string         $defaultReportId URL výchozího článku
@@ -68,7 +72,15 @@ class ReportPresenter extends BasePresenter
     /** Načte a předá seznam článků do šablony. */
     public function renderList()
     {
-        $this->template->reports = $this->reportManager->getReports();
+        if($this->user->getRoles() == 'Disponent')
+        {
+            $this->template->reports = $this->reportManager->getReports();
+        }
+        else
+        {
+            $this->template->reports = $this->reportManager->getReportsWhereFactory($this->vybrana_vyrobna);
+        }
+        
     }
 
     /**
@@ -103,6 +115,56 @@ class ReportPresenter extends BasePresenter
     }
 
     /**
+     * Vytváří dropdown menu se všemi výrobnami daného uživatele.
+     * @return Form formulář pro editaci článků
+     */
+    public function vykazy(Form $form) {
+        // Vytvoření formuláře a definice jeho polí.
+        //parent::startup();
+        $this->user = $this->getUser();
+        $vyrobna = $form->getValues();
+            print_r($vyrobna['vyrobna']);
+        $this->vybrana_vyrobna = $vyrobna['vyrobna'];
+    }
+
+    protected function createComponentDropdownVyrobny()
+    {
+        // Vytvoření formuláře a definice jeho polí.
+        $form = new Form;
+
+        $seznam_vyroven = $this->reportManager->get_factories($this->user);
+        if ($seznam_vyroven == NULL)
+        {
+            echo 'Nemáte žádnou výrobnu a tedy ani žádné výkazy.';
+        }
+        else
+        {
+            $form->addSelect('vyrobna', 'Vyberte výrobnu')->setItems($seznam_vyroven)->setRequired()->setAttribute('onChange', 'submit()');
+            $form->onSuccess[] = [$this,'vykazy'];            
+        }
+        return $form;
+    }
+
+    protected function createComponentVypisVykazu()
+    {
+        // Vytvoření formuláře a definice jeho polí.
+        $form = new Form;
+
+        $seznam_vyroven = $this->reportManager->get_factories($this->user);
+        if ($seznam_vyroven == NULL)
+        {
+            echo 'Nemáte žádnou výrobnu a tedy ani žádné výkazy.';
+        }
+        else
+        {
+            $form->addSelect('vyrobna', 'Vyberte výrobnu')->setItems($seznam_vyroven)->setRequired()->setAttribute('onChange', 'submit()');
+            $form->onSuccess[] = [$this,'vykazy'];
+        }
+        return $form;
+    }
+
+
+    /**
      * Vytváří a vrací formulář pro editaci článků.
      * @return Form formulář pro editaci článků
      */
@@ -111,8 +173,8 @@ class ReportPresenter extends BasePresenter
         // Vytvoření formuláře a definice jeho polí.
         $form = new Form;
         $form->addHidden('id');
-        $form->addInteger('id_osoby', 'ID osoby')->setRequired();
-        $form->addInteger('id_osoby', 'ID výrobny')->setRequired();
+        //$form->addInteger('id_osoby', 'ID osoby')->setRequired();
+        //$form->addInteger('id_osoby', 'ID výrobny')->setRequired();
         $form->addText('od', 'Od')->setHtmlType('date')->setRequired();
         $form->addText('do', 'Do')->setHtmlType('date')->setRequired();
         //TODO Datum zadání výkazu bude nastavováno systémem, prozatím pro testovací účely ponechánu, bude addhidden

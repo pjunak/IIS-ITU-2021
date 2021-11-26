@@ -76,7 +76,7 @@ class FactoryManager extends DatabaseManager
     }
 
     /**
-     * Vrátí všechny možné kód bank v databázi
+     * Vrátí všechny možnosti enumu v databázi
      * 
      * Zdroje:
      * https://forum.nette.org/cs/28085-formular-addselect-hodnoty

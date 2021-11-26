@@ -1,6 +1,8 @@
 {block title}Výpis výkazů{/block}
 {block description}Výpis všech výkazů.{/block}
 {block content}
+    {* Formulář pro editaci. *}
+    {control dropdownVyrobny}    
 <table>
     <tr n:foreach="$reports as $reportFe">
         <td>
@@ -11,3 +13,5 @@
         </td>
     </tr>
 </table>
+
+{/block}

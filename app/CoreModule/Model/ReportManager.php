@@ -46,6 +46,17 @@ class ReportManager extends DatabaseManager
         ')->fetchAll();
     }
 
+    public function getReportsWhereFactory($vyrobna)
+    {
+        //return $this->database->table(self::TABLE_NAME)->order(self::ID . ' DESC');
+        return $this->database->query("
+        SELECT ".self::TABLE_NAME.".*, ".self::TABLE_OSOBA.".jmeno, ".self::TABLE_OSOBA.".prijmeni
+        FROM ".self::TABLE_VYKAZ."
+        LEFT JOIN ".self::TABLE_OSOBA." ON ".self::TABLE_VYKAZ.".id_osoby = ".self::TABLE_OSOBA.".id
+        WHERE ".self::TABLE_VYKAZ.".id_vyrobny = $vyrobna
+        ")->fetchAll();
+    }
+
     /**
      * Vrátí výkaz z databáze podle ID.
      * @param string $id ID firmy
@@ -84,5 +95,40 @@ class ReportManager extends DatabaseManager
     public function removeReport(string $id)
     {
         $this->database->table(self::TABLE_NAME)->where(self::ID, $id)->delete();
+    }
+    
+    /**
+     * Vrátí všechny možné kód bank v databázi
+     * 
+     * Zdroje:
+     * https://forum.nette.org/cs/28085-formular-addselect-hodnoty
+     * https://stackoverflow.com/questions/2350052/how-can-i-get-enum-possible-values-in-a-mysql-database
+     */
+    public function get_factories($user)
+    {
+        $result = array();
+        if ($user->isInRole('disponent'))
+        {
+            $result = $this->database->query("SELECT * FROM iis_vyrobna WHERE id_firmy IN (SELECT firma FROM iis_firma_osoba WHERE osoba = $user->id)")->fetchAll();
+        }
+        else
+        {
+            $result = $this->database->query("SELECT * FROM iis_vyrobna")->fetchAll();
+        }
+        
+        if (!empty($result)) 
+        {
+            foreach ($result as $row) {
+
+                $vyrobny[] = $row['kratky_nazev'];
+                $id_vyrobny[] = $row['id'];
+            }
+        } else
+        {
+            return NULL;
+        }
+        
+        $pairs = array_combine($id_vyrobny, $vyrobny);
+        return $pairs;
     }
 }

@@ -1,17 +1,32 @@
-{block title}Výpis výkazů{/block}
-{block description}Výpis všech výkazů.{/block}
+{block title}Měsíční výkazy{/block}
+{block description}Výpis výkazů{/block}
 {block content}
-    {* Formulář pro editaci. *}
-    {control dropdownVyrobny}    
+V menu níže vyberte požadovanou výrobnu. Poté můžete vložit nový výkaz k dané výrobně, či prohlížet starší záznamy.
+
+{* Formulář pro editaci. *}
 <table>
-    <tr n:foreach="$reports as $reportFe">
-        <td>
-            <h2><a n:href="Report: $reportFe->id">{$reportFe->id}</a></h2>
-            <br>
-            <a n:href="editor $reportFe->id">Editovat</a>
-            <a n:href="remove $reportFe->id">Odstranit</a>
-        </td>
+    <tr>
+        <td>{control dropdownVyrobny}</td>
+        {*Bude potřeba předat cizí klíč pro přiřazení výrobny*}
+        <td><a class="btn-action" n:href="editor"><i class="fas fa-plus-square"></i> Nový výkaz</a></td>
     </tr>
 </table>
 
-{/block}
+<br>
+<h3>Výkazy z uplynulých měsíců</h3>
+<hr>
+<table>
+    <tr>
+        <th>Odkaz</th>
+        <th>Období</th>
+        <th>Svorková výroba</th>
+        <th>Vloženo</th>
+        {*Ještě by se mohlo zobrazit kým to bylo vloženo.*}
+    </tr>
+    <tr n:foreach="$reports as $thisReport">
+        <td><span class="company-name-link"><a n:href="Report: $thisReport->id">Otevřít</a></span></td>
+        <td>{$thisReport->od|date:'j. n. Y'} - {$thisReport->do|date:'j. n. Y'}</td>
+        <td>{$thisReport->svorkova_vyroba_elektriny/1000000}MWh</td>
+        <td>{$thisReport->datum_cas_zadani_vykazu|date:'j. n. Y'}</td>
+    </tr>
+</table>

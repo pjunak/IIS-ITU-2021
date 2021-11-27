@@ -121,9 +121,9 @@ CREATE TABLE `iis_pozadavek` (
   `id` int(11) NOT NULL,
   `id_osoby` int(11) NOT NULL,
   `datum_vytvoreni` date NOT NULL,
-  `datum_uzavreni` date NOT NULL,
+  `datum_uzavreni` date DEFAULT NULL,
   `predmet` varchar(128) COLLATE utf8_czech_ci NOT NULL,
-  `status` enum('podan','vyrizen','uzavren') COLLATE utf8_czech_ci NOT NULL,
+  `status` varchar(8) COLLATE utf8_czech_ci NOT NULL,
   `obsah_pozadavku` text COLLATE utf8_czech_ci NOT NULL,
   `odpoved` text COLLATE utf8_czech_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;

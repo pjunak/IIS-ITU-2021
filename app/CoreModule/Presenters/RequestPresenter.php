@@ -11,6 +11,7 @@ use Nette\Application\BadRequestException;
 use Nette\Application\UI\Form;
 use Nette\Database\UniqueConstraintViolationException;
 use Nette\Utils\ArrayHash;
+use Nette\Utils\DateTime;
 
 /**
  * Presenter pro vykreslování článků.
@@ -104,6 +105,8 @@ class RequestPresenter extends BasePresenter
             {
                 $this['editorForm']->setDefaults($request); // Předání hodnot článku do editačního formuláře.
                 $this['editorForm']['datum_vytvoreni']->setDefaultValue($request->datum_vytvoreni->format('Y-m-d'));
+                $this['editorForm']['datum_uzavreni']->setDefaultValue($request->datum_vytvoreni->format('Y-m-d'));
+                $this['editorForm']['status']->setDefaultValue('podan');
             }
         }
     }
@@ -117,6 +120,8 @@ class RequestPresenter extends BasePresenter
             {
                 $this['editorForm']->setDefaults($request); // Předání hodnot článku do editačního formuláře.
                 $this['editorForm']['datum_vytvoreni']->setDefaultValue($request->datum_vytvoreni->format('Y-m-d'));
+                $this['editorForm']['datum_uzavreni']->setDefaultValue($request->datum_vytvoreni->format('Y-m-d'));
+                $this['editorForm']['status']->setValue('vyrizen');
             }
         }
     }
@@ -131,22 +136,34 @@ class RequestPresenter extends BasePresenter
         $form = new Form;
         $form->addHidden('id');
         $form->addHidden('id_osoby')->setDefaultValue($this->user->id);
-        $form->addText('datum_vytvoreni', 'Datum vytvoření')->setHtmlType('date')->setRequired();
-        $form->addText('datum_uzavreni', 'Datum uzavření')->setHtmlType('date');
-        $form->addText('predmet', 'Předmět')->setRequired()->setHtmlAttribute('placeholder', 'Žádost o změnu údaje')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',128);
-        $stavy = [ //Zatím pro případné testování, TODO nepůjde nastavit zde.
-            'podan' => 'Podán',
-            'vyrizen' => 'Vyřízen',
-            'uzavren' => 'Uzavřen'  
-        ];
-        $form->addSelect('status', 'Status:', $stavy)->setDefaultValue('podan')->setRequired();
+        if($this->user->getRoles()[0] == 'disponent')
+        {
+            $date = new DateTime;
+            $form->addHidden('datum_vytvoreni')->setDefaultValue($date->format('Y-m-d'));
+            $form->addText('predmet', 'Předmět')->setRequired()->setHtmlAttribute('placeholder', 'Žádost o změnu údaje')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',128);
+            $form->addHidden('status', 'Status')->setValue('podan')->setDisabled();
+            $form->addTextArea('obsah_pozadavku', 'Obsah požadavku')->setRequired();
+            $form->addSubmit('save', 'Vložit požadavek');
+        }
+        else
+        {
+            $form->addText('predmet', 'Předmět')->setRequired()->setDisabled()->setHtmlAttribute('placeholder', 'Žádost o změnu údaje')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',128);
+            $form->addText('datum_vytvoreni', 'Datum vytvoření')->setHtmlType('date')->setDisabled();
+            $date = new DateTime;
+            $form->addHidden('datum_uzavreni')->setDefaultValue($date->format('Y-m-d'));
+            $form->addHidden('status', 'Status')->setDefaultValue('vyrizen');
+            $form->addTextArea('obsah_pozadavku', 'Obsah požadavku')->setDisabled()->setRequired();
+            $form->addTextArea('odpoved', 'Odpověď');
+            $form->addSubmit('save', 'Odpovědět na požadavek');
+        }
+        
 
         // da se vyuzit pro odpoved
         //if (!$this->getAction() == "reply")
         
-        $form->addTextArea('obsah_pozadavku', 'Obsah požadavku')->setRequired();
-        $form->addTextArea('odpoved', 'Odpověď'); // Opět, nebude nastavována zde.
-        $form->addSubmit('save', 'Uložit požadavek');
+        
+        
+        
 
         // Funkce se vykonaná při úspěšném odeslání formuláře a zpracuje zadané hodnoty.
         $form->onSuccess[] = function (Form $form, ArrayHash $values) {

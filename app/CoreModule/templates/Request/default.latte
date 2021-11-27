@@ -1,23 +1,22 @@
 {block title}{$request->predmet}{/block}
 {block content}
 <div class="default-output">
-    <div class="btn-bar">   
-        <a class="btn-action" n:href="editor $request->id"><i class="fas fa-edit"></i> Editovat</a>
-        <a class="btn-action" onclick="return confirm('Opravdu chcete tento výpis smazat?');" n:href="remove $request->id"><i class="fas fa-trash-alt"></i> Odstranit</a>
-    </div>
-    <div>   
-        <label>Id</label>
-        <input type="number" value="{$request->id}" disabled>
+    <div class="btn-bar">
+    {if !$user->isInRole('disponent') && $request->status == 'poslan'}
+        <a class="btn-action" n:href="editor $request->id"><i class="fas fa-edit"></i>Odpovědět</a>
+    {/if}
     </div>
     <div>   
         <label>Datum vytvoření</label>
         <input type="date" value="{$request->datum_vytvoreni|date:'Y-m-d'}" disabled>
     </div>
+    {if $request->datum_uzavreni != NULL}
     <div>   
         <label>Datum uzavření</label>
         <input type="date" value="{$request->datum_uzavreni|date:'Y-m-d'}" disabled>
     </div>
-    <div>   
+    {/if}
+    <div> 
         <label>Předmět</label>
         <input type="text" value="{$request->predmet}" disabled>
     </div>
@@ -29,7 +28,7 @@
     </div>
     <div>   
         <label>Obsah požadavku</label><br>
-        <textarea rows="5" cols="50" disabled>{$request->obsah_pozadavku}</textarea>
+        <textarea readonly rows="5" cols="50">{$request->obsah_pozadavku}</textarea>
     </div>
     <div>   
         <label>Odpověď</label><br>

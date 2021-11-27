@@ -9,8 +9,10 @@
         <td>
             <h3>Výběr výrobny</h3>
             <tr>{control dropdownVyrobny}</tr>
-            <h3>Vytvoření nového výkazu</h3>
-            <tr>{control editorForm}</tr>
+            {if $user->isInRole('disponent')}
+                <h3>Vytvoření nového výkazu</h3>
+                <tr>{control editorForm}</tr>
+            {/if}
         </td>
     </tr>
 </table>

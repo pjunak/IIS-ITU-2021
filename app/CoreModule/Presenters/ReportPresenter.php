@@ -51,6 +51,12 @@ class ReportPresenter extends BasePresenter
         {
             $this->redirect(':Sign:in');
         }
+        // Pro nastavení vchozí zobrazené výrobny
+        $seznam_vyroven = $this->reportManager->get_factories($this->user);
+        if ($seznam_vyroven != NULL)
+        {
+            $this->vybrana_vyrobna = array_key_first($seznam_vyroven);
+        }
     }
     
     /**
@@ -80,7 +86,6 @@ class ReportPresenter extends BasePresenter
         {
             $this->template->reports = $this->reportManager->getReportsWhereFactory($this->vybrana_vyrobna);
         }
-        
     }
 
     /**
@@ -113,18 +118,16 @@ class ReportPresenter extends BasePresenter
             }
         }
     }
-
-    /**
-     * Vytváří dropdown menu se všemi výrobnami daného uživatele.
-     * @return Form formulář pro editaci článků
-     */
     public function vykazy(Form $form) {
-        // Vytvoření formuláře a definice jeho polí.
         $this->user = $this->getUser();
         $vyrobna = $form->getValues();
         $this->vybrana_vyrobna = $vyrobna['vyrobna'];
     }
 
+    /**
+     * Vytváří dropdown menu se všemi výrobnami daného uživatele.
+     * @return Form formulář pro editaci článků
+     */
     protected function createComponentDropdownVyrobny()
     {
         // Vytvoření formuláře a definice jeho polí.

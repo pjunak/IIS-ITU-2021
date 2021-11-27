@@ -1,19 +1,22 @@
 {block title}Měsíční výkazy{/block}
 {block description}Výpis výkazů{/block}
 {block content}
-V menu níže vyberte požadovanou výrobnu. Poté můžete vložit nový výkaz k dané výrobně, či prohlížet starší záznamy.
+{block subtitle}V menu níže vyberte požadovanou výrobnu. Poté můžete vložit nový výkaz k dané výrobně, či prohlížet starší záznamy.{/block subtitle}
 
 {* Formulář pro editaci. *}
 <table>
     <tr>
-        <td>{control dropdownVyrobny}</td>
-        {*Bude potřeba předat cizí klíč pro přiřazení výrobny*}
-        <td><a class="btn-action" n:href="editor"><i class="fas fa-plus-square"></i> Nový výkaz</a></td>
+        <td>
+            <h3>Výběr výrobny</h3>
+            <tr>{control dropdownVyrobny}</tr>
+            <h3>Vytvoření nového výkazu</h3>
+            <tr>{control editorForm}</tr>
+        </td>
     </tr>
 </table>
 
 <br>
-<h3>Výkazy z uplynulých měsíců</h3>
+<h3>Výkazy z uplynulých měsíců</h3> 
 <hr>
 <table>
     <tr>

@@ -28,7 +28,7 @@ class ReportPresenter extends BasePresenter
     private $user;
 
     /** @var vybrana_vyrobna Pro identifikaci uživatele */
-    private $vybrana_vyrobna;
+    private $vybrana_vyrobna = NULL;
 
 
     /**
@@ -120,10 +120,8 @@ class ReportPresenter extends BasePresenter
      */
     public function vykazy(Form $form) {
         // Vytvoření formuláře a definice jeho polí.
-        //parent::startup();
         $this->user = $this->getUser();
         $vyrobna = $form->getValues();
-            print_r($vyrobna['vyrobna']);
         $this->vybrana_vyrobna = $vyrobna['vyrobna'];
     }
 
@@ -144,25 +142,6 @@ class ReportPresenter extends BasePresenter
         }
         return $form;
     }
-
-    protected function createComponentVypisVykazu()
-    {
-        // Vytvoření formuláře a definice jeho polí.
-        $form = new Form;
-
-        $seznam_vyroven = $this->reportManager->get_factories($this->user);
-        if ($seznam_vyroven == NULL)
-        {
-            echo 'Nemáte žádnou výrobnu a tedy ani žádné výkazy.';
-        }
-        else
-        {
-            $form->addSelect('vyrobna', 'Vyberte výrobnu')->setItems($seznam_vyroven)->setRequired()->setAttribute('onChange', 'submit()');
-            $form->onSuccess[] = [$this,'vykazy'];
-        }
-        return $form;
-    }
-
 
     /**
      * Vytváří a vrací formulář pro editaci článků.

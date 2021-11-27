@@ -63,6 +63,17 @@ class UserManager extends DatabaseManager
     {
         if (empty($user[self::ID])) {
             unset($user[self::ID]);
+            /* 
+            $this->database->table(self::TABLE_NAME)->insert([
+                self::ID_UCASTNIKA => $user['id_ucastnika'],
+                self::JMENO => $user['jmeno'],
+                self::JMENO => $user['prijmeni'],
+                self::PRIJMENI => $user['telefon'],
+                self::EMAIL => $user['email'],
+                self::LOGIN => $user['login'],
+                self::PASSWORD_HASH => $this->passwords->hash($user['password']),
+            ]);
+            */
             $this->database->table(self::TABLE_NAME)->insert($user);
         } else
             $this->database->table(self::TABLE_NAME)->where(self::ID, $user[self::ID])->update($user);

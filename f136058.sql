@@ -92,7 +92,7 @@ CREATE TABLE `iis_osoba` (
   `prijmeni` varchar(64) COLLATE utf8_czech_ci NOT NULL,
   `telefon` int(11) NOT NULL,
   `email` varchar(32) COLLATE utf8_czech_ci NOT NULL,
-  `login` varchar(64) COLLATE utf8_czech_ci NOT NULL,
+  `login` varchar(64) COLLATE utf8_czech_ci NOT NULL UNIQUE,
   `heslo` varchar(255) COLLATE utf8_czech_ci NOT NULL,
   `kancelar` varchar(32) COLLATE utf8_czech_ci DEFAULT NULL,
   `pozice` varchar(32) COLLATE utf8_czech_ci DEFAULT NULL,
@@ -201,6 +201,8 @@ CREATE TABLE `iis_vyrobna` (
 --
 
 INSERT INTO `iis_vyrobna` (`id`, `id_vyrobniho_zdroje`, `id_site`, `id_firmy`, `kratky_nazev`, `ulice`, `cislo_p`, `cislo_o`, `kraj`, `okres`, `obec`, `psc`, `parcela`, `gps_n`, `gps_e`, `druh_vyrobny`, `vyrobni_EAN`, `EAN_vyrobny`, `vykon_zdroje`, `napetova_hladina`, `zpusob_pripojeni`, `vykaz_za_opm`, `druh_podpory`, `datum_prvniho_pripojeni`, `datum_uvedeni_do_provozu`) VALUES(1, 1, 1, 123456789,'výrobna 1', 'Rúžová', '1024', '8', 1, 1, 'Olomouc', 77900, '235/15', '18.45550', '27.00530', 'slunecni', 1001, 2002, 35, '110', 'primo', 'ano', 'bonus_rocni', '2021-09-01', '2021-09-02');
+INSERT INTO `iis_vyrobna` (`id`, `id_vyrobniho_zdroje`, `id_site`, `id_firmy`, `kratky_nazev`, `ulice`, `cislo_p`, `cislo_o`, `kraj`, `okres`, `obec`, `psc`, `parcela`, `gps_n`, `gps_e`, `druh_vyrobny`, `vyrobni_EAN`, `EAN_vyrobny`, `vykon_zdroje`, `napetova_hladina`, `zpusob_pripojeni`, `vykaz_za_opm`, `druh_podpory`, `datum_prvniho_pripojeni`, `datum_uvedeni_do_provozu`) VALUES(2, 2, 2, 123456789,'výrobna 2', 'Modrá', '1024', '8', 1, 1, 'Olomouc', 77900, '235/16', '18.45899', '27.00530', 'slunecni', 1001, 2002, 35, '110', 'primo', 'ano', 'bonus_rocni', '2021-09-04', '2021-09-08');
+INSERT INTO `iis_vyrobna` (`id`, `id_vyrobniho_zdroje`, `id_site`, `id_firmy`, `kratky_nazev`, `ulice`, `cislo_p`, `cislo_o`, `kraj`, `okres`, `obec`, `psc`, `parcela`, `gps_n`, `gps_e`, `druh_vyrobny`, `vyrobni_EAN`, `EAN_vyrobny`, `vykon_zdroje`, `napetova_hladina`, `zpusob_pripojeni`, `vykaz_za_opm`, `druh_podpory`, `datum_prvniho_pripojeni`, `datum_uvedeni_do_provozu`) VALUES(3, 3, 3, 234567892,'Vodnice', 'Mokrá', '420', '8', 1, 1, 'Olomouc', 77900, '235/16', '18.45899', '27.00530', 'vodni', 1001, 2002, 35, '110', 'primo', 'ano', 'bonus_rocni', '2021-09-04', '2021-09-08');
 
 --
 -- Indexy pro exportované tabulky

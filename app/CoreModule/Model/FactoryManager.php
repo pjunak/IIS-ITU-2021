@@ -50,6 +50,10 @@ class FactoryManager extends DatabaseManager
     {
         return $this->database->table(self::TABLE_NAME)->order(self::ID . ' DESC');
     }
+    public function getFactoriesWhereUser($osoba)
+    {
+        return $this->database->query("SELECT * FROM iis_vyrobna WHERE id_firmy IN (SELECT firma FROM iis_firma_osoba WHERE osoba = $osoba)")->fetchAll();
+    }
 
     /**
      * Vrátí výrobnu z databáze podle ID.

@@ -68,7 +68,15 @@ class FactoryPresenter extends BasePresenter
     /** Načte a předá seznam článků do šablony. */
     public function renderList()
     {
-        $this->template->factories = $this->factoryManager->getFactories();
+        $result = array();
+        if ($this->user->isInRole('disponent'))
+        {
+            $this->template->factories = $this->factoryManager->getFactoriesWhereUser($this->user->id);
+        }
+        else
+        {
+            $this->template->factories = $this->factoryManager->getFactories();
+        }
     }
 
     /**

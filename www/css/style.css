@@ -160,6 +160,8 @@ td, th
     color: white;
     background-color: #1A3873;
     padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
     display: inline-block;
 }
 

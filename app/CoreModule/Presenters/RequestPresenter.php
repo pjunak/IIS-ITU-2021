@@ -123,8 +123,9 @@ class RequestPresenter extends BasePresenter
         // Vytvoření formuláře a definice jeho polí.
         $form = new Form;
         $form->addHidden('id');
+        $form->addHidden('id_osoby')->setDefaultValue($this->user->id);
         $form->addText('datum_vytvoreni', 'Datum vytvoření')->setHtmlType('date')->setRequired();
-        $form->addText('datum_uzavreni', 'Datum uzavření')->setHtmlType('date')->setRequired();
+        $form->addText('datum_uzavreni', 'Datum uzavření')->setHtmlType('date');
         $form->addText('predmet', 'Předmět')->setRequired()->setHtmlAttribute('placeholder', 'Žádost o změnu údaje')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',128);
         $stavy = [ //Zatím pro případné testování, TODO nepůjde nastavit zde.
             'podan' => 'Podán',
@@ -137,7 +138,7 @@ class RequestPresenter extends BasePresenter
         //if (!$this->getAction() == "reply")
         
         $form->addTextArea('obsah_pozadavku', 'Obsah požadavku')->setRequired();
-        $form->addTextArea('odpoved', 'Odpověď')->setRequired(); // Opět, nebude nastavována zde.
+        $form->addTextArea('odpoved', 'Odpověď'); // Opět, nebude nastavována zde.
         $form->addSubmit('save', 'Uložit požadavek');
 
         // Funkce se vykonaná při úspěšném odeslání formuláře a zpracuje zadané hodnoty.

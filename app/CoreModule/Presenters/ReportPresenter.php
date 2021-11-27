@@ -11,6 +11,7 @@ use Nette\Application\BadRequestException;
 use Nette\Application\UI\Form;
 use Nette\Database\UniqueConstraintViolationException;
 use Nette\Utils\ArrayHash;
+use Nette\Utils\DateTime;
 
 /**
  * Presenter pro vykreslování článků.
@@ -115,6 +116,8 @@ class ReportPresenter extends BasePresenter
                 $this['editorForm']->setDefaults($report); // Předání hodnot článku do editačního formuláře.
                 $this['editorForm']['od']->setDefaultValue($report->od->format('Y-m-d'));
                 $this['editorForm']['do']->setDefaultValue($report->do->format('Y-m-d'));
+                $date = new DateTime;
+                $this['editorForm']['datum_cas_zadani_vykazu']->setDefaultValue($date);
             }
         }
     }
@@ -140,7 +143,7 @@ class ReportPresenter extends BasePresenter
         }
         else
         {
-            $form->addSelect('vyrobna', 'Vyberte výrobnu')->setItems($seznam_vyroven)->setRequired()->setAttribute('onChange', 'submit()');
+            $form->addSelect('vyrobna', 'Jméno výrobny')->setItems($seznam_vyroven)->setRequired()->setAttribute('onChange', 'submit()');
             $form->onSuccess[] = [$this,'vykazy'];            
         }
         return $form;
@@ -155,12 +158,12 @@ class ReportPresenter extends BasePresenter
         // Vytvoření formuláře a definice jeho polí.
         $form = new Form;
         $form->addHidden('id');
-        //$form->addInteger('id_osoby', 'ID osoby')->setRequired();
-        //$form->addInteger('id_osoby', 'ID výrobny')->setRequired();
+        $form->addHidden('id_osoby')->setRequired()->setDefaultValue($this->user->id);
+        $form->addHidden('id_vyrobny')->setRequired()->setDefaultValue($this->vybrana_vyrobna);
         $form->addText('od', 'Od')->setHtmlType('date')->setRequired();
         $form->addText('do', 'Do')->setHtmlType('date')->setRequired();
-        //TODO Datum zadání výkazu bude nastavováno systémem, prozatím pro testovací účely ponechánu, bude addhidden
-        $form->addText('datum_zadani_vykazu', 'Datum zadání výkazu')->setHtmlType('datetime-local')->setRequired();
+        $date = new DateTime;
+        $form->addHidden('datum_cas_zadani_vykazu')->setDefaultValue($date); // Je nastaveno automaticky podle aktuálního data a času
         $form->addInteger('svorkova_vyroba_elektriny', 'Svorková výroba elektřiny')->setRequired()->setHtmlAttribute('placeholder', '12500')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);
         $form->addInteger('vlastni_spotreba_elektriny', 'Vlastní spotřeba elektřiny')->setRequired()->setHtmlAttribute('placeholder', '7000')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);;
         $form->addInteger('celkova_konecna_spotreba', 'Celková spotřeba elektřiny')->setRequired()->setHtmlAttribute('placeholder', '9500')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);;

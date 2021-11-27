@@ -1,4 +1,40 @@
-{*Tento přehled uvidí jen úřednící, disponenti budou mít svojí záložku "Reklamace"*}
+{define tabulkaPozadavku, $statusPozadavku}
+    <table class="list-entities">
+        <tr>
+            <th>Link</th>
+            {if !$user->isInRole('disponent')}
+                <th>Zadal</th>
+            {/if}
+            <th>Předmět</th>
+            <th>Datum vytvoření</th>
+            {if $statusPozadavku != 'podan'}
+                <th>Datum uzavření</th>
+            {/if}
+            {if!$user->isInRole('disponent')}
+                <th></th>
+            {/if}
+        </tr>
+        <tr n:foreach="$requests as $requestFe">
+            {if $requestFe->status == $statusPozadavku}
+                <td><span class="company-name-link"><a n:href="Request: $requestFe->id">Otevřít</a></span></td>
+                {if !$user->isInRole('disponent')}
+                    <td>{$requestFe->jmeno} {$requestFe->prijmeni}</td>
+                {/if}
+                <td>{$requestFe->predmet}</td>
+                <td>{$requestFe->datum_vytvoreni|date:'j. n. Y'}</td>
+                {if $statusPozadavku != 'podan'}
+                    <td>{$requestFe->datum_uzavreni|date:'j. n. Y'}</td>
+                {/if}
+                {if $statusPozadavku == 'podan' && !$user->isInRole('disponent')}
+                    <td><a n:href=":reply $requestFe->id">Odpovědět na požadavek &raquo;</a></td>
+                {/if}
+            {/if}
+        </tr>
+    </table>
+    <br>
+{/define}
+
+
 
 {block title}Přehled poždavků{/block}
 {block description}Přehled požadavků{/block}
@@ -9,137 +45,10 @@
 
 <h3>Podané požadavky</h3>
 <hr>
-    <table class="list-entities">
-    <tr>
-        <th>Link</th>
-        <th>Zadal</th>
-        <th>Datum vytvoření</th>
-        <th>Předmět</th>
-        <th>Stav požadavku</th>
-        {if $user->isInRole('urednik') || $user->isInRole('reditel')}
-        <th></th>
-        {/if}
-    </tr>
-    <tr n:foreach="$requests as $requestFe">
-        {if $requestFe->status == 'podan'}
-            <td><span class="company-name-link"><a n:href="Request: $requestFe->id">{$requestFe->id}</a></span></td>
-            <td>{$requestFe->jmeno} {$requestFe->prijmeni}</td>
-            <td>{$requestFe->datum_vytvoreni|date:'j. n. Y'}</td>
-            <td>{$requestFe->predmet}</td>
-            <td>
-                {if $requestFe->status == 'podan'}
-                    Podán
-                {elseif $requestFe->status == 'vyrizen'}
-                    Vyřízen
-                {elseif $requestFe->status == 'uzavren'}
-                    Uzavřen
-                {/if}
-            </td>
-            {if $requestFe->status == 'podan' && ($user->isInRole('urednik') || $user->isInRole('reditel'))}
-            <td><a n:href=":reply $requestFe->id">Odpovědět na požadavek &raquo;</a></td>
-            {/if}
-        {/if}
-    </tr>
-</table>
+    {include tabulkaPozadavku, 'podan'}
 <h3>Vyřízené požadavky</h3>
 <hr>
-        <table class="list-entities">
-        <tr>
-            <th>Link</th>
-            <th>Zadal</th>
-            <th>Datum vytvoření</th>
-            <th>Předmět</th>
-            <th>Stav požadavku</th>
-            {if $user->isInRole('urednik') || $user->isInRole('reditel')}
-            <th></th>
-            {/if}
-        </tr>
-        <tr n:foreach="$requests as $requestFe">
-            {if $requestFe->status == 'vyrizen'}
-                <td><span class="company-name-link"><a n:href="Request: $requestFe->id">{$requestFe->id}</a></span></td>
-                <td>{$requestFe->jmeno} {$requestFe->prijmeni}</td>
-                <td>{$requestFe->datum_vytvoreni|date:'j. n. Y'}</td>
-                <td>{$requestFe->predmet}</td>
-                <td>
-                    {if $requestFe->status == 'podan'}
-                        Podán
-                    {elseif $requestFe->status == 'vyrizen'}
-                        Vyřízen
-                    {elseif $requestFe->status == 'uzavren'}
-                        Uzavřen
-                    {/if}
-                </td>
-                {if $requestFe->status == 'podan' && ($user->isInRole('urednik') || $user->isInRole('reditel'))}
-                <td><a n:href=":reply $requestFe->id">Odpovědět na požadavek &raquo;</a></td>
-                {/if}
-            {/if}
-        </tr>
-    </table>
+    {include tabulkaPozadavku, 'vyrizen'}
 <h3>Uzavřené požadavky</h3>
 <hr>
-    <table class="list-entities">
-        <tr>
-            <th>Link</th>
-            <th>Zadal</th>
-            <th>Datum vytvoření</th>
-            <th>Předmět</th>
-            <th>Stav požadavku</th>
-            {if $user->isInRole('urednik') || $user->isInRole('reditel')}
-            <th></th>
-            {/if}
-        </tr>
-        <tr n:foreach="$requests as $requestFe">
-            {if $requestFe->status == 'uzavren'}
-                <td><span class="company-name-link"><a n:href="Request: $requestFe->id">{$requestFe->id}</a></span></td>
-                <td>{$requestFe->jmeno} {$requestFe->prijmeni}</td>
-                <td>{$requestFe->datum_vytvoreni|date:'j. n. Y'}</td>
-                <td>{$requestFe->predmet}</td>
-                <td>
-                    {if $requestFe->status == 'podan'}
-                        Podán
-                    {elseif $requestFe->status == 'vyrizen'}
-                        Vyřízen
-                    {elseif $requestFe->status == 'uzavren'}
-                        Uzavřen
-                    {/if}
-                </td>
-                {if $requestFe->status == 'podan' && ($user->isInRole('urednik') || $user->isInRole('reditel'))}
-                <td><a n:href=":reply $requestFe->id">Odpovědět na požadavek &raquo;</a></td>
-                {/if}
-            {/if}
-        </tr>
-    </table>
-
-
-{*
-<table class="list-entities">
-    <tr>
-        <th>Link</th>
-        <th>Zadal</th>
-        <th>Datum vytvoření</th>
-        <th>Předmět</th>
-        <th>Stav požadavku</th>
-        {if $user->isInRole('urednik') || $user->isInRole('reditel')}
-        <th></th>
-        {/if}
-    </tr>
-    <tr n:foreach="$requests as $requestFe">
-        <td><span class="company-name-link"><a n:href="Request: $requestFe->id">{$requestFe->id}</a></span></td>
-        <td>{$requestFe->jmeno} {$requestFe->prijmeni}</td>
-        <td>{$requestFe->datum_vytvoreni|date:'j. n. Y'}</td>
-        <td>{$requestFe->predmet}</td>
-        <td>
-            {if $requestFe->status == 'podan'}
-                Podán
-            {elseif $requestFe->status == 'vyrizen'}
-                Vyřízen
-            {elseif $requestFe->status == 'uzavren'}
-                Uzavřen
-            {/if}
-        </td>
-        {if $requestFe->status == 'podan' && ($user->isInRole('urednik') || $user->isInRole('reditel'))}
-        <td><a n:href=":reply $requestFe->id">Odpovědět na požadavek &raquo;</a></td>
-        {/if}
-    </tr>
-</table>
-*}
+    {include tabulkaPozadavku, 'uzavren'}

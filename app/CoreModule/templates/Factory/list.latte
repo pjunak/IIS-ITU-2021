@@ -1,13 +1,53 @@
-{block title}Výpis výroben{/block}
-{block description}Výpis všech výroben.{/block}
+{block title}
+    {if $user->isInRole('disponent')}
+        Vaše výrobny
+    {else}
+        Přehled výroben
+    {/if}
+{/block}
+{block description}Výpis výroben.{/block}
 {block content}
-<table>
-    <tr n:foreach="$factories as $factoryFe">
-        <td>
-            <h2><a n:href="Factory: $factoryFe->id">{$factoryFe->kratky_nazev}</a></h2>
-            <br>
-            <a class="btn-action" n:href="editor $factoryFe->id"><i class="fas fa-edit"></i> Editovat</a>
-            <a class="btn-action" onclick="return confirm('Opravdu chcete tuto výrobnu smazat?');" n:href="remove $factoryFe->id"><i class="fas fa-trash-alt"></i> Odstranit</a>
-        </td>
-    </tr>
-</table>
+<table class="list-entities">
+        <tr>
+            <th>Název</th>
+            <th>ID výrobny</th>
+            <th>Druh</th>
+            <th>Výkon</th>
+            <th>Napěťová hladina</th>
+            <th>Adresa</th>
+            <th>Uvedení do provozu</th>
+        </tr>
+        <tr n:foreach="$factories as $thisFactory">
+            <td><span class="company-name-link"><a n:href="Factory: $thisFactory->id">{$thisFactory->kratky_nazev}</a></span></td>
+            <td>{$thisFactory->id}</td>
+            {switch $thisFactory->druh_vyrobny}
+                {case 'slunecni'}
+                    <td>Sluneční</td>
+                {case 'slunecni_budova'}
+                    <td>Sluneční-budova</td>
+                {case 'vodni'}
+                    <td>Vodní</td>
+                {case 'precerpavaci'}
+                    <td>Přečerpávací</td>
+                {case 'jaderna'}
+                    <td>Jaderná</td>
+                {case 'plyn'}
+                    <td>Plynová</td>
+                {case 'geotermalni'}
+                    <td>Geotermální</td>
+                {case 'vetrna'}
+                    <td>Větrná</td>
+                {case 'biomasa'}
+                    <td>Biomasa</td>
+            {/switch}
+            <td>{$thisFactory->vykon_zdroje/1000000}MW</td>
+            <td>{$thisFactory->napetova_hladina/1000}kV</td>
+            <td>{$thisFactory->ulice} {if $thisFactory->cislo_o != NULL}{$thisFactory->cislo_o}/{/if}{$thisFactory->cislo_p}, {$thisFactory->psc} {$thisFactory->obec}</td>
+            <td>{$thisFactory->datum_uvedeni_do_provozu|date:'j. n. Y'}</td>
+        </tr>
+    </table>
+    <br>
+
+
+
+{*<a class="btn-action" onclick="return confirm('Opravdu chcete tuto výrobnu smazat?');" n:href="remove $factoryFe->id"><i class="fas fa-trash-alt"></i> Odstranit</a>*}

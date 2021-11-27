@@ -8,7 +8,7 @@
             <th>Předmět</th>
             <th>Datum vytvoření</th>
             {if $statusPozadavku != 'podan'}
-                <th>Datum uzavření</th>
+                <th>Datum vyřízení</th>
             {/if}
             {if!$user->isInRole('disponent')}
                 <th></th>

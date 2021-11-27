@@ -68,6 +68,11 @@ class CompanyManager extends DatabaseManager
         
     }
 
+    public function getCompanyUsers($rut)
+    {
+        return $this->database->query("SELECT * FROM iis_osoba WHERE iis_osoba.id IN (SELECT osoba FROM iis_firma_osoba WHERE firma = ?)", $rut);
+    }
+
     /**
      * Uloží firmu do systému.
      * Pokud není nastaveno ID vloží novou firmu, jinak provede editaci firmy s daným ID.

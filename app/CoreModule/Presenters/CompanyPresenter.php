@@ -63,6 +63,7 @@ class CompanyPresenter extends BasePresenter
             $this->error(); // Vyhazuje výjimku BadRequestException.
 
         $this->template->company = $company; // Předá článek do šablony.
+        $this->template->companyUsers = $this->companyManager->getCompanyUsers($rut);
     }
 
     /** Načte a předá seznam článků do šablony. */

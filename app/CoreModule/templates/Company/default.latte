@@ -1,48 +1,83 @@
 {block title}{$company->nazev}{/block}
 {block content}
-<div class="default-output">
-    <div class="btn-bar">   
-        <a class="btn-action" n:href="editor $company->rut_id"><i class="fas fa-edit"></i> Editovat</a>
-        <a class="btn-action" onclick="return confirm('Opravdu chcete tuto společnost smazat?');" n:href="remove $company->rut_id"><i class="fas fa-trash-alt"></i> Odstranit</a>
-    </div>
-    <div>   
-        <label>RUT ID</label>
-        <input type="number" value="{$company->rut_id}" disabled>
-    </div>
-    <div> 
-        <label>EAN</label>
-        <input type="number" value="{$company->ean}" disabled>
-    </div>
-    <div>
-        <label>Název</label>
-        <input type="text" value="{$company->nazev}" disabled>
-    </div>
-    <div> 
-        <label>IČ</label>
-        <input type="number" value="{$company->ic}" disabled>
-    </div>
-    <div> 
-        <label>DIČ</label>
-        <input type="number" value="{$company->dic}" disabled>
-    </div>
-    <div> 
-        <label>Webová stránka</label>
-        <input type="url" value="{$company->web}" disabled>
-    </div>
-    <div> 
-        <label>E-mail</label>
-        <input type="email" value="{$company->email}" disabled>
-    </div>
-    <div> 
-        <label>Datum vytvoření firmy</label>
-        <input type="date" value="{$company->datum_vytvoreni|date:'Y-m-d'}" disabled>
-    </div>
-    <div> 
-        <label>Adresa</label>
-        <input type="text" value="{$company->ulice} {$company->cislo_o}/{$company->cislo_p}, {$company->psc} {$company->obec}" disabled>
-    </div>
-    <div> 
-        <label>Bankovní spojení</label>
-        <input type="text" value="{$company->predcisli}-{$company->cislo_uctu}/{$company->kod_banky}" disabled>
-    </div>
-</div>
+
+<a class="btn-action" n:href="editor $company->rut_id"><i class="fas fa-edit"></i> Editovat</a>
+{if $user->isInRole('urednik')}
+<a class="btn-action" onclick="return confirm('Opravdu chcete tuto společnost smazat?');" n:href="remove $company->rut_id"><i class="fas fa-trash-alt"></i> Odstranit</a>
+{/if}
+
+
+<table>
+<tr>
+<td>
+<table>
+    <tr>
+        <td><label>RUT ID</label></td>
+        <td><input type="number" value="{$company->rut_id}" disabled></td>
+    </tr>
+    <tr>
+        <td><label>EAN</label></td>
+        <td><input type="number" value="{$company->ean}" disabled></td>
+    </tr>
+    <tr>
+        <td><label>Název</label></td>
+        <td><input type="text" value="{$company->nazev}" disabled></td>
+    </tr>
+    <tr>
+        <td><label>IČ</label></td>
+        <td><input type="number" value="{$company->ic}" disabled></td>
+    </tr>
+    <tr>
+        <td><label>DIČ</label></td>
+        <td><input type="number" value="{$company->dic}" disabled></td>
+    </tr>
+    <tr>
+        <td><label>Webová stránka</label></td>
+        <td><input type="url" value="{$company->web}" disabled></td>
+    </tr>
+    <tr>
+        <td><label>E-mail</label></td>
+        <td><input type="email" value="{$company->email}" disabled></td>
+    </tr>
+    <tr>
+        <td><label>Datum vytvoření firmy</label></td>
+        <td><input type="date" value="{$company->datum_vytvoreni|date:'Y-m-d'}" disabled></td>
+    </tr>
+    <tr>
+        <td><label>Adresa</label></td>
+        <td><input type="text" value="{$company->ulice} {if $company->cislo_o != NULL}{$company->cislo_o}/{/if}{$company->cislo_p}, {$company->psc} {$company->obec}" disabled></td>
+    </tr>
+    <tr>
+        <td><label>Bankoví spojení</label></td>
+        <td><input type="text" value="{if $company->predcisli != NULL}{$company->predcisli}-{/if}{$company->cislo_uctu}/{$company->kod_banky}" disabled></td>
+    </tr>
+</table>
+<br>
+
+</td>
+<td>
+
+<h3>Osoby ve firmě</h3>
+<hr>
+
+<table class="list-entities">
+    <tr>
+        <th>ID</th>
+        <th>Jméno a příjmení</th>
+        <th>ID účastníka</th>
+        <th>Telefonní číslo</th>
+        <th>E-mailová adresa</th>
+    </tr>
+    <tr n:foreach="$companyUsers as $thisUser">
+        <td>{$thisUser->id}</td>
+        <td><span class="company-name-link"><a n:href="User: $thisUser->id">{$thisUser->jmeno} {$thisUser->prijmeni}</a></span></td>
+        <td>{$thisUser->id_ucastnika}</td>
+        <td>{$thisUser->telefon}</td>
+        <td>{$thisUser->email}</td>
+    </tr>
+</table>
+
+</td>
+</tr>
+</table>
+    

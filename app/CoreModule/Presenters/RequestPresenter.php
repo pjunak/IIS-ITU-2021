@@ -68,7 +68,14 @@ class RequestPresenter extends BasePresenter
     /** Načte a předá seznam článků do šablony. */
     public function renderList()
     {
-        $this->template->requests = $this->requestManager->getRequests();
+        if($this->user->isInRole('disponent'))
+        {
+            $this->template->requests = $this->requestManager->getRequestsByUser($this->user->getID());
+        }
+        else
+        {
+            $this->template->requests = $this->requestManager->getRequests();
+        }
     }
 
     /**

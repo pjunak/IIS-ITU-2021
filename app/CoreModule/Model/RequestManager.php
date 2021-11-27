@@ -43,6 +43,23 @@ class RequestManager extends DatabaseManager
     }
 
     /**
+     * Vrátí seznam všech požadavků v databázi od zadaného uživatele seřazený sestupně od naposledy přidaného.
+     * @return Selection seznam všech firem
+     */
+    public function getRequestsByUser($userID)
+    {
+        if($userID == NULL)
+        {
+            return getRequests();
+        }
+        else
+        {
+            return $this->database->query(
+            'SELECT '.self::TABLE_NAME.'.* FROM '.self::TABLE_NAME.' WHERE '.self::TABLE_NAME.'.id_osoby = ?', $userID)->fetchAll();
+        }
+    }
+
+    /**
      * Vrátí požadavek z databáze podle ID.
      * @param string $id ID firmy
      * @return false|ActiveRow první entita, která odpovídá ID nebo false pokud entita s danym ID neexistuje
@@ -53,8 +70,7 @@ class RequestManager extends DatabaseManager
             SELECT '.self::TABLE_NAME.'.*, '.self::TABLE_OSOBA.'.jmeno, '.self::TABLE_OSOBA.'.prijmeni
             FROM '.self::TABLE_NAME.'
             LEFT JOIN '.self::TABLE_OSOBA.' ON '.self::TABLE_NAME.'.id_osoby = '.self::TABLE_OSOBA.'.id
-            WHERE '.self::TABLE_NAME.'.id = ?
-        ', $id)->fetch();
+            WHERE '.self::TABLE_NAME.'.id = ?', $id)->fetch();
 
         //return $this->database->table(self::TABLE_NAME)->where(self::ID, $id)->fetch();
         return $request;

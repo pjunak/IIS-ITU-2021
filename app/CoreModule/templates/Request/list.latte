@@ -16,7 +16,7 @@
         </tr>
         <tr n:foreach="$requests as $requestFe">
             {if $requestFe->status == $statusPozadavku}
-                <td><span class="company-name-link"><a n:href="Request: $requestFe->id">Otevřít</a></span></td>
+                <td><span class="company-name-link"><a n:href="Request: $requestFe->id">Zobrazit</a></span></td>
                 {if !$user->isInRole('disponent')}
                     <td>{$requestFe->jmeno} {$requestFe->prijmeni}</td>
                 {/if}

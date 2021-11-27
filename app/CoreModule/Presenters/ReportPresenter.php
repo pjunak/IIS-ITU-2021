@@ -28,7 +28,7 @@ class ReportPresenter extends BasePresenter
     private $user;
 
     /** @var vybrana_vyrobna Pro identifikaci uživatele */
-    private $vybrana_vyrobna = NULL;
+    private $vybrana_vyrobna = 0;
 
 
     /**

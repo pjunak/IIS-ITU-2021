@@ -95,6 +95,11 @@ class UserPresenter extends BasePresenter
                 $this->flashMessage('Uživatel nebyl nalezen.'); // Výpis chybové hlášky.
             else $this['editorForm']->setDefaults($user); // Předání hodnot článku do editačního formuláře.
         }
+
+        if (!$id) $id = $this->defaultUserId;
+        if (!($userFe = $this->userManager->getUser($id)))
+            $this->error();
+        $this->template->userFe = $userFe;
     }
 
     /**

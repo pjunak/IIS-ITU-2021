@@ -129,14 +129,14 @@ class FactoryPresenter extends BasePresenter
         $form->addInteger('kraj', 'Kraj')->setRequired()->setHtmlAttribute('placeholder', '1')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);
         $form->addInteger('okres', 'Okres')->setRequired()->setHtmlAttribute('placeholder', '1')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);
         $form->addText('obec', 'Obec')->setRequired()->setHtmlAttribute('placeholder', 'Obcov')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',32);
-        $form->addInteger('psc', 'PSČ')->setRequired()->setHtmlAttribute('placeholder', '11100')->addRule($form::LENGTH, 'Délka %label je %d',6);
+        $form->addInteger('psc', 'PSČ')->setRequired()->setHtmlAttribute('placeholder', '11100')->addRule($form::LENGTH, 'Délka %label je %d',5);
         $form->addText('parcela', 'Parcela')->setRequired()->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',16);
-        $form->addText('gps_n', 'GPS N')->addRule(Form::FLOAT, 'Zadejte číslo')->setNullable()->setRequired()->setHtmlAttribute('placeholder', '345,123')->addRule($form::RANGE, 'Délka %label je od %d do %d',[5,21]);
-        $form->addText('gps_e', 'GPS E')->addRule(Form::FLOAT, 'Zadejte číslo')->setNullable()->setRequired()->setHtmlAttribute('placeholder', '123,123')->addRule($form::RANGE, 'Délka %label je od %d do %d',[5,21]);
+        $form->addText('gps_n', 'GPS N')->addRule(Form::FLOAT, 'Zadejte číslo')->setNullable()->setRequired()->setHtmlAttribute('placeholder', '345,123');
+        $form->addText('gps_e', 'GPS E')->addRule(Form::FLOAT, 'Zadejte číslo')->setNullable()->setRequired()->setHtmlAttribute('placeholder', '123,123');
         $druhy_vyroben = $this->factoryManager->get_enum_values('druh_vyrobny');
         $form->addSelect('druh_vyrobny', 'Druh výrobny')->setItems($druhy_vyroben)->setRequired();
-        $form->addInteger('vyrobni_EAN', 'Výrobní EAN')->setRequired()->setHtmlAttribute('placeholder', '123456')->addRule($form::RANGE, 'Délka %label je %d',[3,11]);
-        $form->addInteger('EAN_vyrobny', 'EAN výrobny')->setRequired()->setHtmlAttribute('placeholder', '123456')->addRule($form::RANGE, 'Délka %label je mezi %d a %d',[3,11]);
+        $form->addInteger('vyrobni_EAN', 'Výrobní EAN')->setRequired()->setHtmlAttribute('placeholder', '123456');
+        $form->addInteger('EAN_vyrobny', 'EAN výrobny')->setRequired()->setHtmlAttribute('placeholder', '123456');
         $form->addInteger('vykon_zdroje', 'Výkon zdroje')->setRequired()->setHtmlAttribute('placeholder', '7820')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);
         $napetove_hladiny = [
             '0,4' => '0,4',

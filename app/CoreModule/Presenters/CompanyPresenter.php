@@ -103,6 +103,7 @@ class CompanyPresenter extends BasePresenter
                 $this->flashMessage('Firma nebyla nalezena.'); // Výpis chybové hlášky.
             else 
             {
+                $this->template->company = $company;
                 $this['editorForm']->setDefaults($company); // Předání hodnot článku do editačního formuláře.
                 $this['editorForm']['datum_vytvoreni']->setDefaultValue($company->datum_vytvoreni->format('Y-m-d'));
             }
@@ -119,6 +120,7 @@ class CompanyPresenter extends BasePresenter
 
         // Vytvoření formuláře a definice jeho polí.
         $form = new Form;
+        $form->addGroup('Základní údaje');
         $form->addHidden('rut_id');
         array_push($helparr, $form->addInteger('ean', 'Ean')->setHtmlAttribute('placeholder', '123456789')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11));
         $form->addText('nazev', 'Název')->setRequired('%label je nutné vyplnit')->setHtmlAttribute('placeholder', 'Jméno firmy')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',128);
@@ -127,11 +129,15 @@ class CompanyPresenter extends BasePresenter
         $form->addText('web', 'Web')->setRequired('%label je nutné vyplnit')->setHtmlAttribute('placeholder', 'www.mujweb.cz')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',64);
         $form->addEmail('email', 'Email')->setRequired('%label je nutné vyplnit')->setHtmlAttribute('placeholder', 'muj.email@email.cz')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',64);
         $form->addText('datum_vytvoreni', 'Datum Vytvoření')->setHtmlType('date')->setRequired('%label je nutné vyplnit');
+
+        $form->addGroup('Adresa firmy');
         $form->addText('ulice', 'Ulice')->setRequired('%label je nutné vyplnit')->setHtmlAttribute('placeholder', 'Ulicová')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',32);
         $form->addText('cislo_p', 'Číslo popisné')->setHtmlAttribute('placeholder', '123-b')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',8);
         $form->addText('cislo_o', 'Číslo orientační')->setHtmlAttribute('placeholder', '123-bo4')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',8);
         $form->addText('obec', 'Obec')->setRequired('%label je nutné vyplnit')->setHtmlAttribute('placeholder', 'Brno')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',32);
         $form->addInteger('psc', 'PSČ')->setRequired('%label je nutné vyplnit')->setHtmlAttribute('placeholder', '77700')->addRule($form::LENGTH, 'Délka %label je %d',5);
+
+        $form->addGroup('Bankovní spojení');
         $form->addInteger('predcisli', 'Předčíslí')->setHtmlAttribute('placeholder', '000000')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',6);
         $form->addInteger('cislo_uctu', 'Číslo účtu')->setRequired('%label je nutné vyplnit')->setHtmlAttribute('placeholder', '1234567890')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',10);
         $kody_banky = [
@@ -172,7 +178,7 @@ class CompanyPresenter extends BasePresenter
         ];
         
         $form->addSelect('kod_banky', 'Kód Banky')->setItems($kody_banky)->setRequired('%label je nutné vyplnit');
-        $form->addSubmit('save', 'Uložit článek');
+        $form->addSubmit('save', 'Uložit úpravy');
 
         foreach($helparr as $unit)
         {

@@ -79,14 +79,9 @@ class ReportPresenter extends BasePresenter
     /** Načte a předá seznam článků do šablony. */
     public function renderList()
     {
-        if($this->user->isInRole('disponent'))
-        {
-            $this->template->reports = $this->reportManager->getReports();
-        }
-        else
-        {
-            $this->template->reports = $this->reportManager->getReportsWhereFactory($this->vybrana_vyrobna);
-        }
+
+        $this->template->reports = $this->reportManager->getReportsWhereFactory($this->vybrana_vyrobna);
+
     }
 
     /**

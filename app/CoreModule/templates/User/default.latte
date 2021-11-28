@@ -1,50 +1,67 @@
 {block title}{$userFe->jmeno} {$userFe->prijmeni}{/block}
 {block content}
-<div class="default-output">
-    <div class="btn-bar">    
-        <a class="btn-action" n:href="editor $userFe->id"><i class="fas fa-edit"></i> Editovat</a>
-        <a class="btn-action" onclick="return confirm('Opravdu chcete tohoto uživatele smazat?');" n:href="remove $userFe->id"><i class="fas fa-trash-alt"></i> Odstranit</a>
-    </div>
-    <div>   
-        <label>Id</label>
-        <input type="number" value="{$userFe->id}" disabled>
-    </div>
-    <div>   
-        <label>ID účastníka</label>
-        <input type="number" value="{$userFe->id_ucastnika}" disabled>
-    </div>
-    <div>   
-        <label for="typ_osoby">Typ osoby</label>
-        <select id="typ_osoby" disabled>
-            <option value="">{$userFe->typ_osoby}</option>
-        </select>
-    </div>
-    <div>   
-        <label>Jméno</label>
-        <input type="text" value="{$userFe->jmeno}" disabled>
-    </div>
-    <div>   
-        <label>Příjmení</label>
-        <input type="text" value="{$userFe->prijmeni}" disabled>
-    </div>
-    <div>   
-        <label>Telefon</label>
-        <input type="tel" value="{$userFe->telefon}" disabled>
-    </div>
-    <div>   
-        <label>Email</label>
-        <input type="email" value="{$userFe->email}" disabled>
-    </div>
-    <div>   
-        <label>Kancelář</label>
-        <input type="text" value="{$userFe->kancelar}" disabled>
-    </div>
-    <div>   
-        <label>Pozice</label>
-        <input type="text" value="{$userFe->pozice}" disabled>
-    </div>
-    <div>   
-        <label>Plat</label>
-        <input type="number" value="{$userFe->plat}" disabled>
-    </div>
-</div>
+
+{if !$user->isInRole('disponent') || $user->getID() == $userFe->id}
+    <a class="btn-action" n:href="editor $userFe->id"><i class="fas fa-edit"></i> Editovat</a>
+{/if}
+{if !$user->isInRole('disponent')}
+    <a class="btn-action" onclick="return confirm('Opravdu chcete tohoto uživatele smazat?');" n:href="remove $userFe->id"><i class="fas fa-trash-alt"></i> Odstranit</a>
+{/if}
+
+<table>
+    <tr>
+        <td>
+        {*Údaje disponenta a úředníka*}
+            <table>
+                <tr>
+                    <td>ID</td>
+                    <td><input type="number" value="{$userFe->id}" disabled></td>
+                </tr>
+                <tr>
+                    <td>ID účastníka</td>
+                    <td><input type="number" value="{$userFe->id_ucastnika}" disabled></td>
+                </tr>
+                <tr>
+                    <td>Jméno a příjmení</td>
+                    <td><input type="text" value="{$userFe->jmeno} {$userFe->prijmeni}" disabled></td>
+                </tr>
+                <tr>
+                    <td>Telefon</td>
+                    <td><input type="number" value="{$userFe->telefon}" disabled></td>
+                </tr>
+                <tr>
+                    <td>E-mail</td>
+                    <td> <input type="email" value="{$userFe->email}" disabled></td>
+                </tr>
+            </table>
+        </td>
+        {if $userFe->typ_osoby != 'disponent'}
+        <td>
+        {*Údaje pouze úřeníka*}
+            <table>
+                <tr>
+                    <td>Pracovní pozice</td>
+                    <td><input type="text" value="{$userFe->pozice}" disabled></td>
+                </tr>
+                <tr>
+                    <td>Kancelář</td>
+                    <td><input type="text" value="{$userFe->kancelar}" disabled></td>
+                </tr>
+                {if $user->isInRole('reditel')}
+                <tr>
+                    <td>Plat</td>
+                    <td><input type="number" value="{$userFe->plat}" disabled></td>
+                </tr>
+                {/if}
+            </table>
+        </td>
+        {/if}
+    </tr>
+</table>
+
+{*<div>   
+    <label for="typ_osoby">Typ osoby</label>
+    <select id="typ_osoby" disabled>
+        <option value="">{$userFe->typ_osoby}</option>
+    </select>
+</div>*}

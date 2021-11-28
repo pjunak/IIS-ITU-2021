@@ -141,7 +141,7 @@ class RequestPresenter extends BasePresenter
             $date = new DateTime;
             $form->addHidden('datum_vytvoreni')->setDefaultValue($date->format('Y-m-d'));
             $form->addText('predmet', 'Předmět')->setRequired()->setHtmlAttribute('placeholder', 'Žádost o změnu údaje')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',128);
-            $form->addHidden('status', 'Status')->setValue('podan')->setDisabled();
+            $form->addHidden('status', 'Status')->setDefaultValue('podan');
             $form->addTextArea('obsah_pozadavku', 'Obsah požadavku')->setRequired();
             $form->addSubmit('save', 'Vložit požadavek');
         }

@@ -125,7 +125,7 @@ class CompanyPresenter extends BasePresenter
         array_push($helparr, $form->addInteger('ean', 'Ean')->setHtmlAttribute('placeholder', '123456789')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11));
         $form->addText('nazev', 'Název')->setRequired('%label je nutné vyplnit')->setHtmlAttribute('placeholder', 'Jméno firmy')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',128);
         array_push($helparr, $form->addInteger('ic', 'IČ')->setHtmlAttribute('placeholder', '12345678')->addRule($form::LENGTH, 'Délka %label je %d',8));
-        $form->addInteger('dic', 'DIČ')->setHtmlAttribute('placeholder', '12345678')->addRule($form::LENGTH, 'Maximální délka %label je %d',8);
+        $form->addtext('dic', 'DIČ')->setHtmlAttribute('placeholder', '12345678')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);
         $form->addText('web', 'Web')->setHtmlAttribute('placeholder', 'www.mujweb.cz')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',64);
         $form->addEmail('email', 'Email')->setHtmlAttribute('placeholder', 'muj.email@email.cz')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',64);
         $form->addText('datum_vytvoreni', 'Datum Vytvoření')->setHtmlType('date')->setRequired('%label je nutné vyplnit');

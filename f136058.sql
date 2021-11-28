@@ -33,7 +33,7 @@ CREATE TABLE `iis_firma` (
   `ean` int(11) DEFAULT NULL,
   `nazev` varchar(128) COLLATE utf8_czech_ci NOT NULL,
   `ic` int(11) DEFAULT NULL,
-  `dic` int(11) DEFAULT NULL,
+  `dic` varchar(11) DEFAULT NULL,
   `web` varchar(64) COLLATE utf8_czech_ci DEFAULT NULL,
   `email` varchar(64) COLLATE utf8_czech_ci DEFAULT NULL,
   `datum_vytvoreni` date NOT NULL,

@@ -1,4 +1,10 @@
-{block title}Úprava firmy {$company->nazev}{/block}
+{block title}
+{if isSet($company)}
+    Úprava firmy {$company->nazev}
+{else}
+    Registrace nové firmy
+{/if}
+{/block}
 {block description}Editor firmy{/block}
 {block content}
     {* Formulář pro editaci. *}

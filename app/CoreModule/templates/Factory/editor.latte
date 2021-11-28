@@ -1,4 +1,10 @@
-{block title}Editor{/block}
+{block title}
+{if isSet($factory)}
+    Úprava výrobny {$factory->kratky_nazev}
+{else}
+    Registrace nové výrobny
+{/if}
+{/block}
 {block description}Editor výrobny.{/block}
 {block content}
     {* Formulář pro editaci. *}

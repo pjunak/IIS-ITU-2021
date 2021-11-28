@@ -5,8 +5,11 @@
         Přehled výroben
     {/if}
 {/block}
-{block description}Výpis výroben.{/block}
+{block description}Přehled výroben{/block}
 {block content}
+
+{if $user->isInRole('disponent')}<a class="btn-action" n:href="editor"><i class="fas fa-bolt"></i> Registrovat novou výrobnu</a>{/if}
+
 <table class="list-entities">
         <tr>
             <th>Název</th>
@@ -41,7 +44,7 @@
                     <td>Biomasa</td>
             {/switch}
             <td>{$thisFactory->vykon_zdroje/1000000}MW</td>
-            <td>{$thisFactory->napetova_hladina/1000}kV</td>
+            <td>{$thisFactory->napetova_hladina}kV</td>
             <td>{$thisFactory->ulice} {if $thisFactory->cislo_o != NULL}{$thisFactory->cislo_o}/{/if}{$thisFactory->cislo_p}, {$thisFactory->psc} {$thisFactory->obec}</td>
             <td>{$thisFactory->datum_uvedeni_do_provozu|date:'j. n. Y'}</td>
         </tr>

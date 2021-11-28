@@ -103,6 +103,7 @@ class CompanyPresenter extends BasePresenter
                 $this->flashMessage('Firma nebyla nalezena.'); // Výpis chybové hlášky.
             else 
             {
+                $this->template->company = $company;
                 $this['editorForm']->setDefaults($company); // Předání hodnot článku do editačního formuláře.
                 $this['editorForm']['datum_vytvoreni']->setDefaultValue($company->datum_vytvoreni->format('Y-m-d'));
             }

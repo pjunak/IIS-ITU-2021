@@ -65,6 +65,13 @@ class FactoryManager extends DatabaseManager
         return $this->database->table(self::TABLE_NAME)->where(self::ID, $id)->fetch();
     }
 
+    public function getSeznamDostupnychFirem($userID)
+    {
+        return $this->database->query(
+            "SELECT rut_id, nazev FROM iis_firma WHERE rut_id IN(SELECT firma FROM iis_firma_osoba WHERE osoba = ?)"
+            , $userID)->fetchPairs();
+    }
+
     /**
      * Uloží výrobnu systému.
      * Pokud není nastaveno ID vloží novoý výrobnu, jinak provede editaci výrobny s daným ID.

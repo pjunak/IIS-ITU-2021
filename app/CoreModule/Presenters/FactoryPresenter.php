@@ -103,6 +103,7 @@ class FactoryPresenter extends BasePresenter
                 $this->flashMessage('Výrobna nebyla nalezena.'); // Výpis chybové hlášky.
             else 
             {
+                $this->template->factory = $factory;
                 $this['editorForm']->setDefaults($factory); // Předání hodnot článku do editačního formuláře.
                 $this['editorForm']['datum_prvniho_pripojeni']->setDefaultValue($factory->datum_prvniho_pripojeni->format('Y-m-d'));
                 $this['editorForm']['datum_uvedeni_do_provozu']->setDefaultValue($factory->datum_uvedeni_do_provozu->format('Y-m-d'));
@@ -119,24 +120,26 @@ class FactoryPresenter extends BasePresenter
     {
         // Vytvoření formuláře a definice jeho polí.
         $form = new Form;
+        
+        //kategorie SPOLEČNOST
+        $form->addGroup('Společnost');
+        $seznamDostupnychFirem = $this->factoryManager->getSeznamDostupnychFirem($this->user->getID());
+        $form->addSelect('id_firmy', 'Výrobna patří ke společnosti:')->setItems($seznamDostupnychFirem)->setRequired();
+
+        //kategorie DRUH PODPORY
+        $form->addGroup('Data podpory');
+        //minimálně schváleno/neschávleno
+
+        //kategorie VÝROBNÍ ZDROJ
+        $form->addGroup('Výrobní zdroj');
+        $form->addText('kratky_nazev', 'Krátký název')->setRequired()->setHtmlAttribute('placeholder', 'Moje výrobna')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',64);;
         $form->addHidden('id');
         $form->addInteger('id_vyrobniho_zdroje', 'ID výrobního zdroje')->setRequired()->setHtmlAttribute('placeholder', '123456')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);;
         $form->addInteger('id_site', 'ID sítě')->setRequired()->setHtmlAttribute('placeholder', '123456')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);
-        $form->addText('kratky_nazev', 'Krátký název')->setRequired()->setHtmlAttribute('placeholder', 'Moje výrobna')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',64);;
-        $form->addText('ulice', 'Ulice')->setRequired()->setHtmlAttribute('placeholder', 'Ulicová')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',32);
-        $form->addText('cislo_p', 'Číslo popisné')->setHtmlAttribute('placeholder', '123')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',8);
-        $form->addText('cislo_o', 'Orientační číslo')->setHtmlAttribute('placeholder', 'BO-4a')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',8);
-        $form->addInteger('kraj', 'Kraj')->setRequired()->setHtmlAttribute('placeholder', '1')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);
-        $form->addInteger('okres', 'Okres')->setRequired()->setHtmlAttribute('placeholder', '1')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);
-        $form->addText('obec', 'Obec')->setRequired()->setHtmlAttribute('placeholder', 'Obcov')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',32);
-        $form->addInteger('psc', 'PSČ')->setRequired()->setHtmlAttribute('placeholder', '11100')->addRule($form::LENGTH, 'Délka %label je %d',6);
-        $form->addText('parcela', 'Parcela')->setRequired()->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',16);
-        $form->addText('gps_n', 'GPS N')->addRule(Form::FLOAT, 'Zadejte číslo')->setNullable()->setRequired()->setHtmlAttribute('placeholder', '345,123')->addRule($form::RANGE, 'Délka %label je od %d do %d',[5,21]);
-        $form->addText('gps_e', 'GPS E')->addRule(Form::FLOAT, 'Zadejte číslo')->setNullable()->setRequired()->setHtmlAttribute('placeholder', '123,123')->addRule($form::RANGE, 'Délka %label je od %d do %d',[5,21]);
         $druhy_vyroben = $this->factoryManager->get_enum_values('druh_vyrobny');
-        $form->addSelect('druh_vyrobny', 'Druh výrobny')->setItems($druhy_vyroben)->setRequired();
-        $form->addInteger('vyrobni_EAN', 'Výrobní EAN')->setRequired()->setHtmlAttribute('placeholder', '123456')->addRule($form::RANGE, 'Délka %label je %d',[3,11]);
-        $form->addInteger('EAN_vyrobny', 'EAN výrobny')->setRequired()->setHtmlAttribute('placeholder', '123456')->addRule($form::RANGE, 'Délka %label je mezi %d a %d',[3,11]);
+        $form->addSelect('druh_vyrobny', 'Druh zdroje')->setItems($druhy_vyroben)->setRequired();
+        $form->addInteger('vyrobni_EAN', 'Výrobní EAN')->setRequired()->setHtmlAttribute('placeholder', '123456');//->addRule($form::RANGE, 'Délka %label je %d',[3,11]);
+        $form->addInteger('EAN_vyrobny', 'EAN výrobny')->setRequired()->setHtmlAttribute('placeholder', '123456');//->addRule($form::RANGE, 'Délka %label je mezi %d a %d',[3,11]);
         $form->addInteger('vykon_zdroje', 'Výkon zdroje')->setRequired()->setHtmlAttribute('placeholder', '7820')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);
         $napetove_hladiny = [
             '0,4' => '0,4',
@@ -153,20 +156,40 @@ class FactoryPresenter extends BasePresenter
         $form->addSelect('napetova_hladina', 'Napěťová hladina')->setItems($napetove_hladiny)->setRequired();
         $zpusoby_pripojeni = $this->factoryManager->get_enum_values('zpusob_pripojeni');
         $helper = $form->addSelect('zpusob_pripojeni', 'Způsob připojení')->setItems($zpusoby_pripojeni)->setRequired();
-        
+    
         $ano_ne = $this->factoryManager->get_enum_values('vykaz_za_opm');
         $form->addSelect('vykaz_za_opm', 'Výkaz za OPM')->setItems($ano_ne)->setRequired();
+
+        //Kategorie ADRESA
+        $form->addGroup('Adresa výrobny');
+        $form->addText('ulice', 'Ulice')->setRequired()->setHtmlAttribute('placeholder', 'Ulicová')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',32);
+        $form->addText('cislo_p', 'Číslo popisné')->setHtmlAttribute('placeholder', '123')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',8);
+        $form->addText('cislo_o', 'Orientační číslo')->setHtmlAttribute('placeholder', 'BO-4a')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',8);
+        $form->addInteger('kraj', 'Kraj')->setRequired()->setHtmlAttribute('placeholder', '1')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);
+        $form->addInteger('okres', 'Okres')->setRequired()->setHtmlAttribute('placeholder', '1')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);
+        $form->addText('obec', 'Obec')->setRequired()->setHtmlAttribute('placeholder', 'Obcov')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',32);
+        $form->addInteger('psc', 'PSČ')->setRequired()->setHtmlAttribute('placeholder', '11100')->addRule($form::LENGTH, 'Délka %label je %d',5);
+        $form->addText('parcela', 'Parcela')->setRequired()->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',16);
+        $form->addText('gps_n', 'GPS N')->addRule(Form::FLOAT, 'Zadejte číslo')->setNullable()->setRequired()->setHtmlAttribute('placeholder', '345,123')->addRule($form::RANGE, 'Délka %label je od %d do %d',[5,21]);
+        $form->addText('gps_e', 'GPS E')->addRule(Form::FLOAT, 'Zadejte číslo')->setNullable()->setRequired()->setHtmlAttribute('placeholder', '123,123')->addRule($form::RANGE, 'Délka %label je od %d do %d',[5,21]);
+
+        //kategorie DRUH PODPORY
+        $form->addGroup('Druh podpory');
         $druhy_podpory = $this->factoryManager->get_enum_values('druh_podpory');
         $form->addSelect('druh_podpory', 'Druh podpory')->setItems($druhy_podpory)->setRequired();
+
+        //kategorie TERMÍNY
+        $form->addGroup('Termíny');
         $form->addText('datum_prvniho_pripojeni', 'Datum prvního připojení')->setHtmlType('date')->setRequired();
         $form->addText('datum_uvedeni_do_provozu', 'Datum uvedení do provozu')->setHtmlType('date')->setRequired();
-        $form->addSubmit('save', 'Uložit firmu');
+
+        $form->addSubmit('save', 'Registrovat výrobnu');
 
         // Funkce se vykonaná při úspěšném odeslání formuláře a zpracuje zadané hodnoty.
         $form->onSuccess[] = function (Form $form, ArrayHash $values) {
             try {
                 $this->factoryManager->saveFactory($values);
-                $this->flashMessage('Firma byla úspěšně uložena.');
+                $this->flashMessage('Výrobna byla úspěšně uložena.');
                 if(isset($values->id))
                 {
                     $this->redirect('Factory:', $values->id);
@@ -175,7 +198,7 @@ class FactoryPresenter extends BasePresenter
                     $this->redirect('Factory:list');
                 }
             } catch (UniqueConstraintViolationException $e) {
-                $this->flashMessage('Firma s tímto ID již existuje.');
+                $this->flashMessage('Výrobna s tímto ID již existuje.');
             }
         };
 

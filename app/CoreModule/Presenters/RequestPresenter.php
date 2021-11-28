@@ -136,7 +136,7 @@ class RequestPresenter extends BasePresenter
         $form = new Form;
         $form->addHidden('id');
         $form->addHidden('id_osoby')->setDefaultValue($this->user->id);
-        if($this->user->getRoles()[0] == 'disponent')
+        if($this->user->isInRole('disponent'))
         {
             $date = new DateTime;
             $form->addHidden('datum_vytvoreni')->setDefaultValue($date->format('Y-m-d'));

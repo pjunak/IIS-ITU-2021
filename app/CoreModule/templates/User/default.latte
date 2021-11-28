@@ -1,13 +1,20 @@
 {block title}{$userFe->jmeno} {$userFe->prijmeni}{/block}
 {block content}
 
-{if !$user->isInRole('disponent') || $user->getID() == $userFe->id}
+{if $user->getID() == $userFe->id && !$user->isInRole('reditel')}
     <a class="btn-action" n:href="editor $userFe->id"><i class="fas fa-edit"></i> Editovat</a>
-{/if}
-{if !$user->isInRole('disponent')}
+{elseif $user->isInRole('urednik') && $userFe->typ_osoby == 'disponent'}
+    <a class="btn-action" n:href="editor $userFe->id"><i class="fas fa-edit"></i> Editovat</a>
     <a class="btn-action" onclick="return confirm('Opravdu chcete tohoto uživatele smazat?');" n:href="remove $userFe->id"><i class="fas fa-trash-alt"></i> Odstranit</a>
+{elseif $user->isInRole('reditel') && $user->getID() != $userFe->id}
+    <a class="btn-action" n:href="editor $userFe->id"><i class="fas fa-edit"></i> Editovat</a>
+    <a class="btn-action" onclick="return confirm('Opravdu chcete tohoto uživatele smazat?');" n:href="remove $userFe->id"><i class="fas fa-trash-alt"></i> Odstranit</a>
+{else}
 {/if}
 
+{if $user->getID() != $userFe->id && ( $user->isInRole('disponent') || ($user->isInRole('urednik') && !$userFe->typ_osoby != 'disponent'))}
+    Nemáte právo zobrazit tohoton uživatele.
+{else}
 <table>
     <tr>
         <td>
@@ -58,10 +65,4 @@
         {/if}
     </tr>
 </table>
-
-{*<div>   
-    <label for="typ_osoby">Typ osoby</label>
-    <select id="typ_osoby" disabled>
-        <option value="">{$userFe->typ_osoby}</option>
-    </select>
-</div>*}
+{/if}

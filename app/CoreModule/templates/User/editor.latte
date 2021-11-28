@@ -1,6 +1,13 @@
 {block title}Editor{/block}
 {block description}Editor uživatele.{/block}
 {block content}
-    {* Formulář pro editaci. *}
-    {control editorForm}
+    {if $user->getID() == $userFe->id && !$user->isInRole('reditel')}
+        {control editorForm}
+    {elseif $user->isInRole('urednik') && $userFe->typ_osoby == 'disponent'}
+        {control editorForm}
+    {elseif $user->isInRole('reditel') && $user->getID() != $userFe->id}
+        {control editorForm}
+    {else}
+        Nemáte práva k úpravě tohoto uživatele.
+    {/if}
 {/block}

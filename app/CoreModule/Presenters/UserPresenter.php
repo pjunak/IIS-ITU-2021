@@ -111,7 +111,7 @@ class UserPresenter extends BasePresenter
         // Vytvoření formuláře a definice jeho polí.
         $form = new Form;
         $form->addHidden('id');
-        $form->addInteger('id_ucastnika', 'ID účastníka')->setRequired();
+        $form->addInteger('id_ucastnika', 'ID účastníka');
         $form->addText('login', 'Login')->setRequired()->setHtmlAttribute('placeholder', 'Pepega')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',64);
         $form->addPassword('heslo', 'Heslo')->setRequired('%label je nutné vyplnit')
         ->addRule($form::MIN_LENGTH, 'Heslo musí mít alespoň %d znaků', 6)
@@ -119,8 +119,8 @@ class UserPresenter extends BasePresenter
         ->addRule($form::PATTERN, 'Musí obsahovat číslici', '.*[0-9].*');
         $form->addText('jmeno', 'Jméno')->setRequired()->setHtmlAttribute('placeholder', 'Jan')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',64);
         $form->addText('prijmeni', 'Příjmení')->setRequired()->setHtmlAttribute('placeholder', 'Novák')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',64);
-        $form->addInteger('telefon', 'Telefonní číslo')->setRequired()->setHtmlAttribute('placeholder', '111222333')->addRule($form::LENGTH, 'Délka %label je %d',9);
-        $form->addEmail('email', 'E-mail')->setRequired()->setHtmlAttribute('placeholder', 'muj.email@email.cz')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',32);
+        $form->addInteger('telefon', 'Telefonní číslo')->setHtmlAttribute('placeholder', '111222333')->addRule($form::LENGTH, 'Délka %label je %d',9);
+        $form->addEmail('email', 'E-mail')->setHtmlAttribute('placeholder', 'muj.email@email.cz')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',32);
         $form->addSubmit('save', 'Uložit uživatele');
         // Funkce se vykonaná při úspěšném odeslání formuláře a zpracuje zadané hodnoty.
         $form->onSuccess[] = function (Form $form, ArrayHash $values) {
@@ -151,7 +151,7 @@ class UserPresenter extends BasePresenter
         // Vytvoření formuláře a definice jeho polí.
         $form = new Form;
         $form->addHidden('id');
-        $form->addInteger('id_ucastnika', 'ID účastníka')->setRequired();
+        $form->addInteger('id_ucastnika', 'ID účastníka');
         $form->addText('login', 'Login')->setRequired()->setHtmlAttribute('placeholder', 'Pepega')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',64);
         $form->addPassword('heslo', 'Heslo')->setRequired('%label je nutné vyplnit')
         ->addRule($form::MIN_LENGTH, 'Heslo musí mít alespoň %d znaků', 6)
@@ -159,8 +159,8 @@ class UserPresenter extends BasePresenter
         ->addRule($form::PATTERN, 'Musí obsahovat číslici', '.*[0-9].*');
         $form->addText('jmeno', 'Jméno')->setRequired()->setHtmlAttribute('placeholder', 'Jan')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',64);
         $form->addText('prijmeni', 'Příjmení')->setRequired()->setHtmlAttribute('placeholder', 'Novák')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',64);
-        $form->addInteger('telefon', 'Telefonní číslo')->setRequired()->setHtmlAttribute('placeholder', '111222333')->addRule($form::LENGTH, 'Délka %label je %d',9);
-        $form->addEmail('email', 'E-mail')->setRequired()->setHtmlAttribute('placeholder', 'muj.email@email.cz')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',32);
+        $form->addInteger('telefon', 'Telefonní číslo')->setHtmlAttribute('placeholder', '111222333')->addRule($form::LENGTH, 'Délka %label je %d',9);
+        $form->addEmail('email', 'E-mail')->setHtmlAttribute('placeholder', 'muj.email@email.cz')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',32);
         $form->addSubmit('save', 'Uložit uživatele');
         // Funkce se vykonaná při úspěšném odeslání formuláře a zpracuje zadané hodnoty.
         $form->onSuccess[] = function (Form $form, ArrayHash $values) {

@@ -134,13 +134,13 @@ class FactoryPresenter extends BasePresenter
         $form->addGroup('Výrobní zdroj');
         $form->addText('kratky_nazev', 'Krátký název')->setRequired()->setHtmlAttribute('placeholder', 'Moje výrobna')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',64);;
         $form->addHidden('id');
-        $form->addInteger('id_vyrobniho_zdroje', 'ID výrobního zdroje')->setRequired()->setHtmlAttribute('placeholder', '123456')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);;
-        $form->addInteger('id_site', 'ID sítě')->setRequired()->setHtmlAttribute('placeholder', '123456')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);
+        $form->addInteger('id_vyrobniho_zdroje', 'ID výrobního zdroje')->setHtmlAttribute('placeholder', '123456')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);;
+        $form->addInteger('id_site', 'ID sítě')->setHtmlAttribute('placeholder', '123456')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);
         $druhy_vyroben = $this->factoryManager->get_enum_values('druh_vyrobny');
-        $form->addSelect('druh_vyrobny', 'Druh zdroje')->setItems($druhy_vyroben)->setRequired();
-        $form->addInteger('vyrobni_EAN', 'Výrobní EAN')->setRequired()->setHtmlAttribute('placeholder', '123456');//->addRule($form::RANGE, 'Délka %label je %d',[3,11]);
-        $form->addInteger('EAN_vyrobny', 'EAN výrobny')->setRequired()->setHtmlAttribute('placeholder', '123456');//->addRule($form::RANGE, 'Délka %label je mezi %d a %d',[3,11]);
-        $form->addInteger('vykon_zdroje', 'Výkon zdroje')->setRequired()->setHtmlAttribute('placeholder', '7820')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);
+        $form->addSelect('druh_vyrobny', 'Druh zdroje')->setItems($druhy_vyroben);
+        $form->addInteger('vyrobni_EAN', 'Výrobní EAN')->setHtmlAttribute('placeholder', '123456')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);
+        $form->addInteger('EAN_vyrobny', 'EAN výrobny')->setHtmlAttribute('placeholder', '123456')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);
+        $form->addInteger('vykon_zdroje', 'Výkon zdroje')->setHtmlAttribute('placeholder', '7820')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);
         $napetove_hladiny = [
             '0,4' => '0,4',
             '3' => '3',
@@ -162,16 +162,16 @@ class FactoryPresenter extends BasePresenter
 
         //Kategorie ADRESA
         $form->addGroup('Adresa výrobny');
-        $form->addText('ulice', 'Ulice')->setRequired()->setHtmlAttribute('placeholder', 'Ulicová')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',32);
+        $form->addText('ulice', 'Ulice')->setHtmlAttribute('placeholder', 'Ulicová')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',32);
         $form->addText('cislo_p', 'Číslo popisné')->setHtmlAttribute('placeholder', '123')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',8);
         $form->addText('cislo_o', 'Orientační číslo')->setHtmlAttribute('placeholder', 'BO-4a')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',8);
-        $form->addInteger('kraj', 'Kraj')->setRequired()->setHtmlAttribute('placeholder', '1')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);
-        $form->addInteger('okres', 'Okres')->setRequired()->setHtmlAttribute('placeholder', '1')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);
-        $form->addText('obec', 'Obec')->setRequired()->setHtmlAttribute('placeholder', 'Obcov')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',32);
-        $form->addInteger('psc', 'PSČ')->setRequired()->setHtmlAttribute('placeholder', '11100')->addRule($form::LENGTH, 'Délka %label je %d',5);
-        $form->addText('parcela', 'Parcela')->setRequired()->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',16);
-        $form->addText('gps_n', 'GPS N')->addRule(Form::FLOAT, 'Zadejte číslo')->setNullable()->setRequired()->setHtmlAttribute('placeholder', '345,123')->addRule($form::RANGE, 'Délka %label je od %d do %d',[5,21]);
-        $form->addText('gps_e', 'GPS E')->addRule(Form::FLOAT, 'Zadejte číslo')->setNullable()->setRequired()->setHtmlAttribute('placeholder', '123,123')->addRule($form::RANGE, 'Délka %label je od %d do %d',[5,21]);
+        $form->addInteger('kraj', 'Kraj')->setHtmlAttribute('placeholder', '1')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);
+        $form->addInteger('okres', 'Okres')->setHtmlAttribute('placeholder', '1')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);
+        $form->addText('obec', 'Obec')->setHtmlAttribute('placeholder', 'Obcov')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',32);
+        $form->addInteger('psc', 'PSČ')->setHtmlAttribute('placeholder', '11100')->addRule($form::LENGTH, 'Délka %label je %d',5);
+        $form->addText('parcela', 'Parcela')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',16);
+        $form->addText('gps_n', 'GPS N')->addRule(Form::FLOAT, 'Zadejte číslo')->setNullable()->setHtmlAttribute('placeholder', '345,123')->addRule($form::RANGE, 'Délka %label je od %d do %d',[5,21]);
+        $form->addText('gps_e', 'GPS E')->addRule(Form::FLOAT, 'Zadejte číslo')->setNullable()->setHtmlAttribute('placeholder', '123,123')->addRule($form::RANGE, 'Délka %label je od %d do %d',[5,21]);
 
         //kategorie DRUH PODPORY
         $form->addGroup('Druh podpory');
@@ -180,8 +180,8 @@ class FactoryPresenter extends BasePresenter
 
         //kategorie TERMÍNY
         $form->addGroup('Termíny');
-        $form->addText('datum_prvniho_pripojeni', 'Datum prvního připojení')->setHtmlType('date')->setRequired();
-        $form->addText('datum_uvedeni_do_provozu', 'Datum uvedení do provozu')->setHtmlType('date')->setRequired();
+        $form->addText('datum_prvniho_pripojeni', 'Datum prvního připojení')->setHtmlType('date');
+        $form->addText('datum_uvedeni_do_provozu', 'Datum uvedení do provozu')->setHtmlType('date');
 
         $form->addSubmit('save', 'Registrovat výrobnu');
 

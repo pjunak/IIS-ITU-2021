@@ -32,16 +32,16 @@ CREATE TABLE `iis_firma` (
   `rut_id` int(11) NOT NULL,
   `ean` int(11) DEFAULT NULL,
   `nazev` varchar(128) COLLATE utf8_czech_ci NOT NULL,
-  `ic` int(11) NOT NULL,
+  `ic` int(11) DEFAULT NULL,
   `dic` int(11) DEFAULT NULL,
   `web` varchar(64) COLLATE utf8_czech_ci DEFAULT NULL,
   `email` varchar(64) COLLATE utf8_czech_ci DEFAULT NULL,
   `datum_vytvoreni` date NOT NULL,
-  `ulice` varchar(32) COLLATE utf8_czech_ci NOT NULL,
-  `cislo_p` varchar(8) COLLATE utf8_czech_ci NOT NULL,
+  `ulice` varchar(32) COLLATE utf8_czech_ci DEFAULT NULL,
+  `cislo_p` varchar(8) COLLATE utf8_czech_ci DEFAULT NULL,
   `cislo_o` varchar(8) COLLATE utf8_czech_ci DEFAULT NULL,
-  `obec` varchar(32) COLLATE utf8_czech_ci NOT NULL,
-  `psc` int(11) NOT NULL,
+  `obec` varchar(32) COLLATE utf8_czech_ci DEFAULT NULL,
+  `psc` int(11) DEFAULT NULL,
   `predcisli` int(11) DEFAULT NULL,
   `cislo_uctu` int(32) NOT NULL,
   `kod_banky` varchar(4) COLLATE utf8_czech_ci NOT NULL
@@ -86,12 +86,12 @@ INSERT INTO `iis_firma_osoba` (`id`, `firma`, `osoba`) VALUES(4, 518468138, 6);
 DROP TABLE IF EXISTS `iis_osoba`;
 CREATE TABLE `iis_osoba` (
   `id` int(11) NOT NULL,
-  `id_ucastnika` int(11) NOT NULL,
+  `id_ucastnika` int(11) DEFAULT NULL,
   `typ_osoby` enum('disponent','urednik','reditel') COLLATE utf8_czech_ci NOT NULL,
   `jmeno` varchar(64) COLLATE utf8_czech_ci NOT NULL,
   `prijmeni` varchar(64) COLLATE utf8_czech_ci NOT NULL,
-  `telefon` int(11) NOT NULL,
-  `email` varchar(32) COLLATE utf8_czech_ci NOT NULL,
+  `telefon` int(11) DEFAULT NULL,
+  `email` varchar(32) COLLATE utf8_czech_ci DEFAULT NULL,
   `login` varchar(64) COLLATE utf8_czech_ci NOT NULL UNIQUE,
   `heslo` varchar(255) COLLATE utf8_czech_ci NOT NULL,
   `kancelar` varchar(32) COLLATE utf8_czech_ci DEFAULT NULL,
@@ -145,14 +145,14 @@ CREATE TABLE `iis_vykaz` (
   `id` int(11) NOT NULL,
   `id_osoby` int(11) NOT NULL,
   `id_vyrobny` int(11) NOT NULL,
-  `od` date NOT NULL,
-  `do` date NOT NULL,
+  `od` date DEFAULT NULL,
+  `do` date DEFAULT NULL,
   `datum_cas_zadani_vykazu` datetime NOT NULL,
   `svorkova_vyroba_elektriny` int(11) NOT NULL,
-  `vlastni_spotreba_elektriny` int(11) NOT NULL,
-  `celkova_konecna_spotreba` int(11) NOT NULL,
-  `spotreba_z_toho_lokalni` int(11) NOT NULL,
-  `spotreba_z_toho_odber` int(11) NOT NULL
+  `vlastni_spotreba_elektriny` int(11) DEFAULT NULL,
+  `celkova_konecna_spotreba` int(11) DEFAULT NULL,
+  `spotreba_z_toho_lokalni` int(11) DEFAULT NULL,
+  `spotreba_z_toho_odber` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 --
@@ -170,39 +170,40 @@ INSERT INTO `iis_vykaz` (`id`, `id_osoby`, `id_vyrobny`, `od`, `do`, `datum_cas_
 DROP TABLE IF EXISTS `iis_vyrobna`;
 CREATE TABLE `iis_vyrobna` (
   `id` int(11) NOT NULL,
-  `id_vyrobniho_zdroje` int(11) NOT NULL,
-  `id_site` int(11) NOT NULL,
+  `id_vyrobniho_zdroje` int(11) DEFAULT NULL,
+  `id_site` int(11) DEFAULT NULL,
   `id_firmy` int(11) NOT NULL,
   `kratky_nazev` varchar(64) COLLATE utf8_czech_ci NOT NULL,
-  `ulice` varchar(32) COLLATE utf8_czech_ci NOT NULL,
-  `cislo_p` varchar(8) COLLATE utf8_czech_ci NOT NULL,
-  `cislo_o` varchar(8) COLLATE utf8_czech_ci NOT NULL,
-  `kraj` int(11) NOT NULL,
-  `okres` int(11) NOT NULL,
-  `obec` varchar(32) COLLATE utf8_czech_ci NOT NULL,
-  `psc` int(11) NOT NULL,
-  `parcela` varchar(16) COLLATE utf8_czech_ci NOT NULL,
-  `gps_n` decimal(15,5) NOT NULL,
-  `gps_e` decimal(15,5) NOT NULL,
+  `ulice` varchar(32) COLLATE utf8_czech_ci DEFAULT NULL,
+  `cislo_p` varchar(8) COLLATE utf8_czech_ci DEFAULT NULL,
+  `cislo_o` varchar(8) COLLATE utf8_czech_ci DEFAULT NULL,
+  `kraj` varchar(32) DEFAULT NULL,
+  `okres` varchar(32) DEFAULT NULL,
+  `obec` varchar(32) COLLATE utf8_czech_ci DEFAULT NULL,
+  `psc` int(11) DEFAULT NULL,
+  `parcela` varchar(16) COLLATE utf8_czech_ci DEFAULT NULL,
+  `gps_n` decimal(15,5) DEFAULT NULL,
+  `gps_e` decimal(15,5) DEFAULT NULL,
   `druh_vyrobny` enum('slunecni','slunecni_budova','vodni','precerpavaci','jaderna','plyn','geotermalni','vetrna','biomasa') COLLATE utf8_czech_ci NOT NULL,
-  `vyrobni_EAN` int(11) NOT NULL,
-  `EAN_vyrobny` int(11) NOT NULL,
-  `vykon_zdroje` int(11) NOT NULL,
-  `napetova_hladina` varchar(10) COLLATE utf8_czech_ci NOT NULL,
+  `stav` enum('podano','neschvaleno','schvaleno') COLLATE utf8_czech_ci NOT NULL,
+  `vyrobni_EAN` int(11) DEFAULT NULL,
+  `EAN_vyrobny` int(11) DEFAULT NULL,
+  `vykon_zdroje` int(11) DEFAULT NULL,
+  `napetova_hladina` varchar(10) COLLATE utf8_czech_ci DEFAULT NULL,
   `zpusob_pripojeni` enum('primo','neprimo','ostrovni_vyroba') COLLATE utf8_czech_ci NOT NULL,
   `vykaz_za_opm` enum('ano','ne') COLLATE utf8_czech_ci NOT NULL,
   `druh_podpory` enum('bonus_rocni','bonus_hodinovy','povinny_vykup','bez_podpory') COLLATE utf8_czech_ci NOT NULL,
-  `datum_prvniho_pripojeni` date NOT NULL,
-  `datum_uvedeni_do_provozu` date NOT NULL
+  `datum_prvniho_pripojeni` date DEFAULT NULL,
+  `datum_uvedeni_do_provozu` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 --
 -- Vypisuji data pro tabulku `iis_vyrobna`
 --
 
-INSERT INTO `iis_vyrobna` (`id`, `id_vyrobniho_zdroje`, `id_site`, `id_firmy`, `kratky_nazev`, `ulice`, `cislo_p`, `cislo_o`, `kraj`, `okres`, `obec`, `psc`, `parcela`, `gps_n`, `gps_e`, `druh_vyrobny`, `vyrobni_EAN`, `EAN_vyrobny`, `vykon_zdroje`, `napetova_hladina`, `zpusob_pripojeni`, `vykaz_za_opm`, `druh_podpory`, `datum_prvniho_pripojeni`, `datum_uvedeni_do_provozu`) VALUES(1, 1, 1, 123456789,'výrobna 1', 'Rúžová', '1024', '8', 1, 1, 'Olomouc', 77900, '235/15', '18.45550', '27.00530', 'slunecni', 1001, 2002, 35, '110', 'primo', 'ano', 'bonus_rocni', '2021-09-01', '2021-09-02');
-INSERT INTO `iis_vyrobna` (`id`, `id_vyrobniho_zdroje`, `id_site`, `id_firmy`, `kratky_nazev`, `ulice`, `cislo_p`, `cislo_o`, `kraj`, `okres`, `obec`, `psc`, `parcela`, `gps_n`, `gps_e`, `druh_vyrobny`, `vyrobni_EAN`, `EAN_vyrobny`, `vykon_zdroje`, `napetova_hladina`, `zpusob_pripojeni`, `vykaz_za_opm`, `druh_podpory`, `datum_prvniho_pripojeni`, `datum_uvedeni_do_provozu`) VALUES(2, 2, 2, 123456789,'výrobna 2', 'Modrá', '1024', '8', 1, 1, 'Olomouc', 77900, '235/16', '18.45899', '27.00530', 'slunecni', 1001, 2002, 35, '110', 'primo', 'ano', 'bonus_rocni', '2021-09-04', '2021-09-08');
-INSERT INTO `iis_vyrobna` (`id`, `id_vyrobniho_zdroje`, `id_site`, `id_firmy`, `kratky_nazev`, `ulice`, `cislo_p`, `cislo_o`, `kraj`, `okres`, `obec`, `psc`, `parcela`, `gps_n`, `gps_e`, `druh_vyrobny`, `vyrobni_EAN`, `EAN_vyrobny`, `vykon_zdroje`, `napetova_hladina`, `zpusob_pripojeni`, `vykaz_za_opm`, `druh_podpory`, `datum_prvniho_pripojeni`, `datum_uvedeni_do_provozu`) VALUES(3, 3, 3, 234567892,'Vodnice', 'Mokrá', '420', '8', 1, 1, 'Olomouc', 77900, '235/16', '18.45899', '27.00530', 'vodni', 1001, 2002, 35, '110', 'primo', 'ano', 'bonus_rocni', '2021-09-04', '2021-09-08');
+INSERT INTO `iis_vyrobna` (`id`, `id_vyrobniho_zdroje`, `id_site`, `id_firmy`, `kratky_nazev`, `ulice`, `cislo_p`, `cislo_o`, `kraj`, `okres`, `obec`, `psc`, `parcela`, `gps_n`, `gps_e`, `druh_vyrobny`, `vyrobni_EAN`, `EAN_vyrobny`, `vykon_zdroje`, `napetova_hladina`, `zpusob_pripojeni`, `vykaz_za_opm`, `druh_podpory`, `datum_prvniho_pripojeni`, `datum_uvedeni_do_provozu`) VALUES(1, 1, 1, 123456789,'výrobna 1', 'Rúžová', '1024', '8', 'Olomoucký kraj', 'Olomouc', 'Olomouc', 77900, '235/15', '18.45550', '27.00530', 'slunecni', 1001, 2002, 35, '110', 'primo', 'ano', 'bonus_rocni', '2021-09-01', '2021-09-02');
+INSERT INTO `iis_vyrobna` (`id`, `id_vyrobniho_zdroje`, `id_site`, `id_firmy`, `kratky_nazev`, `ulice`, `cislo_p`, `cislo_o`, `kraj`, `okres`, `obec`, `psc`, `parcela`, `gps_n`, `gps_e`, `druh_vyrobny`, `vyrobni_EAN`, `EAN_vyrobny`, `vykon_zdroje`, `napetova_hladina`, `zpusob_pripojeni`, `vykaz_za_opm`, `druh_podpory`, `datum_prvniho_pripojeni`, `datum_uvedeni_do_provozu`) VALUES(2, 2, 2, 123456789,'výrobna 2', 'Modrá', '1024', '8', 'Olomoucký kraj', 'Olomouc', 'Olomouc', 77900, '235/16', '18.45899', '27.00530', 'slunecni', 1001, 2002, 35, '110', 'primo', 'ano', 'bonus_rocni', '2021-09-04', '2021-09-08');
+INSERT INTO `iis_vyrobna` (`id`, `id_vyrobniho_zdroje`, `id_site`, `id_firmy`, `kratky_nazev`, `ulice`, `cislo_p`, `cislo_o`, `kraj`, `okres`, `obec`, `psc`, `parcela`, `gps_n`, `gps_e`, `druh_vyrobny`, `vyrobni_EAN`, `EAN_vyrobny`, `vykon_zdroje`, `napetova_hladina`, `zpusob_pripojeni`, `vykaz_za_opm`, `druh_podpory`, `datum_prvniho_pripojeni`, `datum_uvedeni_do_provozu`) VALUES(3, 3, 3, 234567892,'Vodnice', 'Mokrá', '420', '8', 'Jihomoravský kraj', 'Brno-město  ', 'Brno', 77900, '235/16', '18.45899', '27.00530', 'vodni', 1001, 2002, 35, '110', 'primo', 'ano', 'bonus_rocni', '2021-09-04', '2021-09-08');
 
 --
 -- Indexy pro exportované tabulky

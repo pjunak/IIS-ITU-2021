@@ -147,12 +147,12 @@ class RequestPresenter extends BasePresenter
         }
         else
         {
-            $form->addText('predmet', 'Předmět')->setRequired()->setDisabled()->setHtmlAttribute('placeholder', 'Žádost o změnu údaje')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',128);
+            $form->addText('predmet', 'Předmět')->setDisabled()->setHtmlAttribute('placeholder', 'Žádost o změnu údaje')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',128);
             $form->addText('datum_vytvoreni', 'Datum vytvoření')->setHtmlType('date')->setDisabled();
             $date = new DateTime;
             $form->addHidden('datum_uzavreni')->setDefaultValue($date->format('Y-m-d'));
             $form->addHidden('status', 'Status')->setDefaultValue('vyrizen');
-            $form->addTextArea('obsah_pozadavku', 'Obsah požadavku')->setDisabled()->setRequired();
+            $form->addTextArea('obsah_pozadavku', 'Obsah požadavku')->setDisabled();
             $form->addTextArea('odpoved', 'Odpověď');
             $form->addSubmit('save', 'Odpovědět na požadavek');
         }

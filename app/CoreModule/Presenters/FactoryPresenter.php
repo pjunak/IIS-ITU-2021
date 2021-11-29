@@ -63,6 +63,7 @@ class FactoryPresenter extends BasePresenter
             $this->error(); // Vyhazuje výjimku BadReportException.
 
         $this->template->factory = $factory; // Předá článek do šablony.
+        $this->template->nazevVlastniciFirmy = $this->factoryManager->getNazevVlastniciFirmy($factory->id_firmy);
     }
 
     /** Načte a předá seznam článků do šablony. */

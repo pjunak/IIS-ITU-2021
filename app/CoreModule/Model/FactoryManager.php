@@ -65,6 +65,11 @@ class FactoryManager extends DatabaseManager
         return $this->database->table(self::TABLE_NAME)->where(self::ID, $id)->fetch();
     }
 
+    public function getNazevVlastniciFirmy($rut_id)
+    {
+        return $this->database->query("SELECT nazev FROM iis_firma WHERE rut_id = ?", $rut_id)->fetch();
+    }
+
     public function getSeznamDostupnychFirem($userID)
     {
         return $this->database->query(

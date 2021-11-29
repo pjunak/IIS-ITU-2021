@@ -1,11 +1,10 @@
 {block title}Zobrazení zadného výkazu č. {$report->id}{/block}
 {block content}
 
+{if !$user->isInRole('disponent')}
+    <a class="btn-action" onclick="return confirm('Opravdu chcete tento výkaz smazat?');" n:href="remove $report->id"><i class="fas fa-trash-alt"></i> Odstranit</a>
+{/if}
 
-<a class="btn-action" n:href="editor $report->id"><i class="fas fa-edit"></i> Editovat</a>
-<a class="btn-action" onclick="return confirm('Opravdu chcete tento výkaz smazat?');" n:href="remove $report->id"><i class="fas fa-trash-alt"></i> Odstranit</a>
-
-</div>
 <table>
     <tr>   
         <th><label>Výkaz<label></th>

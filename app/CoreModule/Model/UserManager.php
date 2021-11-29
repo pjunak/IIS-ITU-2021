@@ -9,6 +9,9 @@ use Nette\Database\Table\ActiveRow;
 use Nette\Database\Table\Selection;
 use Nette\Utils\ArrayHash;
 
+use Nette\Utils;
+use Nette\Security\Passwords;
+
 /**
  * Model pro správu osob v redakčním systému.
  * @package App\CoreModule\Model
@@ -26,6 +29,7 @@ class UserManager extends DatabaseManager
         TELEFON = 'telefon',
         EMAIL = 'email',
         HESLO = 'heslo',
+        LOGIN = 'login',
         ULICE = 'ulice',
         CISLO_P = 'cislo_p',
         CISLO_O = 'cislo_o',
@@ -34,6 +38,21 @@ class UserManager extends DatabaseManager
         KANCELAR = 'kancelar',
         POZICE = 'pozice',
         PLAT = 'plat';
+
+   
+    
+    /*
+    private Passwords $passwords;
+
+    private Nette\Database\Explorer $database;
+
+    
+    public function __construct(Passwords $passwords)
+	{
+		$this->database = $database;
+		$this->passwords = $passwords;
+	}
+    */
 
     /**
      * Vrátí seznam všech entit v databázi seřazený sestupně od naposledy přidaného.
@@ -63,7 +82,8 @@ class UserManager extends DatabaseManager
     {
         if (empty($user[self::ID])) {
             unset($user[self::ID]);
-            /* 
+            /*
+            //$this->passwords = new Passwords(PASSWORD_DEFAULT, ['cost' => 12]);
             $this->database->table(self::TABLE_NAME)->insert([
                 self::ID_UCASTNIKA => $user['id_ucastnika'],
                 self::JMENO => $user['jmeno'],
@@ -71,7 +91,7 @@ class UserManager extends DatabaseManager
                 self::PRIJMENI => $user['telefon'],
                 self::EMAIL => $user['email'],
                 self::LOGIN => $user['login'],
-                self::PASSWORD_HASH => $this->passwords->hash($user['password']),
+                //self::HESLO => $this->passwords->hash($user['password']),
             ]);
             */
             $this->database->table(self::TABLE_NAME)->insert($user);

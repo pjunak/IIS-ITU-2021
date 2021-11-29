@@ -80,6 +80,19 @@ class CompanyPresenter extends BasePresenter
         }
     }
 
+    /*
+    public function actionKontrolaDostupnosti($factoryID)
+    {
+        if (in_array($factoryID, $this->companyManager->getCompaniesByUser($this->user->getID($this->user->getID()))
+        {
+            $this->template->aviable = false;
+        }else
+        {
+            return FALSE;
+        }
+    }
+    */
+
     /**
      * Odstraní článek.
      * @param string|null $rut URL článku

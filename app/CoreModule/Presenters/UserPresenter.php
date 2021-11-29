@@ -141,44 +141,4 @@ class UserPresenter extends BasePresenter
 
         return $form;
     }
-
-     /**
-     * Vytváří a vrací formulář pro editaci článků.
-     * @return Form formulář pro editaci článků
-     */
-    protected function createComponentEditUser()
-    {
-        // Vytvoření formuláře a definice jeho polí.
-        $form = new Form;
-        $form->addHidden('id');
-        $form->addInteger('id_ucastnika', 'ID účastníka');
-        $form->addText('login', 'Login')->setRequired()->setHtmlAttribute('placeholder', 'Pepega')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',64);
-        $form->addPassword('heslo', 'Heslo')->setRequired('%label je nutné vyplnit')
-        ->addRule($form::MIN_LENGTH, 'Heslo musí mít alespoň %d znaků', 6)
-        ->addRule($form::MAX_LENGTH, 'Heslo nemůže mít víc, než %d znaků', 255)
-        ->addRule($form::PATTERN, 'Musí obsahovat číslici', '.*[0-9].*');
-        $form->addText('jmeno', 'Jméno')->setRequired()->setHtmlAttribute('placeholder', 'Jan')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',64);
-        $form->addText('prijmeni', 'Příjmení')->setRequired()->setHtmlAttribute('placeholder', 'Novák')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',64);
-        $form->addInteger('telefon', 'Telefonní číslo')->setHtmlAttribute('placeholder', '111222333')->addRule($form::LENGTH, 'Délka %label je %d',9);
-        $form->addEmail('email', 'E-mail')->setHtmlAttribute('placeholder', 'muj.email@email.cz')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',32);
-        $form->addSubmit('save', 'Uložit uživatele');
-        // Funkce se vykonaná při úspěšném odeslání formuláře a zpracuje zadané hodnoty.
-        $form->onSuccess[] = function (Form $form, ArrayHash $values) {
-            try {
-                $this->userManager->saveUser($values);
-                $this->flashMessage('Uživatel byl úspěšně uložen.');
-                if(isset($values->id))
-                {
-                    $this->redirect('User:', $values->id);
-                }else
-                {
-                    $this->redirect('User:list');
-                }
-            } catch (UniqueConstraintViolationException $e) {
-                $this->flashMessage('Uživatel s tímto ID již existuje.');
-            }
-        };
-
-        return $form;
-    }
 }

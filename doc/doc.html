@@ -23,7 +23,7 @@
 	</dd>
 	<dd>Kristián Heøman <!-- Nahraïte skuteèným jménem a e-mailem autora a popisem èinnosti -->
 	    <a href="mailto:xherma33@stud.fit.vutbr.cz">xherma33@stud.fit.vutbr.cz</a> -
-		Návrh a implementace databáze, návrh a implementace frontendu, návrh a implementace backendu, zabezpeèování
+		Návrh a implementace databáze, návrh a implementace frontendu, návrh a implementace backendu, zabezpeèování, kontrola a organizace
 	</dd>
         <dd>Petr Junák <!-- Nahraïte skuteèným jménem a e-mailem autora a popisem èinnosti -->
 	    <a href="mailto:xjunak01@stud.fit.vutbr.cz">xjunak01@stud.fit.vutbr.cz</a> -
@@ -56,7 +56,7 @@
 <h2>Implementace</h2>
 <p>Struèná dokumentace k implementaci, která popisuje, které èásti projektu (napø. PHP skripty) implementují jednotlivé pøípady pou¾ití.</p>
 <ul>
-	<li>Pou¾itý framework Netteli</li>
+	<li>Pou¾itý framework Nettle</li>
 
 	<li>Soubory *Manager.php zprostøedkovávají práce s databází</li>
 	<li>Soubory *Presenter.php zprostøedkovávají tvorbu formuláøù a pøedávání dat do frontendu</li>
@@ -86,18 +86,13 @@ Struènì popi¹te:
 	</ul>
 	<li>jak rozbalit, konfigurovat, inicializovat databázi, ...</li>
 	<ul>
-		<li>Databáze se inicializuje pomocí spu¹tìní inicializaèního skriptu v souboru f136058.sql </li>
+		<li>Je potøeba vytvoøit databázi s názvem f136058 a uvnitø spustit sql skript obsa¾ený v souboru f136058.sql </li>
 	</ul>
 </ul>
 
 <h2>Známé problémy</h2>
 <p>Zde popi¹te, které body zadání nejsou implementovány a z jakého dùvodu. Napø. &#8222;Z èasových dùvodù nebyla implementována správa u¾ivatelù.&#8221; Pomù¾ete tím zrychlit hodnocení, kdy¾ neimplementované funkce nebudeme muset dlouze hledat.</p>
 <ul>
-	<li>Z èasových dùvodù se nepovedlo plnì zprovoznit hashování hesla u¾ivatelù. Je mo¾né pøidávat a odebírat u¾ivatele a upravovat je, ale kvùli neimplementovanému hashování hesla pøi tvorbì u¾ivatele je jejich heslo v databázi nezahashované.</li>
-	<ul>
-		<li>Na tyto novì vytvoøené u¾ivatele se nedá pøihlásit, pøesto¾e se ulo¾í do databáze, proto¾e pøi pøihlá¹ení oèekáváme ji¾ zahashované heslo.</li>
-		<li>I pøes sní¾ení funkènosti jsme se rozhodli ponechat tuto verzi a nevracet se k nechránìným heslùm, proto¾e systém by s trochou víec èasu bylo mo¾né zcela zprovoznit.</li>
-	</ul>
 	<li>Pøi úpravì URL adresy se mù¾e stát, ¾e se u¾ivatel dostane k údajùm, ke kterým by nemìl mít pøístup. Napøíklad si disponent mù¾e prohlédnout firmy ostatních disponentù, pokud správnì tipne jejich rut_id.</li>
 	<ul>
 		<li>Z èasových dùvodù opraveno jenom èásteènì. U¾ivatel nemù¾e prohlí¾et a upravovat u¾ivatele, ke kterým nemá pøístup, na jiných místech ale problém setrvává</li>

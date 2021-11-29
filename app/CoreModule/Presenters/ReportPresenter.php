@@ -79,9 +79,7 @@ class ReportPresenter extends BasePresenter
     /** Načte a předá seznam článků do šablony. */
     public function renderList()
     {
-
         $this->template->reports = $this->reportManager->getReportsWhereFactory($this->vybrana_vyrobna);
-
     }
 
     /**

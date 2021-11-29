@@ -153,10 +153,11 @@ class ReportPresenter extends BasePresenter
         $form->addHidden('id');
         $form->addHidden('id_osoby')->setRequired()->setDefaultValue($this->user->id);
         $form->addHidden('id_vyrobny')->setRequired()->setDefaultValue($this->vybrana_vyrobna);
-        $form->addText('od', 'Od')->setHtmlType('date');
-        $form->addText('do', 'Do')->setHtmlType('date');
-        $date = new DateTime;
-        $form->addHidden('datum_cas_zadani_vykazu')->setDefaultValue($date)->setRequired(); // Je nastaveno automaticky podle aktuálního data a času
+        $dateTime = new DateTime;
+        $date = $dateTime->format('Y-m-d');
+        $form->addText('od', 'Od')->setHtmlType('date')->setDefaultValue($date)->setRequired('%label je nutné vyplnit');;
+        $form->addText('do', 'Do')->setHtmlType('date')->setDefaultValue($date)->setRequired('%label je nutné vyplnit');;
+        $form->addHidden('datum_cas_zadani_vykazu')->setDefaultValue($dateTime)->setRequired(); // Je nastaveno automaticky podle aktuálního data a času
         $form->addInteger('svorkova_vyroba_elektriny', 'Svorková výroba elektřiny')->setRequired()->setHtmlAttribute('placeholder', '12500')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);
         $form->addInteger('vlastni_spotreba_elektriny', 'Vlastní spotřeba elektřiny')->setHtmlAttribute('placeholder', '7000')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);;
         $form->addInteger('celkova_konecna_spotreba', 'Celková spotřeba elektřiny')->setHtmlAttribute('placeholder', '9500')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);;

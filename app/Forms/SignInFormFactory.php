@@ -44,7 +44,7 @@ final class SignInFormFactory
 				$this->user->setExpiration($values->remember ? '14 days' : '20 minutes');
 				$this->user->login($values->username, $values->password);
 			} catch (Nette\Security\AuthenticationException $e) {
-				$form->addError('Zadaný certifikát je neplatný, zkuste to prosím znovu.');
+				$form->addError('Přihlašovací údaje jsou neplatné, zkuste to prosím znovu.');
 				return;
 			}
 			$onSuccess();

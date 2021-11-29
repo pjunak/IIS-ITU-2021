@@ -80,6 +80,7 @@ class UserManager extends DatabaseManager
      */
     public function saveUser(ArrayHash $user)
     {
+        add();
         if (empty($user[self::ID])) {
             unset($user[self::ID]);
             /*
@@ -97,6 +98,18 @@ class UserManager extends DatabaseManager
             $this->database->table(self::TABLE_NAME)->insert($user);
         } else
             $this->database->table(self::TABLE_NAME)->where(self::ID, $user[self::ID])->update($user);
+
+
+            Nette\Utils\Validators::assert($email, 'email');
+		try {
+			$this->database->table(self::TABLE_NAME)->insert([
+				self::COLUMN_NAME => $username,
+				self::COLUMN_PASSWORD_HASH => $this->passwords->hash($password),
+				self::COLUMN_EMAIL => $email,
+			]);
+		} catch (Nette\Database\UniqueConstraintViolationException $e) {
+			throw new DuplicateNameException;
+		}
     }
 
     /**

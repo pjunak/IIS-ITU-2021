@@ -173,6 +173,28 @@ td, th
     text-decoration: none;
 }
 
+.button1 {
+    font-size: 20px;
+    font-weight: bold;
+    width: 24%;
+    color: #1A3873;
+    background-color: #d6d6d6;
+    padding: 50px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    display: inline-block;
+    border: 2px groove #a1a1a1;
+    border-radius: 12px;
+}
+
+.button1:hover,
+.button1:focus
+{
+    color: white;
+    background-color: #43b9c2;
+    text-decoration: none;
+}
+
 input:disabled, 
 textarea:read-only,
 [contenteditable]:read-only {

@@ -1,9 +1,16 @@
-{block title}Administrace webu{/block}
-{block description}Administrace webu.{/block}
+{block title}Portál CS OTE, a.s.{/block}
+{block description}Rozcestník{/block}
 {block content}
-<p>Vítejte v administraci!</p>
-<h2><a n:href=Core:Company:editor>Přidat firmu &raquo;</a></h2>
-<h2><a n:href=Core:Company:list>Seznam firem &raquo;</a></h2>
 
-<h2><a n:href=Core:User:editor>Přidat osobu &raquo;</a></h2>
-<h2><a n:href=Core:User:list>Seznam osob &raquo;</a></h2>
+{if $user->isInRole('disponent')}
+    <h3>Kam dál?</h3>
+    <a class="button1" n:href="Core:Factory:list">Chci registrovat výrobnu >></a>
+    <a class="button1" n:href="Core:Report:list">Chci vyplnit měsíční výkaz >></a>
+    <a class="button1" n:href="Core:Company:list">Správa firmeních údajů >></a>
+    <a class="button1"></i>Jsem zde poprvé >></a>
+{else}
+    <h3>Rychlé odkazy</h3>
+    <a class="button1" n:href="Core:Company:editor">Přidat zákazníka >></a>
+    <a class="button1" n:href="Core:User:editor">Přidat firmu<br>>></a>
+    {*<h3>Statistiky</h3>*}
+{/if}

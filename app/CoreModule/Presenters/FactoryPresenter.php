@@ -11,6 +11,7 @@ use Nette\Application\BadRequestException;
 use Nette\Application\UI\Form;
 use Nette\Database\UniqueConstraintViolationException;
 use Nette\Utils\ArrayHash;
+use Nette\Utils\DateTime;
 
 /**
  * Presenter pro vykreslování článků.
@@ -188,9 +189,11 @@ class FactoryPresenter extends BasePresenter
         $form->addSelect('druh_podpory', 'Druh podpory')->setItems($druhy_podpory)->setRequired();
 
         //kategorie TERMÍNY
+        $dateTime = new DateTime;
+        $date = $dateTime->format('Y-m-d');
         $form->addGroup('Termíny');
-        $form->addText('datum_prvniho_pripojeni', 'Datum prvního připojení')->setHtmlType('date');
-        $form->addText('datum_uvedeni_do_provozu', 'Datum uvedení do provozu')->setHtmlType('date');
+        $form->addText('datum_prvniho_pripojeni', 'Datum prvního připojení')->setHtmlType('date')->setDefaultValue($date)->setRequired('%label je nutné vyplnit');
+        $form->addText('datum_uvedeni_do_provozu', 'Datum uvedení do provozu')->setHtmlType('date')->setDefaultValue($date)->setRequired('%label je nutné vyplnit');
 
         $form->addSubmit('save', 'Registrovat výrobnu');
 

@@ -12,6 +12,7 @@ use Nette\Application\UI\Form;
 use Nette\Database\UniqueConstraintViolationException;
 use Nette\Utils\ArrayHash;
 use Nette\Security\User;
+use Nette\Utils\DateTime;
 /**
  * Presenter pro vykreslování článků.
  * @package App\CoreModule\Presenters
@@ -128,7 +129,9 @@ class CompanyPresenter extends BasePresenter
         $form->addtext('dic', 'DIČ')->setHtmlAttribute('placeholder', '12345678')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);
         $form->addText('web', 'Web')->setHtmlAttribute('placeholder', 'www.mujweb.cz')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',64);
         $form->addEmail('email', 'Email')->setHtmlAttribute('placeholder', 'muj.email@email.cz')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',64);
-        $form->addText('datum_vytvoreni', 'Datum Vytvoření')->setHtmlType('date')->setRequired('%label je nutné vyplnit');
+        $dateTime = new DateTime;
+        $date = $dateTime->format('Y-m-d');
+        $form->addText('datum_vytvoreni', 'Datum Vytvoření')->setHtmlType('date')->setDefaultValue($date)->setRequired('%label je nutné vyplnit');
 
         $form->addGroup('Adresa firmy');
         $form->addText('ulice', 'Ulice')->setHtmlAttribute('placeholder', 'Ulicová')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',32);

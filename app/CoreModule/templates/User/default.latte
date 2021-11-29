@@ -12,7 +12,7 @@
 {else}
 {/if}
 
-{if $user->getID() != $userFe->id && ( $user->isInRole('disponent') || ($user->isInRole('urednik') && !$userFe->typ_osoby != 'disponent'))}
+{if $user->isInRole('disponent') && ($userFe->id != $user->getID())}
     Nemáte právo zobrazit tohoton uživatele.
 {else}
 <table>

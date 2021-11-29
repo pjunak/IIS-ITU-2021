@@ -6,7 +6,11 @@
     {elseif $user->isInRole('urednik') && $userFe->typ_osoby == 'disponent'}
         {control editorForm}
     {elseif $user->isInRole('reditel') && $user->getID() != $userFe->id}
-        {control editorForm}
+        {if $userFe->typ_osoby == 'urednik'}
+            {control editorFormUrednik}
+        {else}
+            {control editorForm}
+        {/if}
     {else}
         Nemáte práva k úpravě tohoto uživatele.
     {/if}

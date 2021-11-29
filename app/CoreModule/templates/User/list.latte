@@ -41,8 +41,8 @@
         <hr>
         {include tabulkaOsob, 'urednik'}
 
-    <a class="btn-action" n:href="editor"><i class="fas fa-user-plus"></i> Vložit uživatele</a>
-    {if $user->isInRole('reditel')}<a class="btn-action" n:href="editor"><i class="fas fa-user-plus"></i> Vložit úředníka</a>{/if}
+    <a class="btn-action" n:href="editor, NULL, 'disponent'"><i class="fas fa-user-plus"></i> Vložit uživatele</a>
+    {if $user->isInRole('reditel')}<a class="btn-action" n:href="editor, NULL, 'urednik'"><i class="fas fa-user-plus"></i> Vložit úředníka</a>{/if}
     {/if}
 {/block}
 

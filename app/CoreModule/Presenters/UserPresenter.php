@@ -26,6 +26,7 @@ class UserPresenter extends BasePresenter
 
     /** @var user Pro identifikaci uživatele */
     private $user;
+    private $userFe;
 
     /**
      * Konstruktor s nastavením URL výchozího článku a injektovaným modelem pro správu článků.
@@ -61,7 +62,7 @@ class UserPresenter extends BasePresenter
         // Pokusí se načíst článek s danou URL a pokud nebude nalezen vyhodí chybu 404.
         if (!($userFe = $this->userManager->getUser($id)))
             $this->error(); // Vyhazuje výjimku BadRequestException.
-
+        $this->userFe = $userFe;
         $this->template->userFe = $userFe; // Předá článek do šablony.
     }
 
@@ -112,6 +113,7 @@ class UserPresenter extends BasePresenter
             $userFe->update(['typ_osoby' => 'disponent']);
             }
         }
+        $this->userFe = $userFe;
         $this->template->userFe = $userFe;
     }
 

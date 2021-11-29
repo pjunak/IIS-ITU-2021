@@ -175,8 +175,8 @@ class FactoryPresenter extends BasePresenter
         $form->addText('ulice', 'Ulice')->setHtmlAttribute('placeholder', 'Ulicová')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',32);
         $form->addText('cislo_p', 'Číslo popisné')->setHtmlAttribute('placeholder', '123')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',8);
         $form->addText('cislo_o', 'Orientační číslo')->setHtmlAttribute('placeholder', 'BO-4a')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',8);
-        $form->addInteger('kraj', 'Kraj')->setHtmlAttribute('placeholder', '1')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);
-        $form->addInteger('okres', 'Okres')->setHtmlAttribute('placeholder', '1')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);
+        $form->addText('kraj', 'Kraj')->setHtmlAttribute('placeholder', 'Olomoucký kraj')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',32);
+        $form->addText('okres', 'Okres')->setHtmlAttribute('placeholder', 'Olomouc')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',32);
         $form->addText('obec', 'Obec')->setHtmlAttribute('placeholder', 'Obcov')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',32);
         $form->addInteger('psc', 'PSČ')->setHtmlAttribute('placeholder', '11100')->addRule($form::LENGTH, 'Délka %label je %d',5);
         $form->addText('parcela', 'Parcela')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',16);

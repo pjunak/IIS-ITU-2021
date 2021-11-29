@@ -98,7 +98,9 @@ class UserManager extends DatabaseManager
                     'telefon' => $user['telefon'],
                     'email' => $user['email'],
                     'login' => $user['login'],
-                    'heslo' => $user['heslo']
+                    //'heslo' => $user['heslo']
+                    'heslo' => password_hash($user['heslo'], PASSWORD_DEFAULT)
+
                 ]);
                 $osobaID = $this->database->query("SELECT id FROM iis_osoba WHERE login = ?", $user['login']);
                 /*$this->database->table('iis_firma_osoba')->insert([

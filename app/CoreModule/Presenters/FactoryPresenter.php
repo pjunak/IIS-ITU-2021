@@ -107,8 +107,15 @@ class FactoryPresenter extends BasePresenter
                 $this['editorForm']->setDefaults($factory); // Předání hodnot článku do editačního formuláře.
                 $this['editorForm']['datum_prvniho_pripojeni']->setDefaultValue($factory->datum_prvniho_pripojeni->format('Y-m-d'));
                 $this['editorForm']['datum_uvedeni_do_provozu']->setDefaultValue($factory->datum_uvedeni_do_provozu->format('Y-m-d'));
+                $this['editorForm']['stav']->setDefaultValue('podano');
             }
         }
+    }
+
+    public function actionZmenStavVyrobny($factoryID, $stav)
+    {
+        $this->factoryManager->updateStavVyrobny($factoryID, $stav);
+        $this->redirect('Factory:list');
     }
 
     
@@ -120,6 +127,7 @@ class FactoryPresenter extends BasePresenter
     {
         // Vytvoření formuláře a definice jeho polí.
         $form = new Form;
+        $form->addHidden('stav', 'Stav')->setValue('podano');
         
         //kategorie SPOLEČNOST
         $form->addGroup('Společnost');

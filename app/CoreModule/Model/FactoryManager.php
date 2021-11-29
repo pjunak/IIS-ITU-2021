@@ -72,6 +72,13 @@ class FactoryManager extends DatabaseManager
             , $userID)->fetchPairs();
     }
 
+    public function updateStavVyrobny($factoryID, $stav)
+    {
+        $this->database->query('UPDATE iis_vyrobna SET', [
+            'stav' => $stav,
+        ], 'WHERE id = ?', $factoryID);
+    }
+
     /**
      * Uloží výrobnu systému.
      * Pokud není nastaveno ID vloží novoý výrobnu, jinak provede editaci výrobny s daným ID.

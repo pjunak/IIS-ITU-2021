@@ -1,9 +1,21 @@
 {block title}{$factory->kratky_nazev}{/block}
 {block content}
+
+{if $user->isInRole('disponent') && $factory->stav == 'neschvaleno'}
+    <a class="btn-action" n:href="editor $factory->id"><i class="fas fa-edit"></i> Editovat</a>
+{/if}
+{if !$user->isInRole('disponent') && $factory->stav == 'podano'}
+    <a class="btn-action" n:href="zmenStavVyrobny $factory->id, 'schvaleno'"><i class="fas fa-check"></i> Schválit</a>
+{/if}
+{if !$user->isInRole('disponent') && $factory->stav == 'podano'}
+    <a class="btn-action" n:href="zmenStavVyrobny $factory->id, 'neschvaleno'"><i class="fas fa-times"></i> Zamítnout</a>
+{/if}
+{if !$user->isInRole('disponent')}
+    <a class="btn-action" onclick="return confirm('Opravdu chcete tuto výrobnu smazat?');" n:href="remove $factory->id"><i class="fas fa-trash-alt"></i> Odstranit</a>
+{/if}
 <div class="default-output">
     <div class="btn-bar">   
-        <a class="btn-action" n:href="editor $factory->id"><i class="fas fa-edit"></i> Editovat</a>
-        <a class="btn-action" onclick="return confirm('Opravdu chcete tuto výrobnu smazat?');" n:href="remove $factory->id"><i class="fas fa-trash-alt"></i> Odstranit</a>
+        
     </div>
     <div>   
         <label>ID</label>

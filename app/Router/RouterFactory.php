@@ -98,7 +98,8 @@ final class RouterFactory
                         // řetězec v URL => akce presenteru
                         'seznam-vyroben' => 'list',
                         'editor-vyroben' => 'editor',
-                        'odstranit-vyrobnu' => 'remove'
+                        'odstranit-vyrobnu' => 'remove',
+                        'zmena-stavu-vyrobny' => 'zmenStavVyrobny'
                         ]
             ]
         ]);

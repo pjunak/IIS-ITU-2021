@@ -73,6 +73,11 @@ class UserManager extends DatabaseManager
         return $this->database->table(self::TABLE_NAME)->where(self::ID, $id)->fetch();
     }
 
+    public function getSeznamFirem()
+    {
+        return $this->database->query("SELECT rut_id, nazev FROM iis_firma")->fetchPairs();
+    }
+
     /**
      * Uloží entitu systému.
      * Pokud není nastaveno ID vloží novou entitu, jinak provede editaci entity s daným ID.
@@ -80,36 +85,37 @@ class UserManager extends DatabaseManager
      */
     public function saveUser(ArrayHash $user)
     {
-        add();
-        if (empty($user[self::ID])) {
+        if (empty($user[self::ID]))
+        {//nový uživatel
             unset($user[self::ID]);
-            /*
-            //$this->passwords = new Passwords(PASSWORD_DEFAULT, ['cost' => 12]);
-            $this->database->table(self::TABLE_NAME)->insert([
-                self::ID_UCASTNIKA => $user['id_ucastnika'],
-                self::JMENO => $user['jmeno'],
-                self::JMENO => $user['prijmeni'],
-                self::PRIJMENI => $user['telefon'],
-                self::EMAIL => $user['email'],
-                self::LOGIN => $user['login'],
-                //self::HESLO => $this->passwords->hash($user['password']),
-            ]);
-            */
-            $this->database->table(self::TABLE_NAME)->insert($user);
+            if($user['typ_osoby'] == 'disponent')
+            {
+                $this->database->table(self::TABLE_NAME)->insert([
+                    'id_ucastnika' => $user['id_ucastnika'],
+                    'typ_osoby' => $user['typ_osoby'],
+                    'jmeno' => $user['jmeno'],
+                    'prijmeni' => $user['prijmeni'],
+                    'telefon' => $user['telefon'],
+                    'email' => $user['email'],
+                    'login' => $user['login'],
+                    'heslo' => $user['heslo']
+                ]);
+                $osobaID = $this->database->query("SELECT id FROM iis_osoba WHERE login = ?", $user['login']);
+                /*$this->database->table('iis_firma_osoba')->insert([
+                    'osoba' => $osobaID,
+                    'firma' => $user['id_firmy']
+                ]);*/
+            }
+            else
+            {
+                $this->database->table(self::TABLE_NAME)->insert($user);
+            }
+            
         } else
+        {//aktualizace stávajícího uživatele
             $this->database->table(self::TABLE_NAME)->where(self::ID, $user[self::ID])->update($user);
-
-
-            Nette\Utils\Validators::assert($email, 'email');
-		try {
-			$this->database->table(self::TABLE_NAME)->insert([
-				self::COLUMN_NAME => $username,
-				self::COLUMN_PASSWORD_HASH => $this->passwords->hash($password),
-				self::COLUMN_EMAIL => $email,
-			]);
-		} catch (Nette\Database\UniqueConstraintViolationException $e) {
-			throw new DuplicateNameException;
-		}
+        }
+            
     }
 
     /**

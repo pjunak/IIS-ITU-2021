@@ -123,6 +123,11 @@ class UserPresenter extends BasePresenter
     {
         // Vytvoření formuláře a definice jeho polí.
         $form = new Form;
+        $form->addGroup('Společnost');
+        $seznamDostupnychFirem = $this->userManager->getSeznamFirem();
+        $form->addSelect('id_firmy', 'Zákazník patří k firmě')->setItems($seznamDostupnychFirem)->setRequired();
+
+        $form->addGroup('Údaje zákazníka');
         $form->addHidden('id');
         $form->addInteger('id_ucastnika', 'ID účastníka');
         $form->addHidden('typ_osoby', 'disponent');
@@ -168,6 +173,7 @@ class UserPresenter extends BasePresenter
     {
         // Vytvoření formuláře a definice jeho polí.
         $form = new Form;
+        $form->addGroup('Údaje osoby');
         $form->addHidden('id');
         $form->addInteger('id_ucastnika', 'ID účastníka');
         $form->addHidden('typ_osoby', 'urednik');
@@ -181,6 +187,7 @@ class UserPresenter extends BasePresenter
         $form->addInteger('telefon', 'Telefonní číslo')->setHtmlAttribute('placeholder', '111222333')->addRule($form::LENGTH, 'Délka %label je %d',9);
         $form->addEmail('email', 'E-mail')->setHtmlAttribute('placeholder', 'muj.email@email.cz')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',32);
       
+        $form->addGroup('Firemní údaje');
         $form->addText('kancelar', 'Kancelář')->setHtmlAttribute('placeholder', '8B')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',32);
         $form->addText('pozice', 'Pozice')->setHtmlAttribute('placeholder', 'Technická podpora')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',32);
         $form->addInteger('plat', 'Plat')->setHtmlAttribute('placeholder', '28000')->addRule($form::LENGTH, 'Délka %label je %d',11);

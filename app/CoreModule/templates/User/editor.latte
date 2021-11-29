@@ -1,4 +1,4 @@
-{block title}Editor{/block}
+{block title}Úprava osoby{/block}
 {block description}Editor uživatele.{/block}
 {block content}
     {if $user->getID() == $userFe->id && !$user->isInRole('reditel')}

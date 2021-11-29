@@ -32,7 +32,7 @@ final class SignInFormFactory
 		$form->addText('username', 'Login:')
 			->setRequired('Prosím zadejte vaše uživatelské jméno.');
 
-		$form->addPassword('password', 'Certifikát:')
+		$form->addPassword('password', 'Heslo:')
 			->setRequired('Prosím zadejte vaše heslo.');
 
 		$form->addCheckbox('remember', 'Zapamatovat si přihlášení.');
@@ -44,7 +44,7 @@ final class SignInFormFactory
 				$this->user->setExpiration($values->remember ? '14 days' : '20 minutes');
 				$this->user->login($values->username, $values->password);
 			} catch (Nette\Security\AuthenticationException $e) {
-				$form->addError('Přihlašovací údaje jsou neplatné, zkuste to prosím znovu.');
+				$form->addError('Zadané heslo je neplatne, nebo uživatel neexistuje. Zkuste to prosím znovu.');
 				return;
 			}
 			$onSuccess();

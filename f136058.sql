@@ -51,9 +51,9 @@ CREATE TABLE `iis_firma` (
 -- Vypisuji data pro tabulku `iis_firma`
 --
 
-INSERT INTO `iis_firma` (`rut_id`, `ean`, `nazev`, `ic`, `dic`, `web`, `email`, `datum_vytvoreni`, `ulice`, `cislo_p`, `cislo_o`, `obec`, `psc`, `predcisli`, `cislo_uctu`, `kod_banky`) VALUES(123456789, 88163, 'Firma TEST s.r.o. #1', 12345678, NULL, 'http://test.com', 'test@domena.cz', '2021-11-21', 'Testová', '1024', '8', 'Testov', 12345, NULL, 123456789, '0100');
-INSERT INTO `iis_firma` (`rut_id`, `ean`, `nazev`, `ic`, `dic`, `web`, `email`, `datum_vytvoreni`, `ulice`, `cislo_p`, `cislo_o`, `obec`, `psc`, `predcisli`, `cislo_uctu`, `kod_banky`) VALUES(234567892, 12349, 'Ravoz spol s.r.o. #1', 62181825, 62181825, 'web.cz', 'mail@mail.cz', '2021-11-26', 'U Višně', '1', NULL, 'Višňová', 12345, 100, 100025242, '2260');
-INSERT INTO `iis_firma` (`rut_id`, `ean`, `nazev`, `ic`, `dic`, `web`, `email`, `datum_vytvoreni`, `ulice`, `cislo_p`, `cislo_o`, `obec`, `psc`, `predcisli`, `cislo_uctu`, `kod_banky`) VALUES(518468138, 84687, 'SolarBaron a.s. #1', 55118844, 55118844, 'http://grukesh.tk', 'xcasek01@vutbr.cz', '2018-02-15', 'Smetanova', '985', '43', 'Olomouc', 77900, NULL, 562874695, '2010');
+INSERT INTO `iis_firma` (`rut_id`, `ean`, `nazev`, `ic`, `dic`, `web`, `email`, `datum_vytvoreni`, `ulice`, `cislo_p`, `cislo_o`, `obec`, `psc`, `predcisli`, `cislo_uctu`, `kod_banky`) VALUES(123456789, 88163, 'Firma TEST s.r.o. 1', 12345678, NULL, 'http://test.com', 'test@domena.cz', '2021-11-21', 'Testová', '1024', '8', 'Testov', 12345, NULL, 123456789, '0100');
+INSERT INTO `iis_firma` (`rut_id`, `ean`, `nazev`, `ic`, `dic`, `web`, `email`, `datum_vytvoreni`, `ulice`, `cislo_p`, `cislo_o`, `obec`, `psc`, `predcisli`, `cislo_uctu`, `kod_banky`) VALUES(234567892, 12349, 'Ravoz spol s.r.o. 2', 62181825, 62181825, 'web.cz', 'mail@mail.cz', '2021-11-26', 'U Višně', '1', NULL, 'Višňová', 12345, 100, 100025242, '2260');
+INSERT INTO `iis_firma` (`rut_id`, `ean`, `nazev`, `ic`, `dic`, `web`, `email`, `datum_vytvoreni`, `ulice`, `cislo_p`, `cislo_o`, `obec`, `psc`, `predcisli`, `cislo_uctu`, `kod_banky`) VALUES(518468138, 84687, 'SolarBaron a.s. 3', 55118844, 55118844, 'http://grukesh.tk', 'xcasek01@vutbr.cz', '2018-02-15', 'Smetanova', '985', '43', 'Olomouc', 77900, NULL, 562874695, '2010');
 
 
 -- --------------------------------------------------------
@@ -186,15 +186,15 @@ CREATE TABLE `iis_vyrobna` (
   `parcela` varchar(16) COLLATE utf8_czech_ci DEFAULT NULL,
   `gps_n` decimal(15,5) DEFAULT NULL,
   `gps_e` decimal(15,5) DEFAULT NULL,
-  `druh_vyrobny` enum('slunecni','slunecni_budova','vodni','precerpavaci','jaderna','plyn','geotermalni','vetrna','biomasa') COLLATE utf8_czech_ci NOT NULL,
+  `druh_vyrobny` enum('sluneční','sluneční budova','vodní','přečerpávací','jaderná','plynová','geotermalní','větrná','biomasa') COLLATE utf8_czech_ci NOT NULL,
   `stav` enum('podano','neschvaleno','schvaleno') COLLATE utf8_czech_ci NOT NULL,
   `vyrobni_EAN` int(11) DEFAULT NULL,
   `EAN_vyrobny` int(11) DEFAULT NULL,
   `vykon_zdroje` int(11) DEFAULT NULL,
   `napetova_hladina` varchar(10) COLLATE utf8_czech_ci DEFAULT NULL,
-  `zpusob_pripojeni` enum('primo','neprimo','ostrovni_vyroba') COLLATE utf8_czech_ci NOT NULL,
+  `zpusob_pripojeni` enum('přímo','nepřímo','ostrovní výroba') COLLATE utf8_czech_ci NOT NULL,
   `vykaz_za_opm` enum('ano','ne') COLLATE utf8_czech_ci NOT NULL,
-  `druh_podpory` enum('bonus_rocni','bonus_hodinovy','povinny_vykup','bez_podpory') COLLATE utf8_czech_ci NOT NULL,
+  `druh_podpory` enum('bonus roční','bonus hodinový','povinný nákup','bez podpory') COLLATE utf8_czech_ci NOT NULL,
   `datum_prvniho_pripojeni` date DEFAULT NULL,
   `datum_uvedeni_do_provozu` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
@@ -203,10 +203,10 @@ CREATE TABLE `iis_vyrobna` (
 -- Vypisuji data pro tabulku `iis_vyrobna`
 --
 
-INSERT INTO `iis_vyrobna` (`id`, `id_vyrobniho_zdroje`, `id_site`, `id_firmy`, `kratky_nazev`, `ulice`, `cislo_p`, `cislo_o`, `kraj`, `okres`, `obec`, `psc`, `parcela`, `gps_n`, `gps_e`, `druh_vyrobny`,`stav`, `vyrobni_EAN`, `EAN_vyrobny`, `vykon_zdroje`, `napetova_hladina`, `zpusob_pripojeni`, `vykaz_za_opm`, `druh_podpory`, `datum_prvniho_pripojeni`, `datum_uvedeni_do_provozu`) VALUES(1, 1, 1, 123456789,'Výrobna 1', 'Rúžová', '1024', '8', 'Olomoucký kraj', 'Olomouc', 'Olomouc', 77900, '235/15', '18.45550', '27.00530', 'slunecni', 'schvaleno', 1001, 2002, 35, '110', 'primo', 'ano', 'bonus_rocni', '2021-09-01', '2021-09-02');
-INSERT INTO `iis_vyrobna` (`id`, `id_vyrobniho_zdroje`, `id_site`, `id_firmy`, `kratky_nazev`, `ulice`, `cislo_p`, `cislo_o`, `kraj`, `okres`, `obec`, `psc`, `parcela`, `gps_n`, `gps_e`, `druh_vyrobny`,`stav`, `vyrobni_EAN`, `EAN_vyrobny`, `vykon_zdroje`, `napetova_hladina`, `zpusob_pripojeni`, `vykaz_za_opm`, `druh_podpory`, `datum_prvniho_pripojeni`, `datum_uvedeni_do_provozu`) VALUES(2, 2, 2, 123456789,'Výrobna 2', 'Modrá', '1024', '8', 'Olomoucký kraj', 'Olomouc', 'Olomouc', 77900, '235/16', '18.45899', '27.00530', 'slunecni', 'podano', 1001, 2002, 35, '110', 'primo', 'ano', 'bonus_rocni', '2021-09-04', '2021-09-08');
-INSERT INTO `iis_vyrobna` (`id`, `id_vyrobniho_zdroje`, `id_site`, `id_firmy`, `kratky_nazev`, `ulice`, `cislo_p`, `cislo_o`, `kraj`, `okres`, `obec`, `psc`, `parcela`, `gps_n`, `gps_e`, `druh_vyrobny`,`stav`, `vyrobni_EAN`, `EAN_vyrobny`, `vykon_zdroje`, `napetova_hladina`, `zpusob_pripojeni`, `vykaz_za_opm`, `druh_podpory`, `datum_prvniho_pripojeni`, `datum_uvedeni_do_provozu`) VALUES(3, 3, 3, 234567892,'Vodnice 3', 'Mokrá', '420', '8', 'Jihomoravský kraj', 'Brno-město  ', 'Brno', 77900, '235/16', '18.45899', '27.00530', 'vodni', 'schvaleno', 1001, 2002, 35, '110', 'primo', 'ano', 'bonus_rocni', '2021-09-04', '2021-09-08');
-INSERT INTO `iis_vyrobna` (`id`, `id_vyrobniho_zdroje`, `id_site`, `id_firmy`, `kratky_nazev`, `ulice`, `cislo_p`, `cislo_o`, `kraj`, `okres`, `obec`, `psc`, `parcela`, `gps_n`, `gps_e`, `druh_vyrobny`,`stav`, `vyrobni_EAN`, `EAN_vyrobny`, `vykon_zdroje`, `napetova_hladina`, `zpusob_pripojeni`, `vykaz_za_opm`, `druh_podpory`, `datum_prvniho_pripojeni`, `datum_uvedeni_do_provozu`) VALUES(4, 4, 4, 518468138,'Vodnice 4', 'Mokrá', '240', '5', 'Jihomoravský kraj', 'Brno-město  ', 'Brno', 77900, '235/16', '18.45899', '27.00530', 'vodni', 'podano', 1001, 2002, 35, '110', 'primo', 'ano', 'bonus_rocni', '2021-09-04', '2021-09-08');
+INSERT INTO `iis_vyrobna` (`id`, `id_vyrobniho_zdroje`, `id_site`, `id_firmy`, `kratky_nazev`, `ulice`, `cislo_p`, `cislo_o`, `kraj`, `okres`, `obec`, `psc`, `parcela`, `gps_n`, `gps_e`, `druh_vyrobny`,`stav`, `vyrobni_EAN`, `EAN_vyrobny`, `vykon_zdroje`, `napetova_hladina`, `zpusob_pripojeni`, `vykaz_za_opm`, `druh_podpory`, `datum_prvniho_pripojeni`, `datum_uvedeni_do_provozu`) VALUES(1, 1, 1, 123456789,'Výrobna 1', 'Rúžová', '1024', '8', 'Olomoucký kraj', 'Olomouc', 'Olomouc', 77900, '235/15', '18.45550', '27.00530', 'sluneční', 'schvaleno', 1001, 2002, 35, '110', 'přímo', 'ano', 'bonus roční', '2021-09-01', '2021-09-02');
+INSERT INTO `iis_vyrobna` (`id`, `id_vyrobniho_zdroje`, `id_site`, `id_firmy`, `kratky_nazev`, `ulice`, `cislo_p`, `cislo_o`, `kraj`, `okres`, `obec`, `psc`, `parcela`, `gps_n`, `gps_e`, `druh_vyrobny`,`stav`, `vyrobni_EAN`, `EAN_vyrobny`, `vykon_zdroje`, `napetova_hladina`, `zpusob_pripojeni`, `vykaz_za_opm`, `druh_podpory`, `datum_prvniho_pripojeni`, `datum_uvedeni_do_provozu`) VALUES(2, 2, 2, 123456789,'Výrobna 2', 'Modrá', '1024', '8', 'Olomoucký kraj', 'Olomouc', 'Olomouc', 77900, '235/16', '18.45899', '27.00530', 'sluneční', 'podano', 1001, 2002, 35, '110', 'přímo', 'ano', 'bonus roční', '2021-09-04', '2021-09-08');
+INSERT INTO `iis_vyrobna` (`id`, `id_vyrobniho_zdroje`, `id_site`, `id_firmy`, `kratky_nazev`, `ulice`, `cislo_p`, `cislo_o`, `kraj`, `okres`, `obec`, `psc`, `parcela`, `gps_n`, `gps_e`, `druh_vyrobny`,`stav`, `vyrobni_EAN`, `EAN_vyrobny`, `vykon_zdroje`, `napetova_hladina`, `zpusob_pripojeni`, `vykaz_za_opm`, `druh_podpory`, `datum_prvniho_pripojeni`, `datum_uvedeni_do_provozu`) VALUES(3, 3, 3, 234567892,'Vodnice 3', 'Mokrá', '420', '8', 'Jihomoravský kraj', 'Brno-město  ', 'Brno', 77900, '235/16', '18.45899', '27.00530', 'vodní', 'schvaleno', 1001, 2002, 35, '110', 'přímo', 'ano', 'bonus roční', '2021-09-04', '2021-09-08');
+INSERT INTO `iis_vyrobna` (`id`, `id_vyrobniho_zdroje`, `id_site`, `id_firmy`, `kratky_nazev`, `ulice`, `cislo_p`, `cislo_o`, `kraj`, `okres`, `obec`, `psc`, `parcela`, `gps_n`, `gps_e`, `druh_vyrobny`,`stav`, `vyrobni_EAN`, `EAN_vyrobny`, `vykon_zdroje`, `napetova_hladina`, `zpusob_pripojeni`, `vykaz_za_opm`, `druh_podpory`, `datum_prvniho_pripojeni`, `datum_uvedeni_do_provozu`) VALUES(4, 4, 4, 518468138,'Vodnice 4', 'Mokrá', '240', '5', 'Jihomoravský kraj', 'Brno-město  ', 'Brno', 77900, '235/16', '18.45899', '27.00530', 'vodní', 'podano', 1001, 2002, 35, '110', 'přímo', 'ano', 'bonus roční', '2021-09-04', '2021-09-08');
 
 --
 -- Indexy pro exportované tabulky

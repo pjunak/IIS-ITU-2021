@@ -10,7 +10,8 @@
 {if !$user->isInRole('disponent') && $factory->stav == 'podano'}
     <a class="btn-action" n:href="zmenStavVyrobny $factory->id, 'neschvaleno'"><i class="fas fa-times"></i> Zamítnout</a>
 {/if}
-{if !$user->isInRole('disponent')}
+
+{if !$user->isInRole('disponent') && $factory->stav != 'schvaleno'}
     <a class="btn-action" onclick="return confirm('Opravdu chcete tuto výrobnu smazat?');" n:href="remove $factory->id"><i class="fas fa-trash-alt"></i> Odstranit</a>
 {/if}
 

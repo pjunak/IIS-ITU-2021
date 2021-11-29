@@ -2,10 +2,11 @@
 {block content}
 
 <a class="btn-action" n:href="editor $company->rut_id"><i class="fas fa-edit"></i> Editovat</a>
+{*
 {if $user->isInRole('urednik')}
 <a class="btn-action" onclick="return confirm('Opravdu chcete tuto společnost smazat?');" n:href="remove $company->rut_id"><i class="fas fa-trash-alt"></i> Odstranit</a>
 {/if}
-
+*}
 
 <table>
     <tr>

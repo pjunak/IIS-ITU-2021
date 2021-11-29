@@ -102,11 +102,11 @@ class UserManager extends DatabaseManager
                     'heslo' => password_hash($user['heslo'], PASSWORD_DEFAULT)
 
                 ]);
-                $osobaID = $this->database->query("SELECT id FROM iis_osoba WHERE login = ?", $user['login']);
-                /*$this->database->table('iis_firma_osoba')->insert([
-                    'osoba' => $osobaID,
+                $osobaID = $this->database->query("SELECT id FROM iis_osoba WHERE login = ?", $user['login'])->fetch();
+                $this->database->table('iis_firma_osoba')->insert([
+                    'osoba' => $osobaID->id,
                     'firma' => $user['id_firmy']
-                ]);*/
+                ]);
             }
             else
             {
@@ -115,7 +115,29 @@ class UserManager extends DatabaseManager
             
         } else
         {//aktualizace stávajícího uživatele
-            $this->database->table(self::TABLE_NAME)->where(self::ID, $user[self::ID])->update($user);
+            if($user['typ_osoby'] == 'disponent')
+            {
+                $this->database->query('UPDATE iis_osoba SET', [
+                    'id_ucastnika' => $user['id_ucastnika'],
+                    'typ_osoby' => $user['typ_osoby'],
+                    'jmeno' => $user['jmeno'],
+                    'prijmeni' => $user['prijmeni'],
+                    'telefon' => $user['telefon'],
+                    'email' => $user['email'],
+                    'login' => $user['login'],
+                    //'heslo' => $user['heslo']
+                    'heslo' => password_hash($user['heslo'], PASSWORD_DEFAULT)
+                ], 'WHERE id = ?', $user['id']);
+
+                $this->database->query('UPDATE iis_firma_osoba SET', [
+                    'firma' => $user['id_firmy']
+                ], 'WHERE osoba = ?', $user['id']);
+            }
+            else
+            {
+                $this->database->table(self::TABLE_NAME)->where(self::ID, $user[self::ID])->update($user);
+            }
+            
         }
             
     }

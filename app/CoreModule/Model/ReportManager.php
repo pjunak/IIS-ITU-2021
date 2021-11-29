@@ -70,8 +70,8 @@ class ReportManager extends DatabaseManager
             FROM '.self::TABLE_VYKAZ.'
             LEFT JOIN '.self::TABLE_OSOBA.' ON '.self::TABLE_VYKAZ.'.id_osoby = '.self::TABLE_OSOBA.'.id
             LEFT JOIN '.self::TABLE_VYROBNA.' ON '.self::TABLE_VYKAZ.'.id_osoby = '.self::TABLE_VYROBNA.'.id
-            WHERE '.self::TABLE_VYKAZ.'.id = ?
-        ', $id)->fetch();
+            WHERE '.self::TABLE_VYKAZ.'.id = ?', $id
+            )->fetch();
     }
 
     /**
@@ -109,7 +109,7 @@ class ReportManager extends DatabaseManager
         $result = array();
         if ($user->isInRole('disponent'))
         {
-            $result = $this->database->query("SELECT * FROM iis_vyrobna WHERE id_firmy IN (SELECT firma FROM iis_firma_osoba WHERE osoba = $user->id)")->fetchAll();
+            $result = $this->database->query("SELECT * FROM iis_vyrobna WHERE (iis_vyrobna.stav = 'schvaleno') AND id_firmy IN (SELECT firma FROM iis_firma_osoba WHERE osoba = $user->id)")->fetchAll();
         }
         else
         {

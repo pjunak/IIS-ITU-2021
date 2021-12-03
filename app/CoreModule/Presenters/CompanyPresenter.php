@@ -65,6 +65,7 @@ class CompanyPresenter extends BasePresenter
 
         $this->template->company = $company; // Předá článek do šablony.
         $this->template->companyUsers = $this->companyManager->getCompanyUsers($rut);
+        $this->template->otherUsers = $this->companyManager->getotherUsers($rut);
     }
 
     /** Načte a předá seznam článků do šablony. */
@@ -95,7 +96,7 @@ class CompanyPresenter extends BasePresenter
 
     /**
      * Odstraní článek.
-     * @param string|null $rut URL článku
+     * @param string|null $rut firmy
      * @throws AbortException
      */
     public function actionRemove(string $rut = null)
@@ -123,6 +124,46 @@ class CompanyPresenter extends BasePresenter
             }
         }
     }
+
+    /**
+     * Fnkce pro přidávání osoby do firmy
+     * @param string|null $rut firmy
+     * @throws AbortException
+     */
+    public function actionAdd(string $rut = null)
+    {
+        $this->renderDefault($rut);  
+        if ($rut) {
+            if (!($company = $this->companyManager->getCompany($rut)))
+                $this->flashMessage('Firma nebyla nalezena.'); // Výpis chybové hlášky.
+            else 
+            {
+                $this->template->company = $company;
+            }
+        }
+    }
+
+    public function handleAddUser(string $rut = null, string $id = null)
+    {
+        $this->companyManager->addUserToCompany($rut, $id);
+        $this->handleUpdate($rut);
+        $this->flashMessage('Uživatel úspěšně přidán do firmy.');
+    }
+
+    public function handleRemoveUser(string $rut = null, string $id = null)
+    {
+        $this->companyManager->removeUserFromCompany($rut, $id);
+        $this->handleUpdate($rut);
+        $this->flashMessage('Uživatel úspěšně odebrán z firmy.');
+    }
+
+    public function handleUpdate(string $rut = null)
+	{
+		$this->template->companyUsers = $this->companyManager->getCompanyUsers($rut);
+        $this->template->otherUsers = $this->companyManager->getotherUsers($rut);
+        $this->redrawControl('companyUsers');
+        $this->redrawControl('otherUsers');
+	}
 
     /**
      * Vytváří a vrací formulář pro editaci článků.

@@ -72,6 +72,23 @@ class CompanyManager extends DatabaseManager
     {
         return $this->database->query("SELECT * FROM iis_osoba WHERE iis_osoba.id IN (SELECT osoba FROM iis_firma_osoba WHERE firma = ?)", $rut);
     }
+    public function getOtherUsers($rut)
+    {
+        return $this->database->query("SELECT * FROM iis_osoba WHERE iis_osoba.typ_osoby = 'disponent' AND NOT iis_osoba.id IN (SELECT osoba FROM iis_firma_osoba WHERE firma = ?)", $rut);
+    }
+
+    public function addUserToCompany($rut, $id)
+    {
+        $this->database->table('iis_firma_osoba')->insert([
+            'osoba' => $id,
+            'firma' => $rut
+        ]);
+    }
+
+    public function removeUserFromCompany($rut, $id)
+    {
+        $this->database->query("DELETE FROM iis_firma_osoba WHERE iis_firma_osoba.osoba = ? AND iis_firma_osoba.firma = ?", $id, $rut);
+    }
 
     /**
      * Uloží firmu do systému.

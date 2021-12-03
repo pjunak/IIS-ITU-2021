@@ -37,6 +37,7 @@ final class RouterFactory
                         Route::FILTER_TABLE => [
                             'seznam-firem' => 'list',
                             'editor-firma' => 'editor',
+                            'add-firma' => 'add',
                             'odstranit-firmu' => 'remove'
                             ]
                 ]

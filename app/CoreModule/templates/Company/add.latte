@@ -1,0 +1,54 @@
+{block title}{$company->nazev}{/block}
+{block content}
+    <table>
+        <tr>
+            <th>
+                <h3>Osoby ve firmě</h3> 
+            </th>
+            <hr>
+            <table class="list-entities">
+                <tr>
+                    <th>ID</th>
+                    <th>Jméno a příjmení</th>
+                    <th>ID účastníka</th>
+                    <th>Telefonní číslo</th>
+                    <th>E-mailová adresa</th>
+                </tr>
+                {snippet companyUsers}
+                <tr n:foreach="$companyUsers as $thisUser">
+                    <td>{$thisUser->id}</td>
+                    <td><span class="company-name-link"><a n:href="User: $thisUser->id">{$thisUser->jmeno} {$thisUser->prijmeni}</a></span></td>
+                    <td>{$thisUser->id_ucastnika}</td>
+                    <td>{$thisUser->telefon}</td>
+                    <td>{$thisUser->email}</td>
+                    <td><span class="company-name-link"><a n:href="removeUser! $company->rut_id, $thisUser->id"><i class="far fa-minus-square"></i> Odebrat z firmy</a></span></td>
+                </tr>
+                {/snippet}  
+            </table>
+        </tr>
+        <tr>
+            <th>
+                <h3>Ostatní osoby</h3> 
+            </th>
+            <hr>
+            <table class="list-entities">
+                <tr>
+                    <th>ID</th>
+                    <th>Jméno a příjmení</th>
+                    <th>ID účastníka</th>
+                    <th>Telefonní číslo</th>
+                    <th>E-mailová adresa</th>
+                </tr>
+                {snippet otherUsers}
+                <tr n:foreach="$otherUsers as $thisUser">
+                    <td>{$thisUser->id}</td>
+                    <td><span class="company-name-link"><a n:href="User: $thisUser->id">{$thisUser->jmeno} {$thisUser->prijmeni}</a></span></td>
+                    <td>{$thisUser->id_ucastnika}</td>
+                    <td>{$thisUser->telefon}</td>
+                    <td>{$thisUser->email}</td>
+                    <td><span class="company-name-link"><a n:href="addUser! $company->rut_id, $thisUser->id"><i class="far fa-plus-square"></i> Přidat do firmy</a></span></td>
+                </tr>
+                {/snippet}
+            </table>
+        </tr>
+    </table>

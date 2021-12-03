@@ -161,8 +161,8 @@ class CompanyPresenter extends BasePresenter
 	{
 		$this->template->companyUsers = $this->companyManager->getCompanyUsers($rut);
         $this->template->otherUsers = $this->companyManager->getotherUsers($rut);
-        $this->redrawControl('companyUsers');
-        $this->redrawControl('otherUsers');
+        $this->redrawControl('companyUsers'); // TODO - zdá se, že z nějakého důvodu není potřeba
+        $this->redrawControl('otherUsers'); // TODO - zdá se, že z nějakého důvodu není potřeba
 	}
 
     /**

@@ -12,19 +12,23 @@
 {/if}
 {/block}
 {block content}   
-    <table class="list-entities">
-        <tr>
-            <th>Název</th>
-            <th>RÚT ID</th>
-            <th>IČO</th>
-            <th>Adresa</th>
-        </tr>
-        <tr n:foreach="$companies as $company">
-            <td><span class="company-name-link"><a n:href="Company: $company->rut_id">{$company->nazev}</a></span></td>
-            <td>{$company->rut_id}</td>
-            <td>{$company->ic}</td>
-            <td>{$company->ulice} {if $company->cislo_o != NULL}{$company->cislo_o}/{/if}{$company->cislo_p}, {$company->psc} {$company->obec}</td>
-        </tr>
+    <table class="list-entities table table-striped table-hover">
+        <tbody>
+            <thead>
+                <tr>
+                    <th>Název</th>
+                    <th>RÚT ID</th>
+                    <th>IČO</th>
+                    <th>Adresa</th>
+                </tr>
+            </thead>
+            <tr n:foreach="$companies as $company">
+                <td><span class="company-name-link"><a n:href="Company: $company->rut_id">{$company->nazev}</a></span></td>
+                <td>{$company->rut_id}</td>
+                <td>{$company->ic}</td>
+                <td>{$company->ulice} {if $company->cislo_o != NULL}{$company->cislo_o}/{/if}{$company->cislo_p}, {$company->psc} {$company->obec}</td>
+            </tr>
+        </tbody>
     </table>
     {if !$user->isInRole('disponent')}<a class="btn-action" n:href="editor"><i class="fas fa-building"></i> Vložit firmu</a>{/if}
 {/block}

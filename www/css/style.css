@@ -6,6 +6,11 @@
 //	Autor: Petr Junák, xjunak01
 */
 
+:root
+{
+    --form-padding: 10px;
+}
+
 body {
     font-family: 'Roboto', sans-serif;
     font-size: 14px;
@@ -15,6 +20,11 @@ body {
 h1 {
     color: #444444;
     margin-bottom: 1em;
+}
+
+h3
+{
+    margin-top: 30px;
 }
 
 article {
@@ -254,4 +264,38 @@ footer
 footer p
 {
     margin-bottom: 0;
+}
+
+table .btn-action
+{
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th
+{
+    vertical-align: baseline;
+}
+
+form th,
+form td
+{
+    padding-top: var(--form-padding);
+}
+
+table.list-item label,
+table.list-item input
+{
+    margin-top: var(--form-padding);
+}
+
+form fieldset
+{
+    margin-bottom: 1em;
+}
+
+hr
+{
+    margin-top: 0;
+    margin-bottom: 10px;
 }

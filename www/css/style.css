@@ -17,6 +17,11 @@ body {
     margin: 0 auto;
 }
 
+#main-content
+{
+    min-height: calc(100vh - 38px);
+}
+
 h1 {
     color: #444444;
     margin-bottom: 1em;

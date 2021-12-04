@@ -21,15 +21,15 @@ use \Exception as Exception;
 class passwordMissmatchException extends Exception { }
 
 /**
- * Presenter pro vykreslování článků.
+ * Presenter pro vykreslování uživatelů.
  * @package App\CoreModule\Presenters
  */
 class UserPresenter extends BasePresenter
 {
-    /** @var string URL výchozího článku. */
+    /** @var string URL výchozího uživatelele. */
     private string $defaultUserId;
 
-    /** @var UserManager Model pro správu s článků. */
+    /** @var UserManager Model pro správu uživatelů. */
     private UserManager $userManager;
 
     /** @var user Pro identifikaci uživatele */
@@ -37,9 +37,9 @@ class UserPresenter extends BasePresenter
     private $userFe;
 
     /**
-     * Konstruktor s nastavením URL výchozího článku a injektovaným modelem pro správu článků.
-     * @param string         $defaultUserId URL výchozího článku
-     * @param UserManager $userManager    automaticky injektovaný model pro správu článků
+     * Konstruktor s nastavením URL výchozího uživatelele a injektovaným modelem pro správu uživatelů.
+     * @param string         $defaultUserId URL výchozího uživatelele
+     * @param UserManager $userManager    automaticky injektovaný model pro správu uživatelů
      */
     public function __construct(string $defaultUserId, UserManager $userManager)
     {
@@ -59,30 +59,30 @@ class UserPresenter extends BasePresenter
     }
     
     /**
-     * Načte a předá článek do šablony podle jeho URL.
-     * @param string|null $id URL článku
-     * @throws BadRequestException Jestliže článek s danou URL nebyl nalezen.
+     * Načte a předá uživatele do šablony podle jeho URL.
+     * @param string|null $id URL uživatelele
+     * @throws BadRequestException Jestliže uživatel s danou URL nebyl nalezen.
      */
     public function renderDefault(string $id = null)
     {
-        if (!$id) $id = $this->defaultUserId; // Pokud není zadaná URL, vezme se URL výchozího článku.
+        if (!$id) $id = $this->defaultUserId; // Pokud není zadaná URL, vezme se URL výchozího uživatelele.
 
-        // Pokusí se načíst článek s danou URL a pokud nebude nalezen vyhodí chybu 404.
+        // Pokusí se načíst uživatele s danou URL a pokud nebude nalezen vyhodí chybu 404.
         if (!($userFe = $this->userManager->getUser($id)))
             $this->error(); // Vyhazuje výjimku BadRequestException.
         $this->userFe = $userFe;
-        $this->template->userFe = $userFe; // Předá článek do šablony.
+        $this->template->userFe = $userFe; // Předá uživatele do šablony.
     }
 
-    /** Načte a předá seznam článků do šablony. */
+    /** Načte a předá seznam uživatelů do šablony. */
     public function renderList()
     {
         $this->template->users = $this->userManager->getUsers();
     }
 
     /**
-     * Odstraní článek.
-     * @param string|null $id URL článku
+     * Odstraní uživatele.
+     * @param string|null $id URL uživatelele
      * @throws AbortException
      */
     public function actionRemove(string $id = null)
@@ -93,9 +93,9 @@ class UserPresenter extends BasePresenter
     }
 
     /**
-     * Vykresluje formulář pro editaci článku podle zadané URL.
-     * Pokud URL není zadána, nebo článek s danou URL neexistuje, vytvoří se nový.
-     * @param string|null $id URL adresa článku
+     * Vykresluje formulář pro editaci uživatelele podle zadané URL.
+     * Pokud URL není zadána, nebo uživatel s danou URL neexistuje, vytvoří se nový.
+     * @param string|null $id URL adresa uživatelele
      */
     public function actionEditor(string $id = null, string $role = null)
     {
@@ -104,8 +104,8 @@ class UserPresenter extends BasePresenter
                 $this->flashMessage('Uživatel nebyl nalezen.'); // Výpis chybové hlášky.
             else
             {
-                $this['editorForm']->setDefaults($user); // Předání hodnot článku do editačního formuláře. 
-                $this['editorFormUrednik']->setDefaults($user); // Předání hodnot článku do editačního formuláře.
+                $this['editorForm']->setDefaults($user); // Předání hodnot uživatelele do editačního formuláře. 
+                $this['editorFormUrednik']->setDefaults($user); // Předání hodnot uživatelele do editačního formuláře.
                 $this['passwordForm']->setDefaults($user);
                 if($user->id == $this->user->id)
                 {
@@ -161,6 +161,11 @@ class UserPresenter extends BasePresenter
         $this->template->userFe = $userFe;
     }
 
+    /**
+     * Vykresluje formulář pro tvorbu uživatelele.
+     * @param string|null $id URL adresa uživatelele
+     * @param string|null $role role uživatele
+     */
     public function actionCreator(string $id = null, $role = null)
     {
         if (!$id) $id = $this->defaultUserId;
@@ -180,8 +185,8 @@ class UserPresenter extends BasePresenter
     }
 
     /**
-     * Vytváří a vrací formulář pro editaci článků.
-     * @return Form formulář pro editaci článků
+     * Vytváří a vrací formulář pro tvorbu uživatelů.
+     * @return Form formulář pro tvorbu uživatelů
      */
     protected function createComponentCreatorForm()
     {
@@ -226,10 +231,10 @@ class UserPresenter extends BasePresenter
         return $form;
     }
 
-         /**
-     * Vytváří a vrací formulář pro editaci článků. Pokud je uživatel přihlášen jako ředitel, může také upravovat a přidávat tyto pole
+    /**
+     * Vytváří a vrací formulář pro tvorbu uživatelů. Pokud je uživatel přihlášen jako ředitel, může také upravovat a přidávat tyto pole
 
-     * @return Form formulář pro editaci článků
+     * @return Form formulář pro tvorbu uživatelů
      */
     protected function createComponentCreatorFormUrednik()
     {
@@ -276,8 +281,8 @@ class UserPresenter extends BasePresenter
     }
 
         /**
-     * Vytváří a vrací formulář pro editaci článků.
-     * @return Form formulář pro editaci článků
+     * Vytváří a vrací formulář pro hesla uživatele
+     * @return Form formulář pro hesla uživatele
      */
     protected function createComponentPasswordForm()
     {
@@ -326,8 +331,8 @@ class UserPresenter extends BasePresenter
     }
 
     /**
-     * Vytváří a vrací formulář pro editaci článků.
-     * @return Form formulář pro editaci článků
+     * Vytváří a vrací formulář pro editaci uživatelů.
+     * @return Form formulář pro editaci uživatelů
      */
     protected function createComponentEditorForm()
     {
@@ -365,9 +370,9 @@ class UserPresenter extends BasePresenter
     }
 
      /**
-     * Vytváří a vrací formulář pro editaci článků. Pokud je uživatel přihlášen jako ředitel, může také upravovat a přidávat tyto pole
+     * Vytváří a vrací formulář pro editaci uživatelů. Pokud je uživatel přihlášen jako ředitel, může také upravovat a přidávat tyto pole
 
-     * @return Form formulář pro editaci článků
+     * @return Form formulář pro editaci uživatelů
      */
     protected function createComponentEditorFormUrednik()
     {

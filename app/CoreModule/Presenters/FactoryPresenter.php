@@ -20,24 +20,24 @@ use Nette\Utils\ArrayHash;
 use Nette\Utils\DateTime;
 
 /**
- * Presenter pro vykreslování článků.
+ * Presenter pro vykreslování výroben.
  * @package App\CoreModule\Presenters
  */
 class FactoryPresenter extends BasePresenter
 {
-    /** @var string URL výchozího článku. */
+    /** @var string URL výchozí výrobny. */
     private string $defaultFactoryId;
 
-    /** @var FactoryManager Model pro správu s článků. */
+    /** @var FactoryManager Model pro správu výroben. */
     private FactoryManager $factoryManager;
 
     /** @var user Pro identifikaci uživatele */
     private $user;
 
     /**
-     * Konstruktor s nastavením URL výchozího článku a injektovaným modelem pro správu článků.
-     * @param string         $defaultFactoryId URL výchozího článku
-     * @param FactoryManager $factoryManager    automaticky injektovaný model pro správu článků
+     * Konstruktor s nastavením URL výchozí výrobny a injektovaným modelem pro správu výroben.
+     * @param string         $defaultFactoryId URL výchozí výrobny
+     * @param FactoryManager $factoryManager    automaticky injektovaný model pro správu výroben
      */
     public function __construct(string $defaultFactoryId, FactoryManager $factoryManager)
     {
@@ -57,23 +57,23 @@ class FactoryPresenter extends BasePresenter
     }
     
     /**
-     * Načte a předá článek do šablony podle jeho URL.
-     * @param string|null $id URL článku
-     * @throws BadReportException Jestliže článek s danou URL nebyl nalezen.
+     * Načte a předá výrobnu do šablony podle jeho URL.
+     * @param string|null $id URL výrobny
+     * @throws BadReportException Jestliže výrobna s danou URL nebyl nalezena.
      */
     public function renderDefault(string $id = null)
     {
-        if (!$id) $id = $this->defaultFactoryId; // Pokud není zadaná URL, vezme se URL výchozího článku.
+        if (!$id) $id = $this->defaultFactoryId; // Pokud není zadaná URL, vezme se URL výchozí výrobny.
 
-        // Pokusí se načíst článek s danou URL a pokud nebude nalezen vyhodí chybu 404.
+        // Pokusí se načíst výrobnu s danou URL a pokud nebude nalezen vyhodí chybu 404.
         if (!($factory = $this->factoryManager->getFactory($id)))
             $this->error(); // Vyhazuje výjimku BadReportException.
 
-        $this->template->factory = $factory; // Předá článek do šablony.
+        $this->template->factory = $factory; // Předá výrobnu do šablony.
         $this->template->nazevVlastniciFirmy = $this->factoryManager->getNazevVlastniciFirmy($factory->id_firmy);
     }
 
-    /** Načte a předá seznam článků do šablony. */
+    /** Načte a předá seznam výroben do šablony. */
     public function renderList()
     {
         $result = array();
@@ -89,7 +89,7 @@ class FactoryPresenter extends BasePresenter
 
     /**
      * Odstraní Výrobnu.
-     * @param string|null $id URL článku
+     * @param string|null $id URL výrobny
      * @throws AbortException
      */
     public function handleRemove(string $id = null)
@@ -100,9 +100,9 @@ class FactoryPresenter extends BasePresenter
     }
 
     /**
-     * Vykresluje formulář pro editaci článku podle zadané URL.
-     * Pokud URL není zadána, nebo článek s danou URL neexistuje, vytvoří se nový.
-     * @param string|null $id URL adresa článku
+     * Vykresluje formulář pro editaci výrobny podle zadané URL.
+     * Pokud URL není zadána, nebo výrobna s danou URL neexistuje, vytvoří se novou.
+     * @param string|null $id URL adresa výrobny
      */
     public function actionEditor(string $id = null)
     {
@@ -112,7 +112,7 @@ class FactoryPresenter extends BasePresenter
             else 
             {
                 $this->template->factory = $factory;
-                $this['editorForm']->setDefaults($factory); // Předání hodnot článku do editačního formuláře.
+                $this['editorForm']->setDefaults($factory); // Předání hodnot výrobny do editačního formuláře.
                 $this['editorForm']['datum_prvniho_pripojeni']->setDefaultValue($factory->datum_prvniho_pripojeni->format('Y-m-d'));
                 $this['editorForm']['datum_uvedeni_do_provozu']->setDefaultValue($factory->datum_uvedeni_do_provozu->format('Y-m-d'));
                 $this['editorForm']['stav']->setDefaultValue('podano');
@@ -120,6 +120,11 @@ class FactoryPresenter extends BasePresenter
         }
     }
 
+    /**
+     * Změní stav výrobny na požadovaný
+     * @param string $factoryID ID výrobny
+     * @param string $stav stav
+     */
     public function actionZmenStavVyrobny($factoryID, $stav)
     {
         $this->factoryManager->updateStavVyrobny($factoryID, $stav);
@@ -128,8 +133,8 @@ class FactoryPresenter extends BasePresenter
 
     
     /**
-     * Vytváří a vrací formulář pro editaci článků.
-     * @return Form formulář pro editaci článků
+     * Vytváří a vrací formulář pro editaci výroben.
+     * @return Form formulář pro editaci výroen
      */
     protected function createComponentEditorForm()
     {

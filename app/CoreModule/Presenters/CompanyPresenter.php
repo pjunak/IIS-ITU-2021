@@ -20,24 +20,24 @@ use Nette\Utils\ArrayHash;
 use Nette\Security\User;
 use Nette\Utils\DateTime;
 /**
- * Presenter pro vykreslování článků.
+ * Presenter pro vykreslování firem.
  * @package App\CoreModule\Presenters
  */
 class CompanyPresenter extends BasePresenter
 {
-    /** @var string URL výchozího článku. */
+    /** @var string URL výchozí firmy. */
     private string $defaultCompanyRut;
 
-    /** @var CompanyManager Model pro správu s článků. */
+    /** @var CompanyManager Model pro správu s firem. */
     private CompanyManager $companyManager;
 
     /** @var user Pro identifikaci uživatele */
     private $user;
 
     /**
-     * Konstruktor s nastavením URL výchozího článku a injektovaným modelem pro správu článků.
-     * @param string         $defaultCompanyRut URL výchozího článku
-     * @param CompanyManager $companyManager    automaticky injektovaný model pro správu článků
+     * Konstruktor s nastavením URL výchozí firmy a injektovaným modelem pro správu firem.
+     * @param string         $defaultCompanyRut URL výchozí firmy
+     * @param CompanyManager $companyManager    automaticky injektovaný model pro správu firem
      */
     public function __construct(string $defaultCompanyRut, CompanyManager $companyManager)
     {
@@ -57,24 +57,24 @@ class CompanyPresenter extends BasePresenter
     }
 
     /**
-     * Načte a předá článek do šablony podle jeho URL.
-     * @param string|null $rut URL článku
-     * @throws BadRequestException Jestliže článek s danou URL nebyl nalezen.
+     * Načte a předá firmu do šablony podle jeho URL.
+     * @param string|null $rut URL firmy
+     * @throws BadRequestException Jestliže firma s danou URL nebyla nalezen.
      */
     public function renderDefault(string $rut = null)
     {
-        if (!$rut) $rut = $this->defaultCompanyRut; // Pokud není zadaná URL, vezme se URL výchozího článku.
+        if (!$rut) $rut = $this->defaultCompanyRut; // Pokud není zadaná URL, vezme se URL výchozíh firmy.
 
-        // Pokusí se načíst článek s danou URL a pokud nebude nalezen vyhodí chybu 404.
+        // Pokusí se načíst firmu s danou URL a pokud nebude nalezen vyhodí chybu 404.
         if (!($company = $this->companyManager->getCompany($rut)))
             $this->error(); // Vyhazuje výjimku BadRequestException.
 
-        $this->template->company = $company; // Předá článek do šablony.
+        $this->template->company = $company; // Předá firmu do šablony.
         $this->template->companyUsers = $this->companyManager->getCompanyUsers($rut);
         $this->template->otherUsers = $this->companyManager->getotherUsers($rut);
     }
 
-    /** Načte a předá seznam článků do šablony. */
+    /** Načte a předá seznam firem do šablony. */
     public function renderList()
     {
         if($this->user->isInRole('disponent'))
@@ -101,21 +101,21 @@ class CompanyPresenter extends BasePresenter
     */
 
     /**
-     * Odstraní článek.
+     * Odstraní firmu.
      * @param string|null $rut firmy
      * @throws AbortException
      */
     public function actionRemove(string $rut = null)
     {
         $this->companyManager->removeCompany($rut);
-        $this->flashMessage('Článek byl úspěšně odstraněn.');
+        $this->flashMessage('Firma byla úspěšně odstraněn.');
         $this->redirect('Company:list');
     }
 
     /**
-     * Vykresluje formulář pro editaci článku podle zadané URL.
-     * Pokud URL není zadána, nebo článek s danou URL neexistuje, vytvoří se nový.
-     * @param string|null $rut URL adresa článku
+     * Vykresluje formulář pro editaci firmy podle zadané URL.
+     * Pokud URL není zadána, nebo formu s danou URL neexistuje, vytvoří se nový.
+     * @param string|null $rut URL adresa firmy
      */
     public function actionEditor(string $rut = null)
     {
@@ -125,7 +125,7 @@ class CompanyPresenter extends BasePresenter
             else 
             {
                 $this->template->company = $company;
-                $this['editorForm']->setDefaults($company); // Předání hodnot článku do editačního formuláře.
+                $this['editorForm']->setDefaults($company); // Předání hodnot firmy do editačního formuláře.
                 $this['editorForm']['datum_vytvoreni']->setDefaultValue($company->datum_vytvoreni->format('Y-m-d'));
             }
         }
@@ -149,6 +149,11 @@ class CompanyPresenter extends BasePresenter
         }
     }
 
+    /**
+     * Přidá zživatele do firmy
+     * @param string $rut ID firmy
+     * @param string $id ID uživatele
+     */
     public function handleAddUser(string $rut = null, string $id = null)
     {
         $this->companyManager->addUserToCompany($rut, $id);
@@ -156,6 +161,11 @@ class CompanyPresenter extends BasePresenter
         $this->flashMessage('Uživatel úspěšně přidán do firmy.');
     }
 
+    /**
+     * Odebere uživatele z firmy
+     * @param string $rut ID firmy
+     * @param string $id ID uživatele
+     */
     public function handleRemoveUser(string $rut = null, string $id = null)
     {
         $this->companyManager->removeUserFromCompany($rut, $id);
@@ -163,6 +173,10 @@ class CompanyPresenter extends BasePresenter
         $this->flashMessage('Uživatel úspěšně odebrán z firmy.');
     }
 
+    /**
+     * Obnoví seznam uživatelů ve firmě a mimo firmu
+     * @param string $rut ID firmy
+     */
     public function handleUpdate(string $rut = null)
 	{
 		$this->template->companyUsers = $this->companyManager->getCompanyUsers($rut);
@@ -172,8 +186,8 @@ class CompanyPresenter extends BasePresenter
 	}
 
     /**
-     * Vytváří a vrací formulář pro editaci článků.
-     * @return Form formulář pro editaci článků
+     * Vytváří a vrací formulář pro editaci firem.
+     * @return Form formulář pro editaci firem
      */
     protected function createComponentEditorForm()
     {
@@ -256,7 +270,7 @@ class CompanyPresenter extends BasePresenter
         $form->onSuccess[] = function (Form $form, ArrayHash $values) {
             try {
                 $this->companyManager->saveCompany($values);
-                $this->flashMessage('Článek byl úspěšně uložen.');
+                $this->flashMessage('Firma byla úspěšně uložena.');
                 if(isset($values->rut_id))
                 {
                     $this->redirect('Company:', $values->rut_id);

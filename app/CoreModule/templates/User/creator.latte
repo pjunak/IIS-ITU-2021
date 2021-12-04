@@ -1,0 +1,11 @@
+{block title}Úprava osoby{/block}
+{block description}Editor uživatele.{/block}
+{block content}
+    {if $user->isInRole('disponent')}
+        Nemáte práva k vkládání uživatelů do systému.
+    {elseif $userFe->typ_osoby == 'disponent'}
+        {control creatorForm}
+    {elseif $user->isInRole('reditel') && $userFe->typ_osoby == 'urednik'}
+        {control creatorFormUrednik}
+    {/if}
+{/block}

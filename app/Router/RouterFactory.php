@@ -53,6 +53,7 @@ final class RouterFactory
                         // řetězec v URL => akce presenteru
                         'seznam-uzivatelu' => 'list',
                         'editor-uzivatel' => 'editor',
+                        'pridat-uzivatele' => 'creator',
                         'odstranit-uzivatele' => 'remove'
                         ]
             ]

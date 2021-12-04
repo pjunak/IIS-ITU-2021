@@ -2,12 +2,12 @@
 {block content}
 
 {if $user->getID() == $userFe->id && !$user->isInRole('reditel')}
-    <a class="btn-action" n:href="editor $userFe->id"><i class="fas fa-edit"></i> Editovat</a>
+    <a class="btn-action" n:href="editor $userFe->id, $userFe->typ_osoby"><i class="fas fa-edit"></i> Editovat</a>
 {elseif $user->isInRole('urednik') && $userFe->typ_osoby == 'disponent'}
-    <a class="btn-action" n:href="editor $userFe->id"><i class="fas fa-edit"></i> Editovat</a>
+    <a class="btn-action" n:href="editor $userFe->id, $userFe->typ_osoby"><i class="fas fa-edit"></i> Editovat</a>
     {*<a class="btn-action" onclick="return confirm('Opravdu chcete tohoto uživatele smazat?');" n:href="remove $userFe->id"><i class="fas fa-trash-alt"></i> Odstranit</a>*}
 {elseif $user->isInRole('reditel') && $user->getID() != $userFe->id}
-    <a class="btn-action" n:href="editor $userFe->id"><i class="fas fa-edit"></i> Editovat</a>
+    <a class="btn-action" n:href="editor $userFe->id, $userFe->typ_osoby"><i class="fas fa-edit"></i> Editovat</a>
     {*<a class="btn-action" onclick="return confirm('Opravdu chcete tohoto uživatele smazat?');" n:href="remove $userFe->id"><i class="fas fa-trash-alt"></i> Odstranit</a>*}
 {else}
 {/if}

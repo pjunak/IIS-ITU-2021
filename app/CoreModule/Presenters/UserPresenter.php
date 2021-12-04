@@ -11,6 +11,8 @@ use Nette\Application\BadRequestException;
 use Nette\Application\UI\Form;
 use Nette\Database\UniqueConstraintViolationException;
 use Nette\Utils\ArrayHash;
+use \Exception as Exception;
+class passwordMissmatchException extends Exception { }
 
 /**
  * Presenter pro vykreslování článků.
@@ -89,7 +91,7 @@ class UserPresenter extends BasePresenter
      * Pokud URL není zadána, nebo článek s danou URL neexistuje, vytvoří se nový.
      * @param string|null $id URL adresa článku
      */
-    public function actionEditor(string $id = null, $role = null)
+    public function actionEditor(string $id = null, string $role = null)
     {
         if ($id) {
             if (!($user = $this->userManager->getUser($id)))
@@ -98,9 +100,63 @@ class UserPresenter extends BasePresenter
             {
                 $this['editorForm']->setDefaults($user); // Předání hodnot článku do editačního formuláře. 
                 $this['editorFormUrednik']->setDefaults($user); // Předání hodnot článku do editačního formuláře.
+                $this['passwordForm']->setDefaults($user);
+                if($user->id == $this->user->id)
+                {
+                    $this['editorForm']['id_ucastnika']->setDisabled();
+                    $this['editorForm']['jmeno']->setDisabled();
+                    $this['editorForm']['prijmeni']->setDisabled();
+                    $this['editorForm']['telefon']->setRequired();
+                    $this['editorForm']['email']->setRequired();
+
+                    $this['editorFormUrednik']['id_ucastnika']->setDisabled();
+                    $this['editorFormUrednik']['jmeno']->setDisabled();
+                    $this['editorFormUrednik']['prijmeni']->setDisabled();
+                    $this['editorFormUrednik']['telefon']->setRequired();
+                    $this['editorFormUrednik']['email']->setRequired();
+
+                    $this['editorFormUrednik']['kancelar']->setDisabled();
+                    $this['editorFormUrednik']['pozice']->setDisabled();
+                    $this['editorFormUrednik']['plat']->setDisabled();
+                } else 
+                {
+                    $this['editorForm']['id_ucastnika']->setRequired();
+                    $this['editorForm']['jmeno']->setRequired();
+                    $this['editorForm']['prijmeni']->setRequired();
+                    $this['editorForm']['telefon']->setDisabled();
+                    $this['editorForm']['email']->setDisabled();
+
+                    $this['editorFormUrednik']['id_ucastnika']->setRequired();
+                    $this['editorFormUrednik']['jmeno']->setRequired();
+                    $this['editorFormUrednik']['prijmeni']->setRequired();
+                    $this['editorFormUrednik']['telefon']->setDisabled();
+                    $this['editorFormUrednik']['email']->setDisabled();
+
+                    $this['editorFormUrednik']['kancelar']->setRequired();
+                    $this['editorFormUrednik']['pozice']->setRequired();
+                    $this['editorFormUrednik']['plat']->setRequired();
+                }
             }
         }
 
+        if (!$id) $id = $this->defaultUserId;
+        if (!($userFe = $this->userManager->getUser($id)))
+            $this->error();
+        if ($role) {
+            if($role == 'urednik')
+            {
+                $userFe->update(['typ_osoby' => 'urednik']);
+            }else
+            {
+            $userFe->update(['typ_osoby' => 'disponent']);
+            }
+        }
+        $this->userFe = $userFe;
+        $this->template->userFe = $userFe;
+    }
+
+    public function actionCreator(string $id = null, $role = null)
+    {
         if (!$id) $id = $this->defaultUserId;
         if (!($userFe = $this->userManager->getUser($id)))
             $this->error();
@@ -121,7 +177,7 @@ class UserPresenter extends BasePresenter
      * Vytváří a vrací formulář pro editaci článků.
      * @return Form formulář pro editaci článků
      */
-    protected function createComponentEditorForm()
+    protected function createComponentCreatorForm()
     {
         // Vytvoření formuláře a definice jeho polí.
         $form = new Form;
@@ -142,9 +198,8 @@ class UserPresenter extends BasePresenter
         $form->addText('prijmeni', 'Příjmení')->setRequired()->setHtmlAttribute('placeholder', 'Novák')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',64);
         $form->addInteger('telefon', 'Telefonní číslo')->setHtmlAttribute('placeholder', '111222333')->addRule($form::LENGTH, 'Délka %label je %d',9);
         $form->addEmail('email', 'E-mail')->setHtmlAttribute('placeholder', 'muj.email@email.cz')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',32);
+
         $form->addSubmit('save', 'Uložit uživatele');
-
-
 
         // Funkce se vykonaná při úspěšném odeslání formuláře a zpracuje zadané hodnoty.
         $form->onSuccess[] = function (Form $form, ArrayHash $values) {
@@ -162,16 +217,15 @@ class UserPresenter extends BasePresenter
                 $this->flashMessage('Uživatel s tímto Loginem již existuje.');
             }
         };
-
         return $form;
     }
 
-     /**
+         /**
      * Vytváří a vrací formulář pro editaci článků. Pokud je uživatel přihlášen jako ředitel, může také upravovat a přidávat tyto pole
 
      * @return Form formulář pro editaci článků
      */
-    protected function createComponentEditorFormUrednik()
+    protected function createComponentCreatorFormUrednik()
     {
         // Vytvoření formuláře a definice jeho polí.
         $form = new Form;
@@ -212,7 +266,141 @@ class UserPresenter extends BasePresenter
                 $this->flashMessage('Uživatel s tímto ID již existuje.');
             }
         };
+        return $form;
+    }
 
+        /**
+     * Vytváří a vrací formulář pro editaci článků.
+     * @return Form formulář pro editaci článků
+     */
+    protected function createComponentPasswordForm()
+    {
+        // Vytvoření formuláře a definice jeho polí.
+        $form = new Form;
+        $form->addHidden('id');
+        $form->addGroup('Staré heslo pro kontrolu');
+        $form->addPassword('heslo', 'Původní heslo')->setRequired('%label je nutné vyplnit')
+        ->addRule($form::MIN_LENGTH, 'Heslo musí mít alespoň %d znaků', 6)
+        ->addRule($form::MAX_LENGTH, 'Heslo nemůže mít víc, než %d znaků', 255);
+        $form->addGroup('Nové heslo');
+        $form->addPassword('heslo_new', 'Heslo')->setRequired('%label je nutné vyplnit')
+        ->addRule($form::MIN_LENGTH, 'Heslo musí mít alespoň %d znaků', 6)
+        ->addRule($form::MAX_LENGTH, 'Heslo nemůže mít víc, než %d znaků', 255)
+        ->addRule($form::PATTERN, 'Musí obsahovat číslici', '.*[0-9].*');
+        $form->addPassword('heslo_new_check', 'Ověření hesla')->setRequired('%label je nutné vyplnit')
+        ->addRule($form::MIN_LENGTH, 'Heslo musí mít alespoň %d znaků', 6)
+        ->addRule($form::MAX_LENGTH, 'Heslo nemůže mít víc, než %d znaků', 255)
+        ->addRule($form::PATTERN, 'Musí obsahovat číslici', '.*[0-9].*');
+        
+        $form->addSubmit('save', 'Změnit heslo');
+
+        // Funkce se vykonaná při úspěšném odeslání formuláře a zpracuje zadané hodnoty.
+        $form->onSuccess[] = function (Form $form, ArrayHash $values) {
+            try {
+                if($values['heslo_new'] != $values['heslo_new_check'])
+                {
+                    throw new passwordMissmatchException('Password missmatch');
+                } else
+                {
+                    $this->userManager->updateUserPassword($values);
+                    $this->flashMessage('Heslo bylo úspěšně změněno.');
+                    if(isset($values->id))
+                    {
+                        $this->redirect('User:', $values->id);
+                    }else
+                    {
+                        $this->redirect('User:list');
+                    }
+                }
+            } catch (passwordMissmatchException $e) {
+                $this->flashMessage('Hesla musejí být stejná.','warning');
+            }
+        };
+        return $form;
+    }
+
+    /**
+     * Vytváří a vrací formulář pro editaci článků.
+     * @return Form formulář pro editaci článků
+     */
+    protected function createComponentEditorForm()
+    {
+        // Vytvoření formuláře a definice jeho polí.
+        $form = new Form;
+        $form->addHidden('id');
+        $form->addText('login', 'Login')->setDisabled()->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',64);
+        $form->addInteger('id_ucastnika', 'ID účastníka');
+        $form->addHidden('typ_osoby', 'disponent');
+        $form->addText('jmeno', 'Jméno')->setHtmlAttribute('placeholder', 'Jan')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',64);
+        $form->addText('prijmeni', 'Příjmení')->setHtmlAttribute('placeholder', 'Novák')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',64);
+        $form->addInteger('telefon', 'Telefonní číslo')->setHtmlAttribute('placeholder', '111222333')->addRule($form::LENGTH, 'Délka %label je %d',9);
+        $form->addEmail('email', 'E-mail')->setHtmlAttribute('placeholder', 'muj.email@email.cz')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',32);
+
+        $form->addSubmit('save', 'Uložit uživatele');
+
+        // Funkce se vykonaná při úspěšném odeslání formuláře a zpracuje zadané hodnoty.
+        $form->onSuccess[] = function (Form $form, ArrayHash $values) {
+            try {
+                $this->userManager->saveUser($values);
+                $this->flashMessage('Uživatel byl úspěšně uložen.');
+                if(isset($values->id))
+                {
+                    $this->redirect('User:', $values->id);
+                }else
+                {
+                    $this->redirect('User:list');
+                }
+            } catch (UniqueConstraintViolationException $e) {
+                $this->flashMessage('Uživatel s tímto Loginem již existuje.');
+            }
+        };
+
+        return $form;
+    }
+
+     /**
+     * Vytváří a vrací formulář pro editaci článků. Pokud je uživatel přihlášen jako ředitel, může také upravovat a přidávat tyto pole
+
+     * @return Form formulář pro editaci článků
+     */
+    protected function createComponentEditorFormUrednik()
+    {
+        // Vytvoření formuláře a definice jeho polí.
+        $form = new Form;
+        $form->addGroup('Údaje osoby');
+        $form->addHidden('id');
+        $form->addInteger('id_ucastnika', 'ID účastníka');
+        $form->addHidden('typ_osoby', 'urednik');
+        $form->addText('login', 'Login')->setdisabled()->setHtmlAttribute('placeholder', 'Pepega')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',64);
+        // Pro zjednodušení kontroly odstraněno ->addRule($form::PATTERN, 'Musí obsahovat číslici', '.*[0-9].*');
+        $form->addText('jmeno', 'Jméno')->setRequired()->setHtmlAttribute('placeholder', 'Jan')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',64);
+        $form->addText('prijmeni', 'Příjmení')->setRequired()->setHtmlAttribute('placeholder', 'Novák')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',64);
+        $form->addInteger('telefon', 'Telefonní číslo')->setHtmlAttribute('placeholder', '111222333')->addRule($form::LENGTH, 'Délka %label je %d',9);
+        $form->addEmail('email', 'E-mail')->setHtmlAttribute('placeholder', 'muj.email@email.cz')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',32);
+      
+        $form->addGroup('Firemní údaje');
+        $form->addText('kancelar', 'Kancelář')->setHtmlAttribute('placeholder', '8B')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',32);
+        $form->addText('pozice', 'Pozice')->setHtmlAttribute('placeholder', 'Technická podpora')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',32);
+        $form->addInteger('plat', 'Plat')->setHtmlAttribute('placeholder', '28000')->addRule($form::LENGTH, 'Délka %label je %d',11);
+        
+        $form->addSubmit('save', 'Uložit úředníka');
+
+        // Funkce se vykonaná při úspěšném odeslání formuláře a zpracuje zadané hodnoty.
+        $form->onSuccess[] = function (Form $form, ArrayHash $values) {
+            try {
+                $this->userManager->saveUser($values);
+                $this->flashMessage('Úředník byl úspěšně uložen.');
+                if(isset($values->id))
+                {
+                    $this->redirect('User:', $values->id);
+                }else
+                {
+                    $this->redirect('User:list');
+                }
+            } catch (UniqueConstraintViolationException $e) {
+                $this->flashMessage('Uživatel s tímto ID již existuje.');
+            }
+        };
         return $form;
     }
 }

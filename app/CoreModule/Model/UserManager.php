@@ -98,9 +98,7 @@ class UserManager extends DatabaseManager
                     'telefon' => $user['telefon'],
                     'email' => $user['email'],
                     'login' => $user['login'],
-                    //'heslo' => $user['heslo']
                     'heslo' => password_hash($user['heslo'], PASSWORD_DEFAULT)
-
                 ]);
                 $osobaID = $this->database->query("SELECT id FROM iis_osoba WHERE login = ?", $user['login'])->fetch();
                 $this->database->table('iis_firma_osoba')->insert([
@@ -125,7 +123,6 @@ class UserManager extends DatabaseManager
                     'telefon' => $user['telefon'],
                     'email' => $user['email'],
                     'login' => $user['login'],
-                    //'heslo' => $user['heslo']
                     'heslo' => password_hash($user['heslo'], PASSWORD_DEFAULT)
                 ], 'WHERE id = ?', $user['id']);
 
@@ -140,6 +137,31 @@ class UserManager extends DatabaseManager
             
         }
             
+    }
+
+    public function updateUser(ArrayHash $user)
+    {
+        //aktualizace stávajícího uživatele
+        if($user['typ_osoby'] == 'disponent')
+        {
+            $this->database->query('UPDATE iis_osoba SET', [
+                'id_ucastnika' => $user['id_ucastnika'],
+                'typ_osoby' => $user['typ_osoby'],
+                'jmeno' => $user['jmeno'],
+                'prijmeni' => $user['prijmeni'],
+                'telefon' => $user['telefon'],
+                'email' => $user['email'],
+            ], 'WHERE id = ?', $user['id']);
+        }
+    }
+
+    /**
+     * Aktualizuje heslo stávajícího uživatele
+     * @param string ArrayHash $user obsahuje heslo_new, které se nastaví jako nové heslo
+     */
+    public function updateUserPassword(ArrayHash $user)
+    {
+        $this->database->query('UPDATE iis_osoba SET iis_osoba.heslo = \''.password_hash($user['heslo_new'], PASSWORD_DEFAULT).'\' WHERE id = '.$user['id']);
     }
 
     /**

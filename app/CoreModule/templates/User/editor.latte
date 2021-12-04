@@ -2,7 +2,12 @@
 {block description}Editor uživatele.{/block}
 {block content}
     {if $user->getID() == $userFe->id && !$user->isInRole('reditel')}
-        {control editorForm}
+        <table>
+            <tr>
+                <th>{control editorForm}</th>
+                <th>{control passwordForm}</th>
+            </tr>
+        </table>
     {elseif $user->isInRole('urednik') && $userFe->typ_osoby == 'disponent'}
         {control editorForm}
     {elseif $user->isInRole('reditel') && $user->getID() != $userFe->id}

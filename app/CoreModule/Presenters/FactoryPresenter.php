@@ -165,7 +165,7 @@ class FactoryPresenter extends BasePresenter
         ];
         $form->addSelect('napetova_hladina', 'Napěťová hladina')->setItems($napetove_hladiny)->setRequired();
         $zpusoby_pripojeni = $this->factoryManager->get_enum_values('zpusob_pripojeni');
-        $helper = $form->addSelect('zpusob_pripojeni', 'Způsob připojení')->setItems($zpusoby_pripojeni)->setRequired();
+        $form->addSelect('zpusob_pripojeni', 'Způsob připojení')->setItems($zpusoby_pripojeni)->setRequired();
     
         $ano_ne = $this->factoryManager->get_enum_values('vykaz_za_opm');
         $form->addSelect('vykaz_za_opm', 'Výkaz za OPM')->setItems($ano_ne)->setRequired();

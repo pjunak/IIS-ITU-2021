@@ -263,7 +263,7 @@ class UserPresenter extends BasePresenter
                     $this->redirect('User:list');
                 }
             } catch (UniqueConstraintViolationException $e) {
-                $this->flashMessage('Uživatel s tímto ID již existuje.');
+                $this->flashMessage('Uživatel s tímto Loginem již existuje.');
             }
         };
         return $form;
@@ -328,8 +328,8 @@ class UserPresenter extends BasePresenter
         // Vytvoření formuláře a definice jeho polí.
         $form = new Form;
         $form->addHidden('id');
-        $form->addText('login', 'Login')->setDisabled()->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',64);
-        $form->addInteger('id_ucastnika', 'ID účastníka');
+        $form->addHidden('login');
+        $form->addHidden('id_ucastnika');
         $form->addHidden('typ_osoby', 'disponent');
         $form->addText('jmeno', 'Jméno')->setHtmlAttribute('placeholder', 'Jan')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',64);
         $form->addText('prijmeni', 'Příjmení')->setHtmlAttribute('placeholder', 'Novák')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',64);
@@ -369,10 +369,9 @@ class UserPresenter extends BasePresenter
         $form = new Form;
         $form->addGroup('Údaje osoby');
         $form->addHidden('id');
-        $form->addInteger('id_ucastnika', 'ID účastníka');
+        $form->addHidden('id_ucastnika');
         $form->addHidden('typ_osoby', 'urednik');
-        $form->addText('login', 'Login')->setdisabled()->setHtmlAttribute('placeholder', 'Pepega')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',64);
-        // Pro zjednodušení kontroly odstraněno ->addRule($form::PATTERN, 'Musí obsahovat číslici', '.*[0-9].*');
+        $form->addHidden('login');
         $form->addText('jmeno', 'Jméno')->setRequired()->setHtmlAttribute('placeholder', 'Jan')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',64);
         $form->addText('prijmeni', 'Příjmení')->setRequired()->setHtmlAttribute('placeholder', 'Novák')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',64);
         $form->addInteger('telefon', 'Telefonní číslo')->setHtmlAttribute('placeholder', '111222333')->addRule($form::LENGTH, 'Délka %label je %d',9);
@@ -398,7 +397,7 @@ class UserPresenter extends BasePresenter
                     $this->redirect('User:list');
                 }
             } catch (UniqueConstraintViolationException $e) {
-                $this->flashMessage('Uživatel s tímto ID již existuje.');
+                $this->flashMessage('Uživatel s tímto Loginem již existuje.');
             }
         };
         return $form;

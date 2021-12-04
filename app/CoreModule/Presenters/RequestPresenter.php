@@ -18,6 +18,7 @@ use Nette\Application\UI\Form;
 use Nette\Database\UniqueConstraintViolationException;
 use Nette\Utils\ArrayHash;
 use Nette\Utils\DateTime;
+use Nette\Utils\Html;
 
 /**
  * Presenter pro vykreslování požadavků.
@@ -150,7 +151,8 @@ class RequestPresenter extends BasePresenter
         {
             $date = new DateTime;
             $form->addHidden('datum_vytvoreni')->setDefaultValue($date->format('Y-m-d'));
-            $form->addText('predmet', 'Předmět')->setRequired()->setHtmlAttribute('placeholder', 'Žádost o změnu údaje')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',128);
+            $form->addText('predmet', Html::el()->setHtml('Předmět <span data-toggle="tooltip" data-placement="top" title="Krátký popis žádosti, nebo oznámení."><i class="fas fa-info-circle"></i></span>'))
+            ->setRequired()->setHtmlAttribute('placeholder', 'Žádost o změnu údaje')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',128);
             $form->addHidden('status', 'Status')->setDefaultValue('podan');
             $form->addTextArea('obsah_pozadavku', 'Obsah požadavku')->setRequired();
             $form->addSubmit('save', 'Vložit požadavek');

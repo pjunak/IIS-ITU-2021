@@ -18,6 +18,7 @@ use Nette\Application\UI\Form;
 use Nette\Database\UniqueConstraintViolationException;
 use Nette\Utils\ArrayHash;
 use Nette\Utils\DateTime;
+use Nette\Utils\Html;
 
 /**
  * Presenter pro vykreslování výkazů.
@@ -166,10 +167,13 @@ class ReportPresenter extends BasePresenter
         $form->addHidden('id_vyrobny')->setRequired()->setDefaultValue($this->vybrana_vyrobna);
         $dateTime = new DateTime;
         $date = $dateTime->format('Y-m-d');
-        $form->addText('od', 'Od')->setHtmlType('date')->setDefaultValue($date)->setRequired('%label je nutné vyplnit');;
-        $form->addText('do', 'Do')->setHtmlType('date')->setDefaultValue($date)->setRequired('%label je nutné vyplnit');;
+        $form->addText('od', Html::el()->setHtml('Od <span data-toggle="tooltip" data-placement="top" title="První den měsíce, ve kterém byla vrobna v provozu"><i class="fas fa-info-circle"></i></span>'))
+        ->setHtmlType('date')->setDefaultValue($date)->setRequired('%label je nutné vyplnit');
+        $form->addText('do', Html::el()->setHtml('DO <span data-toggle="tooltip" data-placement="top" title="Poslední den měsíce, ve kterém byla výrobna v provozu"><i class="fas fa-info-circle"></i></span>'))
+        ->setHtmlType('date')->setDefaultValue($date)->setRequired('%label je nutné vyplnit');
         $form->addHidden('datum_cas_zadani_vykazu')->setDefaultValue($dateTime)->setRequired(); // Je nastaveno automaticky podle aktuálního data a času
-        $form->addInteger('svorkova_vyroba_elektriny', 'Svorková výroba elektřiny')->setRequired()->setHtmlAttribute('placeholder', '12500')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);
+        $form->addInteger('svorkova_vyroba_elektriny', Html::el()->setHtml('Svorková výroba elektřiny <span data-toggle="tooltip" data-placement="top" title="Všechny údaje lze zjistit přímo z měřiče umístěného na výrobně."><i class="fas fa-info-circle"></i></span>'))
+        ->setRequired()->setHtmlAttribute('placeholder', '12500')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);
         $form->addInteger('vlastni_spotreba_elektriny', 'Vlastní spotřeba elektřiny')->setHtmlAttribute('placeholder', '7000')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);;
         $form->addInteger('celkova_konecna_spotreba', 'Celková spotřeba elektřiny')->setHtmlAttribute('placeholder', '9500')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);;
         $form->addInteger('spotreba_z_toho_lokalni', 'Spotřeba z toho lokální')->setHtmlAttribute('placeholder', '2500')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);;

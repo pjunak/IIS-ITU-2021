@@ -18,6 +18,7 @@ use Nette\Application\UI\Form;
 use Nette\Database\UniqueConstraintViolationException;
 use Nette\Utils\ArrayHash;
 use Nette\Utils\DateTime;
+use Nette\Utils\Html;
 
 /**
  * Presenter pro vykreslování výroben.
@@ -156,11 +157,13 @@ class FactoryPresenter extends BasePresenter
         $form->addText('kratky_nazev', 'Krátký název')->setRequired()->setHtmlAttribute('placeholder', 'Moje výrobna')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',64);;
         $form->addHidden('id');
         $form->addInteger('id_vyrobniho_zdroje', 'ID výrobního zdroje')->setHtmlAttribute('placeholder', '123456')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);;
-        $form->addInteger('id_site', 'ID sítě')->setHtmlAttribute('placeholder', '123456')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);
+        $form->addInteger('id_site', Html::el()->setHtml('ID sítě <span data-toggle="tooltip" data-placement="top" title="Lorem ipsum dolor sit amet, consectetuer adipiscing elit."><i class="fas fa-info-circle"></i></span>'))->setHtmlAttribute('placeholder', '123456')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);
         $druhy_vyroben = $this->factoryManager->get_enum_values('druh_vyrobny');
         $form->addSelect('druh_vyrobny', 'Druh zdroje')->setItems($druhy_vyroben);
-        $form->addInteger('vyrobni_EAN', 'Výrobní EAN')->setHtmlAttribute('placeholder', '123456')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',18);
-        $form->addInteger('EAN_vyrobny', 'EAN výrobny')->setHtmlAttribute('placeholder', '123456')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',18);
+        $form->addInteger('vyrobni_EAN', Html::el()->setHtml('Výrobní EAN <span data-toggle="tooltip" data-placement="top" title="Kód EAN (European Article Number) je mezinárodní číslo obchodní doložky. Najdete ho ve faktuře u adresy odběrného místa. Slouží k jednoznačné identifikaci odběrného místa, resp. místa spotřeby energie. Jde o 18místné číslo. "><i class="fas fa-info-circle"></i></span>'))
+        ->setHtmlAttribute('placeholder', '123456')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',18);
+        $form->addInteger('EAN_vyrobny', Html::el()->setHtml('EAN výrobny <span data-toggle="tooltip" data-placement="top" title="Kód EAN (European Article Number) je mezinárodní číslo obchodní doložky. Najdete ho ve faktuře u adresy odběrného místa. Slouží k jednoznačné identifikaci odběrného místa, resp. místa spotřeby energie. Jde o 18místné číslo. "><i class="fas fa-info-circle"></i></span>'))
+        ->setHtmlAttribute('placeholder', '123456')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',18);
         $form->addInteger('vykon_zdroje', 'Výkon zdroje')->setHtmlAttribute('placeholder', '7820')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);
         $napetove_hladiny = [
             '0,4' => '0,4',

@@ -17,6 +17,7 @@ use Nette\Application\BadRequestException;
 use Nette\Application\UI\Form;
 use Nette\Database\UniqueConstraintViolationException;
 use Nette\Utils\ArrayHash;
+use Nette\Utils\Html;
 use \Exception as Exception;
 class passwordMissmatchException extends Exception { }
 
@@ -198,7 +199,7 @@ class UserPresenter extends BasePresenter
 
         $form->addGroup('Údaje zákazníka');
         $form->addHidden('id');
-        $form->addInteger('id_ucastnika', 'ID účastníka');
+        $form->addInteger('id_ucastnika', Html::el()->setHtml('ID účastníka <span data-toggle="tooltip" data-placement="top" title="ID účastníka pro Lorem ipsum najdete v Dolor sir amet."><i class="fas fa-info-circle"></i></span>'));
         $form->addHidden('typ_osoby', 'disponent');
         $form->addText('login', 'Login')->setRequired()->setHtmlAttribute('placeholder', 'Pepega')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',64);
         $form->addPassword('heslo', 'Heslo')->setRequired('%label je nutné vyplnit')
@@ -242,7 +243,7 @@ class UserPresenter extends BasePresenter
         $form = new Form;
         $form->addGroup('Údaje osoby');
         $form->addHidden('id');
-        $form->addInteger('id_ucastnika', 'ID účastníka');
+        $form->addInteger('id_ucastnika', Html::el()->setHtml('ID účastníka <span data-toggle="tooltip" data-placement="top" title="ID účastníka pro Lorem ipsum najdete v Dolor sir amet."><i class="fas fa-info-circle"></i></span>'));
         $form->addHidden('typ_osoby', 'urednik');
         $form->addText('login', 'Login')->setRequired()->setHtmlAttribute('placeholder', 'Pepega')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',64);
         $form->addPassword('heslo', 'Heslo')->setRequired('%label je nutné vyplnit')

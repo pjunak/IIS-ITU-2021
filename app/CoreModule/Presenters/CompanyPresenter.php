@@ -19,6 +19,7 @@ use Nette\Database\UniqueConstraintViolationException;
 use Nette\Utils\ArrayHash;
 use Nette\Security\User;
 use Nette\Utils\DateTime;
+use Nette\Utils\Html;
 /**
  * Presenter pro vykreslování firem.
  * @package App\CoreModule\Presenters
@@ -197,7 +198,8 @@ class CompanyPresenter extends BasePresenter
         $form = new Form;
         $form->addGroup('Základní údaje');
         $form->addHidden('rut_id');
-        array_push($helparr, $form->addInteger('ean', 'Ean')->setHtmlAttribute('placeholder', '123456789')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11));
+        array_push($helparr, $form->addInteger('ean', Html::el()->setHtml('EAN <span data-toggle="tooltip" data-placement="top" title="Kód EAN (European Article Number) je mezinárodní číslo obchodní doložky. Najdete ho ve faktuře u adresy odběrného místa. Slouží k jednoznačné identifikaci odběrného místa, resp. místa spotřeby energie. Jde o 18místné číslo. "><i class="fas fa-info-circle"></i></span>'))
+        ->setHtmlAttribute('placeholder', '123456789')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',18));
         $form->addText('nazev', 'Název')->setRequired('%label je nutné vyplnit')->setHtmlAttribute('placeholder', 'Jméno firmy')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',128);
         array_push($helparr, $form->addInteger('ic', 'IČ')->setHtmlAttribute('placeholder', '12345678')->addRule($form::LENGTH, 'Délka %label je %d',8));
         $form->addtext('dic', 'DIČ')->setHtmlAttribute('placeholder', '12345678')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);

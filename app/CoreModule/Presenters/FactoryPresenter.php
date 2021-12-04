@@ -159,8 +159,8 @@ class FactoryPresenter extends BasePresenter
         $form->addInteger('id_site', 'ID sítě')->setHtmlAttribute('placeholder', '123456')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);
         $druhy_vyroben = $this->factoryManager->get_enum_values('druh_vyrobny');
         $form->addSelect('druh_vyrobny', 'Druh zdroje')->setItems($druhy_vyroben);
-        $form->addInteger('vyrobni_EAN', 'Výrobní EAN')->setHtmlAttribute('placeholder', '123456')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);
-        $form->addInteger('EAN_vyrobny', 'EAN výrobny')->setHtmlAttribute('placeholder', '123456')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);
+        $form->addInteger('vyrobni_EAN', 'Výrobní EAN')->setHtmlAttribute('placeholder', '123456')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',18);
+        $form->addInteger('EAN_vyrobny', 'EAN výrobny')->setHtmlAttribute('placeholder', '123456')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',18);
         $form->addInteger('vykon_zdroje', 'Výkon zdroje')->setHtmlAttribute('placeholder', '7820')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);
         $napetove_hladiny = [
             '0,4' => '0,4',

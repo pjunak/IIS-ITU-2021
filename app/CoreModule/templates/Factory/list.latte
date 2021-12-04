@@ -5,46 +5,50 @@
 *}
 
 {define seznamVyroben, $stavVyrobny}
-<table class="list-entities">
-    <tr>
-        <th>Název</th>
-        <th>ID výrobny</th>
-        <th>Druh</th>
-        <th>Výkon</th>
-        <th>Napěťová hladina</th>
-        <th>Adresa</th>
-        <th>Uvedení do provozu</th>
-    </tr>
-    <tr n:foreach="$factories as $thisFactory">
-        {if $thisFactory->stav == $stavVyrobny}
-        <td><span class="company-name-link"><a n:href="Factory: $thisFactory->id">{$thisFactory->kratky_nazev}</a></span></td>
-        <td>{$thisFactory->id}</td>
-        {switch $thisFactory->druh_vyrobny}
-            {case 'slunecni'}
-                <td>Sluneční</td>
-            {case 'slunecni_budova'}
-                <td>Sluneční-budova</td>
-            {case 'vodni'}
-                <td>Vodní</td>
-            {case 'precerpavaci'}
-                <td>Přečerpávací</td>
-            {case 'jaderna'}
-                <td>Jaderná</td>
-            {case 'plyn'}
-                <td>Plynová</td>
-            {case 'geotermalni'}
-                <td>Geotermální</td>
-            {case 'vetrna'}
-                <td>Větrná</td>
-            {case 'biomasa'}
-                <td>Biomasa</td>
-        {/switch}
-        <td>{$thisFactory->vykon_zdroje/1000000}MW</td>
-        <td>{$thisFactory->napetova_hladina}kV</td>
-        <td>{$thisFactory->ulice} {if $thisFactory->cislo_o != NULL}{$thisFactory->cislo_o}/{/if}{$thisFactory->cislo_p}, {$thisFactory->psc} {$thisFactory->obec}</td>
-        <td>{$thisFactory->datum_uvedeni_do_provozu|date:'j. n. Y'}</td>
-        {/if}
-    </tr>
+<table class="list-entities table table-striped table-hover">
+    <thead>
+        <tr>
+            <th>Název</th>
+            <th>ID výrobny</th>
+            <th>Druh</th>
+            <th>Výkon</th>
+            <th>Napěťová hladina</th>
+            <th>Adresa</th>
+            <th>Uvedení do provozu</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr n:foreach="$factories as $thisFactory">
+            {if $thisFactory->stav == $stavVyrobny}
+            <td><span class="company-name-link"><a n:href="Factory: $thisFactory->id">{$thisFactory->kratky_nazev}</a></span></td>
+            <td>{$thisFactory->id}</td>
+            {switch $thisFactory->druh_vyrobny}
+                {case 'slunecni'}
+                    <td>Sluneční</td>
+                {case 'slunecni_budova'}
+                    <td>Sluneční-budova</td>
+                {case 'vodni'}
+                    <td>Vodní</td>
+                {case 'precerpavaci'}
+                    <td>Přečerpávací</td>
+                {case 'jaderna'}
+                    <td>Jaderná</td>
+                {case 'plyn'}
+                    <td>Plynová</td>
+                {case 'geotermalni'}
+                    <td>Geotermální</td>
+                {case 'vetrna'}
+                    <td>Větrná</td>
+                {case 'biomasa'}
+                    <td>Biomasa</td>
+            {/switch}
+            <td>{$thisFactory->vykon_zdroje/1000000}MW</td>
+            <td>{$thisFactory->napetova_hladina}kV</td>
+            <td>{$thisFactory->ulice} {if $thisFactory->cislo_o != NULL}{$thisFactory->cislo_o}/{/if}{$thisFactory->cislo_p}, {$thisFactory->psc} {$thisFactory->obec}</td>
+            <td>{$thisFactory->datum_uvedeni_do_provozu|date:'j. n. Y'}</td>
+            {/if}
+        </tr>
+    </tbody>
 </table>
 <br>
 {/define}

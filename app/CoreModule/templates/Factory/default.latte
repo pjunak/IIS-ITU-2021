@@ -23,16 +23,16 @@
 
 <h3>Společnost</h3>
 <hr>
-<table>
+<table class="list-item">
     <tr> 
         <td><label>Výrobnu vlastní</label></td>
         <td><input type="text" value="{$nazevVlastniciFirmy->nazev}" disabled></td>
     </tr>
-<table>
+</table>
 
 <h3>Výrobní zdroj</h3>
 <hr>
-<table>
+<table class="list-item">
     <tr> 
         <td><label>Krátký název</label></td>
         <td><input type="text" value="{$factory->kratky_nazev}" disabled></td>
@@ -73,11 +73,11 @@
         <td><label>Výkaz za OPM</label></td>
         <td><input type="text" value="{$factory->vykaz_za_opm}" disabled></td>
     </tr>
-<table>
+</table>
 
 <h3>Adresa výrobny</h3>
 <hr>
-<table>
+<table class="list-item">
     <tr> 
         <td><label>Adresa</label></td>
         <td><input type="text" value="{$factory->ulice} {if $factory->cislo_o != NULL}{$factory->cislo_o}/{/if}{$factory->cislo_p}, {$factory->psc} {$factory->obec}" disabled></td>
@@ -102,20 +102,20 @@
         <td><label>GPS E</label></td>
         <td><input type="number" value="{$factory->gps_e}" disabled></td>
     </tr>
-<table>
+</table>
 
 <h3>Druh podpory</h3>
 <hr>
-<table>
+<table class="list-item"> 
     <tr> 
         <td><label>Druh podpory</label></td>
         <td><input type="text" value="{$factory->druh_podpory}" disabled></td>
     </tr>
-<table>
+</table>
 
 <h3>Termíny</h3>
 <hr>
-<table>
+<table class="list-item">
     <tr> 
         <td><label>Datum prvního připojení</label></td>
         <td><input type="date" value="{$factory->datum_prvniho_pripojeni|date:'Y-m-d'}" disabled></td>
@@ -124,4 +124,4 @@
         <td><label>Datum uvedení do provozu</label></td>
         <td><input type="date" value="{$factory->datum_uvedeni_do_provozu|date:'Y-m-d'}" disabled></td>
     </tr>
-<table>
+</table>

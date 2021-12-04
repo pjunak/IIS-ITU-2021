@@ -5,37 +5,41 @@
 *}
 
 {define tabulkaPozadavku, $statusPozadavku}
-    <table class="list-entities">
-        <tr>
-            <th>Link</th>
-            {if !$user->isInRole('disponent')}
-                <th>Zadal</th>
-            {/if}
-            <th>Předmět</th>
-            <th>Datum vytvoření</th>
-            {if $statusPozadavku != 'podan'}
-                <th>Datum vyřízení</th>
-            {/if}
-            {if!$user->isInRole('disponent')}
-                <th></th>
-            {/if}
-        </tr>
-        <tr n:foreach="$requests as $requestFe">
-            {if $requestFe->status == $statusPozadavku}
-                <td><span class="company-name-link"><a n:href="Request: $requestFe->id">Zobrazit</a></span></td>
+    <table class="list-entities table table-striped table-hover">
+        <thead>
+            <tr>
                 {if !$user->isInRole('disponent')}
-                    <td>{$requestFe->jmeno} {$requestFe->prijmeni}</td>
+                    <th>Zadal</th>
                 {/if}
-                <td>{$requestFe->predmet}</td>
-                <td>{$requestFe->datum_vytvoreni|date:'j. n. Y'}</td>
+                <th>Předmět</th>
+                <th>Datum vytvoření</th>
                 {if $statusPozadavku != 'podan'}
-                    <td>{$requestFe->datum_uzavreni|date:'j. n. Y'}</td>
+                    <th>Datum vyřízení</th>
                 {/if}
-                {if $statusPozadavku == 'podan' && !$user->isInRole('disponent')}
-                    <td><a n:href=":reply $requestFe->id">Odpovědět na požadavek &raquo;</a></td>
+                <th></th>
+                {if!$user->isInRole('disponent')}
+                    <th></th>
                 {/if}
-            {/if}
-        </tr>
+            </tr>
+        </thead>
+        <tbody>
+            <tr n:foreach="$requests as $requestFe">
+                {if $requestFe->status == $statusPozadavku}
+                    {if !$user->isInRole('disponent')}
+                        <td>{$requestFe->jmeno} {$requestFe->prijmeni}</td>
+                    {/if}
+                    <td>{$requestFe->predmet}</td>
+                    <td>{$requestFe->datum_vytvoreni|date:'j. n. Y'}</td>
+                    {if $statusPozadavku != 'podan'}
+                        <td>{$requestFe->datum_uzavreni|date:'j. n. Y'}</td>
+                    {/if}
+                    <td><span class="company-name-link"><a n:href="Request: $requestFe->id" class="btn-action">Zobrazit požadavek &raquo;</a></span></td>
+                    {if $statusPozadavku == 'podan' && !$user->isInRole('disponent')}
+                        <td><a n:href=":reply $requestFe->id" class="btn-action"><i class="fas fa-reply"></i>&nbsp;&nbsp;Odpovědět na požadavek</a></td>
+                    {/if}
+                {/if}
+            </tr>
+        </tbody>
     </table>
     <br>
 {/define}

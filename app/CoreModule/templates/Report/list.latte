@@ -25,19 +25,18 @@
 
 <br>
 <h3>Výkazy z uplynulých měsíců</h3> 
-<hr>
-<table>
+<table class="table table-striped table-hover">
     <tr>
-        <th>Odkaz</th>
         <th>Období</th>
         <th>Svorková výroba</th>
         <th>Vloženo</th>
+        <th></th>
         {*Ještě by se mohlo zobrazit kým to bylo vloženo.*}
     </tr>
     <tr n:foreach="$reports as $thisReport">
-        <td><span class="company-name-link"><a n:href="Report: $thisReport->id">Otevřít</a></span></td>
-        <td>{$thisReport->od|date:'j. n. Y'} - {$thisReport->do|date:'j. n. Y'}</td>
+        <td>{$thisReport->od|date:'j. n. Y'} &ndash; {$thisReport->do|date:'j. n. Y'}</td>
         <td>{$thisReport->svorkova_vyroba_elektriny/1000000}MWh</td>
         <td>{$thisReport->datum_cas_zadani_vykazu|date:'j. n. Y'}</td>
+        <td><span class="company-name-link"><a n:href="Report: $thisReport->id" class="btn-action">Zobrazit výkaz &raquo;</a></span></td>
     </tr>
 </table>

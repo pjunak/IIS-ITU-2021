@@ -25,29 +25,29 @@
     <tr>
         <td>
         {*Údaje disponenta a úředníka*}
-            <table>
+            <table class="list-item">
                 <tr>
-                    <td>ID</td>
+                    <td><label>ID</label></td>
                     <td><input type="number" value="{$userFe->id}" disabled></td>
                 </tr>
                 <tr>
-                    <td>ID účastníka</td>
+                    <td><label>ID účastníka</label></td>
                     <td><input type="number" value="{$userFe->id_ucastnika}" disabled></td>
                 </tr>
                 <tr>
-                    <td>Login</td>
+                    <td><label>Login</label></td>
                     <td><input type="text" value="{$userFe->login}" disabled></td>
                 </tr>
                 <tr>
-                    <td>Jméno a příjmení</td>
+                    <td><label>Jméno a příjmení</label></td>
                     <td><input type="text" value="{$userFe->jmeno} {$userFe->prijmeni}" disabled></td>
                 </tr>
                 <tr>
-                    <td>Telefon</td>
+                    <td><label>Telefon</label></td>
                     <td><input type="number" value="{$userFe->telefon}" disabled></td>
                 </tr>
                 <tr>
-                    <td>E-mail</td>
+                    <td><label>E-mail</label></td>
                     <td> <input type="email" value="{$userFe->email}" disabled></td>
                 </tr>
             </table>
@@ -55,18 +55,18 @@
         {if $userFe->typ_osoby != 'disponent'}
         <td>
         {*Údaje pouze úřeníka*}
-            <table>
+            <table class="list-item">
                 <tr>
-                    <td>Pracovní pozice</td>
+                    <td><label>Pracovní pozice</label></td>
                     <td><input type="text" value="{$userFe->pozice}" disabled></td>
                 </tr>
                 <tr>
-                    <td>Kancelář</td>
+                    <td><label>Kancelář</label></td>
                     <td><input type="text" value="{$userFe->kancelar}" disabled></td>
                 </tr>
                 {if $user->isInRole('reditel')}
                 <tr>
-                    <td>Plat</td>
+                    <td><label>Plat</label></td>
                     <td><input type="number" value="{$userFe->plat}" disabled></td>
                 </tr>
                 {/if}

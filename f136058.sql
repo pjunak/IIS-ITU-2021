@@ -87,7 +87,7 @@ INSERT INTO `iis_firma_osoba` (`id`, `firma`, `osoba`) VALUES(4, 518468138, 6);
 DROP TABLE IF EXISTS `iis_osoba`;
 CREATE TABLE `iis_osoba` (
   `id` int(11) NOT NULL,
-  `id_ucastnika` int(11) DEFAULT NULL,
+  `id_ucastnika` int(11) DEFAULT NULL UNIQUE,
   `typ_osoby` enum('disponent','urednik','reditel') COLLATE utf8_czech_ci NOT NULL,
   `jmeno` varchar(64) COLLATE utf8_czech_ci NOT NULL,
   `prijmeni` varchar(64) COLLATE utf8_czech_ci NOT NULL,

@@ -35,7 +35,7 @@ final class SignInFormFactory
 		$form->addPassword('password', 'Heslo:')
 			->setRequired('Prosím zadejte vaše heslo.');
 
-		$form->addCheckbox('remember', 'Zapamatovat si přihlášení.');
+		$form->addCheckbox('remember', Nette\Utils\Html::el()->setHtml('Zapamatovat si přihlášení. <span data-toggle="tooltip" data-placement="top" title="Tooltip on top"><i class="fas fa-info-circle"></i></span>'));
 
 		$form->addSubmit('send', 'Přihlásit se');
 

@@ -29,6 +29,14 @@ final class SignPresenter extends BasePresenter
 
 		$this->user = $this->getUser();
 
+
+		if (!$this->user->isLoggedIn()) {
+            if ($this->user->getLogoutReason() === User::INACTIVITY) {
+                $this->flashMessage('Byl jste odhlášen z důvodu nečinnosti.', 'danger');
+				$this->session->destroy();
+            }
+        }
+
 		// Pokud uzivatel klikne na prihlaseni a jiz je prihlasen
 		if ($this->isLinkCurrent('Sign:in') && $this->user->isLoggedIn())
 		{

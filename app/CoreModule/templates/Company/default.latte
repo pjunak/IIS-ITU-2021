@@ -59,7 +59,9 @@
             <table>
                 <tr>
                     <th><h3>Osoby ve firmě</h3></th>
-                    <th><a class="btn-action" n:href="add $company->rut_id"><i class="fas fa-users-cog"></i> Upravit zaměstnance</a></span></th>
+                    {if $user->isInRole('urednik')}
+                        <th><a class="btn-action" n:href="add $company->rut_id"><i class="fas fa-users-cog"></i> Upravit zaměstnance</a></span></th>
+                    {/if}
                 </tr>
             </table>
             <hr>

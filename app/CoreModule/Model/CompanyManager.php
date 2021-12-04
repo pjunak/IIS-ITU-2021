@@ -61,6 +61,11 @@ class CompanyManager extends DatabaseManager
         return $this->database->table(self::TABLE_NAME)->where(self::RUT_ID, $rut)->fetch();
     }
 
+    /**
+     * Vrátí všechny firmy, ve kterých je daný uživatel
+     * @param string $userID ID uživatele v databázi
+     * @return null|array  Všechny firmy, ve kterých se nachází uživatel
+     */
     public function getCompaniesByUser($userID)
     {
         if($userID == NULL)
@@ -74,15 +79,31 @@ class CompanyManager extends DatabaseManager
         
     }
 
+    /**
+     * Vrátí všechny uživatele z dané firmy
+     * @param string $rut RUT ID firmy
+     * @return null|array Všichni členové dané firmy
+     */
     public function getCompanyUsers($rut)
     {
         return $this->database->query("SELECT * FROM iis_osoba WHERE iis_osoba.id IN (SELECT osoba FROM iis_firma_osoba WHERE firma = ?)", $rut);
     }
+
+    /**
+     * Vrátí všechny uživatele z dané, kteří nejsou členy dané firmy
+     * @param string $rut RUT ID firmy
+     * @return null|array Všichni uživatelé, kteří nejsou členy dané firmy
+     */
     public function getOtherUsers($rut)
     {
         return $this->database->query("SELECT * FROM iis_osoba WHERE iis_osoba.typ_osoby = 'disponent' AND NOT iis_osoba.id IN (SELECT osoba FROM iis_firma_osoba WHERE firma = ?)", $rut);
     }
 
+    /**
+     * Vytvoří v tabulce iis_firma_osoba vztah mezi uživatelem a firmou
+     * @param string $rut RUT ID firmy
+     * @param string $id ID uživatele
+     */
     public function addUserToCompany($rut, $id)
     {
         $this->database->table('iis_firma_osoba')->insert([
@@ -91,6 +112,11 @@ class CompanyManager extends DatabaseManager
         ]);
     }
 
+    /**
+     * Odstraní z tabulky iis_firma_osoba vztah mezi uživatelem a firmou
+     * @param string $rut RUT ID firmy
+     * @param string $id ID uživatele
+     */
     public function removeUserFromCompany($rut, $id)
     {
         $this->database->query("DELETE FROM iis_firma_osoba WHERE iis_firma_osoba.osoba = ? AND iis_firma_osoba.firma = ?", $id, $rut);

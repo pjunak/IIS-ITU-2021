@@ -97,7 +97,7 @@ class RequestManager extends DatabaseManager
     }
 
     /**
-     * Odstraní požadavek s danym ID
+     * Odstraní požadavek s daným ID
      * @param string $id ID entity
      */
     public function removeRequest(string $id)

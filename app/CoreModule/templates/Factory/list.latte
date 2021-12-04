@@ -19,26 +19,7 @@
         {if $thisFactory->stav == $stavVyrobny}
         <td><span class="company-name-link"><a n:href="Factory: $thisFactory->id">{$thisFactory->kratky_nazev}</a></span></td>
         <td>{$thisFactory->id}</td>
-        {switch $thisFactory->druh_vyrobny}
-            {case 'slunecni'}
-                <td>Sluneční</td>
-            {case 'slunecni_budova'}
-                <td>Sluneční-budova</td>
-            {case 'vodni'}
-                <td>Vodní</td>
-            {case 'precerpavaci'}
-                <td>Přečerpávací</td>
-            {case 'jaderna'}
-                <td>Jaderná</td>
-            {case 'plyn'}
-                <td>Plynová</td>
-            {case 'geotermalni'}
-                <td>Geotermální</td>
-            {case 'vetrna'}
-                <td>Větrná</td>
-            {case 'biomasa'}
-                <td>Biomasa</td>
-        {/switch}
+        <td>{$thisFactory->druh_vyrobny}</td>
         <td>{$thisFactory->vykon_zdroje/1000000}MW</td>
         <td>{$thisFactory->napetova_hladina}kV</td>
         <td>{$thisFactory->ulice} {if $thisFactory->cislo_o != NULL}{$thisFactory->cislo_o}/{/if}{$thisFactory->cislo_p}, {$thisFactory->psc} {$thisFactory->obec}</td>

@@ -1,5 +1,11 @@
 <?php
 
+/*
+//	Projekt do předmětu ITU - Zákaznický portál OTE, a.s.
+//	Datum: 5.12.2021
+//	Autor: Petr Junák, xjunak01
+*/
+
 declare(strict_types=1);
 
 namespace App\CoreModule\Model;
@@ -46,6 +52,11 @@ class ReportManager extends DatabaseManager
         ')->fetchAll();
     }
 
+    /**
+     * Vrátí seznam všech výkazů týkajících se dané výrobny
+     * @param string $vyrobna ID výrobny
+     * @return array výkazů které se týkají dané výrobny
+     */
     public function getReportsWhereFactory($vyrobna)
     {
         //return $this->database->table(self::TABLE_NAME)->order(self::ID . ' DESC');
@@ -98,7 +109,7 @@ class ReportManager extends DatabaseManager
     }
     
     /**
-     * Vrátí všechny možné kód bank v databázi
+     * Vrátí všechny výrobny z databáze pro zobrazení jako select ve formu
      * 
      * Zdroje:
      * https://forum.nette.org/cs/28085-formular-addselect-hodnoty
@@ -127,7 +138,6 @@ class ReportManager extends DatabaseManager
         {
             return NULL;
         }
-        
         $pairs = array_combine($id_vyrobny, $vyrobny);
         return $pairs;
     }

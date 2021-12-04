@@ -1,5 +1,11 @@
 <?php
 
+/*
+//	Projekt do předmětu ITU - Zákaznický portál OTE, a.s.
+//	Datum: 5.12.2021
+//	Autor: Petr Junák, xjunak01
+*/
+
 declare(strict_types=1);
 
 namespace App\CoreModule\Presenters;

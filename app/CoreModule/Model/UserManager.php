@@ -1,5 +1,11 @@
 <?php
 
+/*
+//	Projekt do předmětu ITU - Zákaznický portál OTE, a.s.
+//	Datum: 5.12.2021
+//	Autor: Petr Junák, xjunak01
+*/
+
 declare(strict_types=1);
 
 namespace App\CoreModule\Model;
@@ -39,21 +45,6 @@ class UserManager extends DatabaseManager
         POZICE = 'pozice',
         PLAT = 'plat';
 
-   
-    
-    /*
-    private Passwords $passwords;
-
-    private Nette\Database\Explorer $database;
-
-    
-    public function __construct(Passwords $passwords)
-	{
-		$this->database = $database;
-		$this->passwords = $passwords;
-	}
-    */
-
     /**
      * Vrátí seznam všech entit v databázi seřazený sestupně od naposledy přidaného.
      * @return Selection seznam všech firem
@@ -73,6 +64,10 @@ class UserManager extends DatabaseManager
         return $this->database->table(self::TABLE_NAME)->where(self::ID, $id)->fetch();
     }
 
+    /**
+     * Vrátí seznam všech firem z databáze
+     * @return array seznam všech firem
+     */
     public function getSeznamFirem()
     {
         return $this->database->query("SELECT rut_id, nazev FROM iis_firma")->fetchPairs();
@@ -134,11 +129,13 @@ class UserManager extends DatabaseManager
             {
                 $this->database->table(self::TABLE_NAME)->where(self::ID, $user[self::ID])->update($user);
             }
-            
         }
-            
     }
 
+    /**
+     * Aktualizuje data stávajícího uživatele v databázi
+     * @param string ArrayHash $user obsahuje info o daném uživateli
+     */
     public function updateUser(ArrayHash $user)
     {
         //aktualizace stávajícího uživatele

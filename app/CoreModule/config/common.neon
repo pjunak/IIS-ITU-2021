@@ -1,4 +1,10 @@
 #
+#   Projekt do předmětu ITU - Zákaznický portál OTE, a.s.
+#   Datum: 5.12.2021
+#   Autor: Kristián Heřman, xherma33
+#
+
+#
 # Konfigurační soubor pro CoreModule.
 #
 parameters:
@@ -20,7 +26,6 @@ services:
     - App\CoreModule\Model\FactoryManager
 
     - App\CoreModule\Presenters\CompanyPresenter(%defaultCompanyRut%) # Předání nastavení při vytváření služby presenteru.
-    - App\CoreModule\Presenters\ContactPresenter(%contactEmail%)
     - App\CoreModule\Presenters\UserPresenter(%defaultUserId%)
     - App\CoreModule\Presenters\RequestPresenter(%defaultRequestId%)
     - App\CoreModule\Presenters\ReportPresenter(%defaultRequestId%)

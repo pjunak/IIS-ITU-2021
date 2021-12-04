@@ -1,5 +1,11 @@
 <?php
 
+/*
+//	Projekt do předmětu ITU - Zákaznický portál OTE, a.s.
+//	Datum: 5.12.2021
+//	Autor: Kristián Heřman, xherma33
+*/
+
 declare(strict_types=1);
 
 namespace App\CoreModule\Model;
@@ -91,7 +97,7 @@ class RequestManager extends DatabaseManager
     }
 
     /**
-     * Odstraní požadavek s danym ID
+     * Odstraní požadavek s daným ID
      * @param string $id ID entity
      */
     public function removeRequest(string $id)

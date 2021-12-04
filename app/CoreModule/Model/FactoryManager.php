@@ -1,5 +1,11 @@
 <?php
 
+/*
+//	Projekt do předmětu ITU - Zákaznický portál OTE, a.s.
+//	Datum: 5.12.2021
+//	Autor: Dalibor Čásek, xcasek01
+*/
+
 declare(strict_types=1);
 
 namespace App\CoreModule\Model;
@@ -50,6 +56,12 @@ class FactoryManager extends DatabaseManager
     {
         return $this->database->table(self::TABLE_NAME)->order(self::ID . ' DESC');
     }
+
+    /**
+     * Vrátí všechny firmy, ve kterých figuruje daná osoba
+     * @param string $osoba ID dané osoby
+     * @return null|array výreben, ve kterých figuruje daná soba
+     */
     public function getFactoriesWhereUser($osoba)
     {
         return $this->database->query("SELECT * FROM iis_vyrobna WHERE id_firmy IN (SELECT firma FROM iis_firma_osoba WHERE osoba = $osoba)")->fetchAll();
@@ -65,11 +77,21 @@ class FactoryManager extends DatabaseManager
         return $this->database->table(self::TABLE_NAME)->where(self::ID, $id)->fetch();
     }
 
+    /**
+     * Vrátí jméno dané firmy z databáze
+     * @param string $rut_id ID firmy
+     * @return string název dané firmy
+     */
     public function getNazevVlastniciFirmy($rut_id)
     {
         return $this->database->query("SELECT nazev FROM iis_firma WHERE rut_id = ?", $rut_id)->fetch();
     }
 
+    /**
+     * Vrátí seznam všech firem, ve kterých figuruje uživatel
+     * @param string $userId ID uživatele
+     * @return array firem, ve kterých vystupuje uživatel
+     */
     public function getSeznamDostupnychFirem($userID)
     {
         return $this->database->query(
@@ -77,6 +99,11 @@ class FactoryManager extends DatabaseManager
             , $userID)->fetchPairs();
     }
 
+    /**
+     * Změní stav výrobny na vybraný stav
+     * @param string $factoryID ID výrobny
+     * @param string $stav stav procesu schvalování výrobny
+     */
     public function updateStavVyrobny($factoryID, $stav)
     {
         $this->database->query('UPDATE iis_vyrobna SET', [

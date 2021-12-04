@@ -1,3 +1,11 @@
+--
+--	Projekt do předmětu ITU - Zákaznický portál OTE, a.s.
+--	Datum: 5.12.2021
+--	Autor: Kristián Heřman, xherma33
+--	Autor: Dalibor Čásek, xcasek01
+--	Autor: Petr Junák, xjunak01
+--
+
 -- phpMyAdmin SQL Dump
 -- version 5.1.1
 -- https://www.phpmyadmin.net/

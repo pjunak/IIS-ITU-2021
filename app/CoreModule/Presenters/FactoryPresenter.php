@@ -82,14 +82,14 @@ class FactoryPresenter extends BasePresenter
     }
 
     /**
-     * Odstraní článek.
+     * Odstraní Výrobnu.
      * @param string|null $id URL článku
      * @throws AbortException
      */
-    public function actionRemove(string $id = null)
+    public function handleRemove(string $id = null)
     {
-        $this->factoryManager->removeFactory($id);
-        $this->flashMessage('Factory byl úspěšně odstraněn.');
+        //$this->factoryManager->removeFactory($id);
+        $this->flashMessage('Výrobna byla úspěšně odstraněna.');
         $this->redirect('Factory:list');
     }
 

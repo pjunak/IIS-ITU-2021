@@ -15,33 +15,49 @@
         <a class="button1" n:href="Core:Report:list">Chci vyplnit měsíční výkaz&nbsp;&raquo;</a>
         <a class="button1" n:href="Core:Company:list">Správa firemních údajů&nbsp;&raquo;</a>
         <!--<a class="button1 zde-poprve"></i>Jsem zde poprvé&nbsp;&raquo;</a>-->
-        <button type="button" class="button1 zde-poprve" data-toggle="modal" data-target="#myModal">Jsem zde poprvé&nbsp;&raquo;</button>
+        <button type="button" class="button1 zde-poprve" data-toggle="modal" data-target="#myModal1">Jsem zde poprvé&nbsp;&raquo;</button>
     </div>
 
 
-    <!-- Trigger the modal with a button -->
-    
+<!-- Modal -->
+<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Modal title 1</h4>
+         </div>
+         <div class="modal-body">
+            Text prvního okna
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-default btn-prev">&laquo; Předchozí</button>
+            <button type="button" class="btn btn-success btn-next">Další &raquo;</button>
+         </div>
+      </div>
+   </div>
+</div>
 
-    <!-- Modal -->
-    <div id="myModal" class="modal fade" role="dialog">
-    <div class="modal-dialog modal-lg">
+<!-- Modal -->
+<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Modal title 2</h4>
+         </div>
+         <div class="modal-body">
+           Text druhého okna
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-default btn-prev">&laquo; Předchozí</button>
+            <button type="button" class="btn btn-success btn-next">Další &raquo;</button>
+         </div>
+      </div>
+   </div>
+</div>
 
-        <!-- Modal content-->
-        <div class="modal-content">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Modal Header</h4>
-        </div>
-        <div class="modal-body">
-            <p>Some text in the modal.</p>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Zavřít</button>
-        </div>
-        </div>
 
-    </div>
-    </div>
 
 {else}
     <h3>Rychlé odkazy</h3>

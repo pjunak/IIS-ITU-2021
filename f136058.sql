@@ -38,7 +38,7 @@ SET time_zone = "+00:00";
 DROP TABLE IF EXISTS `iis_firma`;
 CREATE TABLE `iis_firma` (
   `rut_id` int(11) NOT NULL,
-  `ean` int(11) DEFAULT NULL,
+  `ean` int(18) DEFAULT NULL,
   `nazev` varchar(128) COLLATE utf8_czech_ci NOT NULL,
   `ic` int(11) DEFAULT NULL,
   `dic` varchar(11) DEFAULT NULL,
@@ -196,8 +196,8 @@ CREATE TABLE `iis_vyrobna` (
   `gps_e` decimal(15,5) DEFAULT NULL,
   `druh_vyrobny` enum('sluneční','sluneční budova','vodní','přečerpávací','jaderná','plynová','geotermalní','větrná','biomasa') COLLATE utf8_czech_ci NOT NULL,
   `stav` enum('podano','neschvaleno','schvaleno') COLLATE utf8_czech_ci NOT NULL,
-  `vyrobni_EAN` int(11) DEFAULT NULL,
-  `EAN_vyrobny` int(11) DEFAULT NULL,
+  `vyrobni_EAN` int(18) DEFAULT NULL,
+  `EAN_vyrobny` int(18) DEFAULT NULL,
   `vykon_zdroje` int(11) DEFAULT NULL,
   `napetova_hladina` varchar(10) COLLATE utf8_czech_ci DEFAULT NULL,
   `zpusob_pripojeni` enum('přímo','nepřímo','ostrovní výroba') COLLATE utf8_czech_ci NOT NULL,

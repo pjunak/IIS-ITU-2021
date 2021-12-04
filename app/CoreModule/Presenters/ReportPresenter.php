@@ -18,17 +18,18 @@ use Nette\Application\UI\Form;
 use Nette\Database\UniqueConstraintViolationException;
 use Nette\Utils\ArrayHash;
 use Nette\Utils\DateTime;
+use Nette\Utils\Html;
 
 /**
- * Presenter pro vykreslování článků.
+ * Presenter pro vykreslování výkazů.
  * @package App\CoreModule\Presenters
  */
 class ReportPresenter extends BasePresenter
 {
-    /** @var string URL výchozího článku. */
+    /** @var string URL výchozího výkazu. */
     private string $defaultReportId;
 
-    /** @var ReportManager Model pro správu s článků. */
+    /** @var ReportManager Model pro správu s výkazů. */
     private ReportManager $reportManager;
 
     /** @var user Pro identifikaci uživatele */
@@ -39,9 +40,9 @@ class ReportPresenter extends BasePresenter
 
 
     /**
-     * Konstruktor s nastavením URL výchozího článku a injektovaným modelem pro správu článků.
-     * @param string         $defaultReportId URL výchozího článku
-     * @param ReportManager $reportManager    automaticky injektovaný model pro správu článků
+     * Konstruktor s nastavením URL výchozího výkazu a injektovaným modelem pro správu výkazů.
+     * @param string         $defaultReportId URL výchozího výkazu
+     * @param ReportManager $reportManager    automaticky injektovaný model pro správu výkazů
      */
     public function __construct(string $defaultReportId, ReportManager $reportManager)
     {
@@ -67,30 +68,30 @@ class ReportPresenter extends BasePresenter
     }
     
     /**
-     * Načte a předá článek do šablony podle jeho URL.
-     * @param string|null $id URL článku
-     * @throws BadReportException Jestliže článek s danou URL nebyl nalezen.
+     * Načte a předá výkaz do šablony podle jeho URL.
+     * @param string|null $id URL výkazu
+     * @throws BadReportException Jestliže výkaz s danou URL nebyl nalezen.
      */
     public function renderDefault(string $id = null)
     {
-        if (!$id) $id = $this->defaultReportId; // Pokud není zadaná URL, vezme se URL výchozího článku.
+        if (!$id) $id = $this->defaultReportId; // Pokud není zadaná URL, vezme se URL výchozího výkazu.
 
-        // Pokusí se načíst článek s danou URL a pokud nebude nalezen vyhodí chybu 404.
+        // Pokusí se načíst výkaz s danou URL a pokud nebude nalezen vyhodí chybu 404.
         if (!($report = $this->reportManager->getReport($id)))
             $this->error(); // Vyhazuje výjimku BadReportException.
 
-        $this->template->report = $report; // Předá článek do šablony.
+        $this->template->report = $report; // Předá výkaz do šablony.
     }
 
-    /** Načte a předá seznam článků do šablony. */
+    /** Načte a předá seznam výkazů do šablony. */
     public function renderList()
     {
         $this->template->reports = $this->reportManager->getReportsWhereFactory($this->vybrana_vyrobna);
     }
 
     /**
-     * Odstraní článek.
-     * @param string|null $id URL článku
+     * Odstraní výkaz.
+     * @param string|null $id URL výkazu
      * @throws AbortException
      */
     public function actionRemove(string $id = null)
@@ -101,9 +102,9 @@ class ReportPresenter extends BasePresenter
     }
 
     /**
-     * Vykresluje formulář pro editaci článku podle zadané URL.
-     * Pokud URL není zadána, nebo článek s danou URL neexistuje, vytvoří se nový.
-     * @param string|null $id URL adresa článku
+     * Vykresluje formulář pro editaci výkazu podle zadané URL.
+     * Pokud URL není zadána, nebo výkaz s danou URL neexistuje, vytvoří se nový.
+     * @param string|null $id URL adresa výkazu
      */
     public function actionEditor(string $id = null)
     {
@@ -112,7 +113,7 @@ class ReportPresenter extends BasePresenter
                 $this->flashMessage('Výkaz nebyl nalezen.'); // Výpis chybové hlášky.
             else 
             {
-                $this['editorForm']->setDefaults($report); // Předání hodnot článku do editačního formuláře.
+                $this['editorForm']->setDefaults($report); // Předání hodnot výkazu do editačního formuláře.
                 $this['editorForm']['od']->setDefaultValue($report->od->format('Y-m-d'));
                 $this['editorForm']['do']->setDefaultValue($report->do->format('Y-m-d'));
                 $date = new DateTime;
@@ -120,6 +121,11 @@ class ReportPresenter extends BasePresenter
             }
         }
     }
+
+    /**
+     * Po zavolání vloží do proměnné $this->vybrana_vyrobna údaj z formu vyrobna['vyrobna']
+     * @return Form formulář pro editaci výkazů
+     */
     public function vykazy(Form $form) {
         $this->user = $this->getUser();
         $vyrobna = $form->getValues();
@@ -128,7 +134,7 @@ class ReportPresenter extends BasePresenter
 
     /**
      * Vytváří dropdown menu se všemi výrobnami daného uživatele.
-     * @return Form formulář pro editaci článků
+     * @return Form formulář pro editaci výkazů
      */
     protected function createComponentDropdownVyrobny()
     {
@@ -149,8 +155,8 @@ class ReportPresenter extends BasePresenter
     }
 
     /**
-     * Vytváří a vrací formulář pro editaci článků.
-     * @return Form formulář pro editaci článků
+     * Vytváří a vrací formulář pro editaci výkazů.
+     * @return Form formulář pro editaci výkazů
      */
     protected function createComponentEditorForm()
     {
@@ -161,10 +167,13 @@ class ReportPresenter extends BasePresenter
         $form->addHidden('id_vyrobny')->setRequired()->setDefaultValue($this->vybrana_vyrobna);
         $dateTime = new DateTime;
         $date = $dateTime->format('Y-m-d');
-        $form->addText('od', 'Od')->setHtmlType('date')->setDefaultValue($date)->setRequired('%label je nutné vyplnit');;
-        $form->addText('do', 'Do')->setHtmlType('date')->setDefaultValue($date)->setRequired('%label je nutné vyplnit');;
+        $form->addText('od', Html::el()->setHtml('Od <span data-toggle="tooltip" data-placement="top" title="První den měsíce, ve kterém byla vrobna v provozu"><i class="fas fa-info-circle"></i></span>'))
+        ->setHtmlType('date')->setDefaultValue($date)->setRequired('%label je nutné vyplnit');
+        $form->addText('do', Html::el()->setHtml('DO <span data-toggle="tooltip" data-placement="top" title="Poslední den měsíce, ve kterém byla výrobna v provozu"><i class="fas fa-info-circle"></i></span>'))
+        ->setHtmlType('date')->setDefaultValue($date)->setRequired('%label je nutné vyplnit');
         $form->addHidden('datum_cas_zadani_vykazu')->setDefaultValue($dateTime)->setRequired(); // Je nastaveno automaticky podle aktuálního data a času
-        $form->addInteger('svorkova_vyroba_elektriny', 'Svorková výroba elektřiny')->setRequired()->setHtmlAttribute('placeholder', '12500')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);
+        $form->addInteger('svorkova_vyroba_elektriny', Html::el()->setHtml('Svorková výroba elektřiny <span data-toggle="tooltip" data-placement="top" title="Všechny údaje lze zjistit přímo z měřiče umístěného na výrobně."><i class="fas fa-info-circle"></i></span>'))
+        ->setRequired()->setHtmlAttribute('placeholder', '12500')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);
         $form->addInteger('vlastni_spotreba_elektriny', 'Vlastní spotřeba elektřiny')->setHtmlAttribute('placeholder', '7000')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);;
         $form->addInteger('celkova_konecna_spotreba', 'Celková spotřeba elektřiny')->setHtmlAttribute('placeholder', '9500')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);;
         $form->addInteger('spotreba_z_toho_lokalni', 'Spotřeba z toho lokální')->setHtmlAttribute('placeholder', '2500')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);;

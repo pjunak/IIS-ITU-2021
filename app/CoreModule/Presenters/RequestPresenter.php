@@ -18,26 +18,27 @@ use Nette\Application\UI\Form;
 use Nette\Database\UniqueConstraintViolationException;
 use Nette\Utils\ArrayHash;
 use Nette\Utils\DateTime;
+use Nette\Utils\Html;
 
 /**
- * Presenter pro vykreslování článků.
+ * Presenter pro vykreslování požadavků.
  * @package App\CoreModule\Presenters
  */
 class RequestPresenter extends BasePresenter
 {
-    /** @var string URL výchozího článku. */
+    /** @var string URL výchozího požadavku. */
     private string $defaultRequestId;
 
-    /** @var RequestManager Model pro správu s článků. */
+    /** @var RequestManager Model pro správu s požadavků. */
     private RequestManager $requestManager;
 
     /** @var user Pro identifikaci uživatele */
     private $user;
 
     /**
-     * Konstruktor s nastavením URL výchozího článku a injektovaným modelem pro správu článků.
-     * @param string         $defaultRequestId URL výchozího článku
-     * @param RequestManager $requestManager    automaticky injektovaný model pro správu článků
+     * Konstruktor s nastavením URL výchozího požadavku a injektovaným modelem pro správu požadavků.
+     * @param string         $defaultRequestId URL výchozího požadavku
+     * @param RequestManager $requestManager    automaticky injektovaný model pro správu požadavků
      */
     public function __construct(string $defaultRequestId, RequestManager $requestManager)
     {
@@ -57,22 +58,22 @@ class RequestPresenter extends BasePresenter
     }
     
     /**
-     * Načte a předá článek do šablony podle jeho URL.
-     * @param string|null $id URL článku
-     * @throws BadRequestException Jestliže článek s danou URL nebyl nalezen.
+     * Načte a předá požadavek do šablony podle jeho URL.
+     * @param string|null $id URL požadavku
+     * @throws BadRequestException Jestliže požadavek s danou URL nebyl nalezen.
      */
     public function renderDefault(string $id = null)
     {
-        if (!$id) $id = $this->defaultRequestId; // Pokud není zadaná URL, vezme se URL výchozího článku.
+        if (!$id) $id = $this->defaultRequestId; // Pokud není zadaná URL, vezme se URL výchozího požadavku.
 
-        // Pokusí se načíst článek s danou URL a pokud nebude nalezen vyhodí chybu 404.
+        // Pokusí se načíst požadavek s danou URL a pokud nebude nalezen vyhodí chybu 404.
         if (!($request = $this->requestManager->getRequest($id)))
             $this->error(); // Vyhazuje výjimku BadRequestException.
 
-        $this->template->request = $request; // Předá článek do šablony.
+        $this->template->request = $request; // Předá požadavek do šablony.
     }
 
-    /** Načte a předá seznam článků do šablony. */
+    /** Načte a předá seznam požadavků do šablony. */
     public function renderList()
     {
         if($this->user->isInRole('disponent'))
@@ -86,8 +87,8 @@ class RequestPresenter extends BasePresenter
     }
 
     /**
-     * Odstraní článek.
-     * @param string|null $id URL článku
+     * Odstraní požadavek.
+     * @param string|null $id URL požadavku
      * @throws AbortException
      */
     public function actionRemove(string $id = null)
@@ -98,9 +99,9 @@ class RequestPresenter extends BasePresenter
     }
 
     /**
-     * Vykresluje formulář pro editaci článku podle zadané URL.
-     * Pokud URL není zadána, nebo článek s danou URL neexistuje, vytvoří se nový.
-     * @param string|null $id URL adresa článku
+     * Vykresluje formulář pro editaci požadavku podle zadané URL.
+     * Pokud URL není zadána, nebo požadavek s danou URL neexistuje, vytvoří se nový.
+     * @param string|null $id URL adresa požadavku
      */
     public function actionEditor(string $id = null)
     {
@@ -109,7 +110,7 @@ class RequestPresenter extends BasePresenter
                 $this->flashMessage('Request nebyl nalezen.'); // Výpis chybové hlášky.
             else 
             {
-                $this['editorForm']->setDefaults($request); // Předání hodnot článku do editačního formuláře.
+                $this['editorForm']->setDefaults($request); // Předání hodnot požadavku do editačního formuláře.
                 $this['editorForm']['datum_vytvoreni']->setDefaultValue($request->datum_vytvoreni->format('Y-m-d'));
                 $this['editorForm']['datum_uzavreni']->setDefaultValue($request->datum_vytvoreni->format('Y-m-d'));
                 $this['editorForm']['status']->setDefaultValue('podan');
@@ -117,6 +118,10 @@ class RequestPresenter extends BasePresenter
         }
     }
 
+    /**
+     * Vykresluje formulář pro odpověď na požadavek podle zadané URL.
+     * @param string|null $id URL adresa požadavku
+     */
     public function actionReply(string $id = null)
     {
         if ($id) {
@@ -124,7 +129,7 @@ class RequestPresenter extends BasePresenter
                 $this->flashMessage('Request nebyl nalezen.'); // Výpis chybové hlášky.
             else 
             {
-                $this['editorForm']->setDefaults($request); // Předání hodnot článku do editačního formuláře.
+                $this['editorForm']->setDefaults($request); // Předání hodnot požadavku do editačního formuláře.
                 $this['editorForm']['datum_vytvoreni']->setDefaultValue($request->datum_vytvoreni->format('Y-m-d'));
                 $this['editorForm']['datum_uzavreni']->setDefaultValue($request->datum_vytvoreni->format('Y-m-d'));
                 $this['editorForm']['status']->setValue('vyrizen');
@@ -133,8 +138,8 @@ class RequestPresenter extends BasePresenter
     }
 
     /**
-     * Vytváří a vrací formulář pro editaci článků.
-     * @return Form formulář pro editaci článků
+     * Vytváří a vrací formulář pro editaci požadavků.
+     * @return Form formulář pro editaci požadavků
      */
     protected function createComponentEditorForm()
     {
@@ -146,7 +151,8 @@ class RequestPresenter extends BasePresenter
         {
             $date = new DateTime;
             $form->addHidden('datum_vytvoreni')->setDefaultValue($date->format('Y-m-d'));
-            $form->addText('predmet', 'Předmět')->setRequired()->setHtmlAttribute('placeholder', 'Žádost o změnu údaje')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',128);
+            $form->addText('predmet', Html::el()->setHtml('Předmět <span data-toggle="tooltip" data-placement="top" title="Krátký popis žádosti, nebo oznámení."><i class="fas fa-info-circle"></i></span>'))
+            ->setRequired()->setHtmlAttribute('placeholder', 'Žádost o změnu údaje')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',128);
             $form->addHidden('status', 'Status')->setDefaultValue('podan');
             $form->addTextArea('obsah_pozadavku', 'Obsah požadavku')->setRequired();
             $form->addSubmit('save', 'Vložit požadavek');
@@ -162,14 +168,6 @@ class RequestPresenter extends BasePresenter
             $form->addTextArea('odpoved', 'Odpověď');
             $form->addSubmit('save', 'Odpovědět na požadavek');
         }
-        
-
-        // da se vyuzit pro odpoved
-        //if (!$this->getAction() == "reply")
-        
-        
-        
-        
 
         // Funkce se vykonaná při úspěšném odeslání formuláře a zpracuje zadané hodnoty.
         $form->onSuccess[] = function (Form $form, ArrayHash $values) {

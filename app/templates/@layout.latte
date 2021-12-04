@@ -54,20 +54,20 @@
     <!-- Menu pro prihlasene -->
     <nav n:if="$user->isLoggedIn()" class="collapse navbar-collapse">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item"><a class="nav-link" n:href=:Administration:><i class="fas fa-home"></i></a></li>
+            <li class="nav-item"><a n:class="nav-link, $presenter->isLinkCurrent(':Administration:') ? active" n:href=:Administration:><i class="fas fa-home"></i>&nbsp;&nbsp;Úvod</a></li>
                 {if $user->isInRole('disponent')}
                 <!-- Menu pro disponenta -->
-                    <li class="nav-item"><a class="nav-link" n:href=:Core:Company:list>Moje firmy</a></li>
-                    <li class="nav-item"><a class="nav-link" n:href=:Core:Factory:list>Výrobny</a></li>
-                    <li class="nav-item"><a class="nav-link" n:href=:Core:Report:list>Měsíční výkazy</a></li>
-                    <li class="nav-item"><a class="nav-link" n:href=:Core:Request:list>Reklamace</a></li>
+                    <li class="nav-item"><a n:class="nav-link, $presenter->isLinkCurrent(':Core:Company:*') ? active" n:href=:Core:Company:list>Moje firmy</a></li>
+                    <li class="nav-item"><a n:class="nav-link, $presenter->isLinkCurrent(':Core:Factory:*') ? active" n:href=:Core:Factory:list>Výrobny</a></li>
+                    <li class="nav-item"><a n:class="nav-link, $presenter->isLinkCurrent(':Core:Report:*') ? active" n:href=:Core:Report:list>Měsíční výkazy</a></li>
+                    <li class="nav-item"><a n:class="nav-link, $presenter->isLinkCurrent(':Core:Request:*') ? active" n:href=:Core:Request:list>Reklamace</a></li>
                 {else}
                 <!-- Menu pro urednika/reditele -->
-                    <li class="nav-item"><a class="nav-link" n:href=:Core:Company:list>Firmy</a></li>
-                    <li class="nav-item"><a class="nav-link" n:href=:Core:User:list>Osoby</a></li>
-                    <li class="nav-item"><a class="nav-link" n:href=:Core:Factory:list>Výrobny</a></li>
-                    <li class="nav-item"><a class="nav-link" n:href=:Core:Report:list>Výkazy</a></li>
-                    <li class="nav-item"><a class="nav-link" n:href=:Core:Request:list>Požadavky</a></li>
+                    <li class="nav-item"><a n:class="nav-link, $presenter->isLinkCurrent(':Core:Company:*') ? active" n:href=:Core:Company:list>Firmy</a></li>
+                    <li class="nav-item"><a n:class="nav-link, $presenter->isLinkCurrent(':Core:User:*') ? active" n:href=:Core:User:list>Osoby</a></li>
+                    <li class="nav-item"><a n:class="nav-link, $presenter->isLinkCurrent(':Core:Factory:*') ? active" n:href=:Core:Factory:list>Výrobny</a></li>
+                    <li class="nav-item"><a n:class="nav-link, $presenter->isLinkCurrent(':Core:Report:*') ? active" n:href=:Core:Report:list>Výkazy</a></li>
+                    <li class="nav-item"><a n:class="nav-link, $presenter->isLinkCurrent(':Core:Request:*') ? active" n:href=:Core:Request:list>Požadavky</a></li>
                 {/if}
         </ul>
     </nav>

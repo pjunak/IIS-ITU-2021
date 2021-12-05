@@ -169,7 +169,7 @@ CREATE TABLE `iis_vykaz` (
 -- Vypisuji data pro tabulku `iis_vykaz`
 --
 
-INSERT INTO `iis_vykaz` (`id`, `id_osoby`, `id_vyrobny`, `od`, `do`, `datum_cas_zadani_vykazu`, `svorkova_vyroba_elektriny`, `vlastni_spotreba_elektriny`, `celkova_konecna_spotreba`, `spotreba_z_toho_lokalni`, `spotreba_z_toho_odber`) VALUES(1, 1, 1, '2021-10-01', '2021-10-31', '2021-11-01 08:15:23', 23, 10, 8, 2, 6);
+INSERT INTO `iis_vykaz` (`id`, `id_osoby`, `id_vyrobny`, `od`, `do`, `datum_cas_zadani_vykazu`, `svorkova_vyroba_elektriny`, `vlastni_spotreba_elektriny`, `celkova_konecna_spotreba`, `spotreba_z_toho_lokalni`, `spotreba_z_toho_odber`) VALUES(1, 1, 1, '2021-10-01', '2021-10-31', '2021-11-01 08:15:23', 530000, 599000, 753000, 6885000, 545000);
 
 -- --------------------------------------------------------
 

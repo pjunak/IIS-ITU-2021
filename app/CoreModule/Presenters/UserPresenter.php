@@ -200,15 +200,15 @@ class UserPresenter extends BasePresenter
         $form->addGroup('Údaje zákazníka');
         $form->addHidden('id');
         $form->addInteger('id_ucastnika', Html::el()->setHtml('ID účastníka <span data-toggle="tooltip" data-placement="top" title="ID účastníka pro Lorem ipsum najdete v Dolor sir amet."><i class="fas fa-info-circle"></i></span>'))
-        ->setRequired();
+        ->setRequired('Je nutné vyplnit ID účastníka');
         $form->addHidden('typ_osoby', 'disponent');
-        $form->addText('login', 'Login')->setRequired()->setHtmlAttribute('placeholder', 'Pepega')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',64);
+        $form->addText('login', 'Login')->setRequired('Login je nutné vyplnit')->setHtmlAttribute('placeholder', 'Pepega')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',64);
         $form->addPassword('heslo', 'Heslo')->setRequired('%label je nutné vyplnit')
         ->addRule($form::MIN_LENGTH, 'Heslo musí mít alespoň %d znaků', 6)
         ->addRule($form::MAX_LENGTH, 'Heslo nemůže mít víc, než %d znaků', 255)
         ->addRule($form::PATTERN, 'Heslo musí obsahovat číslici', '.*[0-9].*');
-        $form->addText('jmeno', 'Jméno')->setRequired()->setHtmlAttribute('placeholder', 'Jan')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',64);
-        $form->addText('prijmeni', 'Příjmení')->setRequired()->setHtmlAttribute('placeholder', 'Novák')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',64);
+        $form->addText('jmeno', 'Jméno')->setRequired('Jméno je nutné vyplnit')->setHtmlAttribute('placeholder', 'Jan')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',64);
+        $form->addText('prijmeni', 'Příjmení')->setRequired('Příjmení je nutné vyplnit')->setHtmlAttribute('placeholder', 'Novák')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',64);
         $form->addInteger('telefon', 'Telefonní číslo')->setHtmlAttribute('placeholder', '111222333')->addRule($form::LENGTH, 'Délka %label je %d',9);
         $form->addEmail('email', 'E-mail')->setHtmlAttribute('placeholder', 'muj.email@email.cz')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',32);
 
@@ -246,15 +246,15 @@ class UserPresenter extends BasePresenter
         $form->addGroup('Údaje osoby');
         $form->addHidden('id');
         $form->addInteger('id_ucastnika', Html::el()->setHtml('ID účastníka <span data-toggle="tooltip" data-placement="top" title="ID účastníka pro Lorem ipsum najdete v Dolor sir amet."><i class="fas fa-info-circle"></i></span>'))
-        ->setRequired();
+        ->setRequired('Je nutné vyplnit ID účastníka');
         $form->addHidden('typ_osoby', 'urednik');
-        $form->addText('login', 'Login')->setRequired()->setHtmlAttribute('placeholder', 'Pepega')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',64);
+        $form->addText('login', 'Login')->setRequired('Login je nutné vyplnit')->setHtmlAttribute('placeholder', 'Pepega')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',64);
         $form->addPassword('heslo', 'Heslo')->setRequired('%label je nutné vyplnit')
         ->addRule($form::MIN_LENGTH, 'Heslo musí mít alespoň %d znaků', 6)
         ->addRule($form::MAX_LENGTH, 'Heslo nemůže mít víc, než %d znaků', 255)
         ->addRule($form::PATTERN, 'Heslo musí obsahovat číslici', '.*[0-9].*');
-        $form->addText('jmeno', 'Jméno')->setRequired()->setHtmlAttribute('placeholder', 'Jan')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',64);
-        $form->addText('prijmeni', 'Příjmení')->setRequired()->setHtmlAttribute('placeholder', 'Novák')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',64);
+        $form->addText('jmeno', 'Jméno')->setRequired('Jméno je nutné vyplnit')->setHtmlAttribute('placeholder', 'Jan')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',64);
+        $form->addText('prijmeni', 'Příjmení')->setRequired('Heslo je nutné vyplnit')->setHtmlAttribute('placeholder', 'Novák')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',64);
         $form->addInteger('telefon', 'Telefonní číslo')->setHtmlAttribute('placeholder', '111222333')->addRule($form::LENGTH, 'Délka %label je %d',9);
         $form->addEmail('email', 'E-mail')->setHtmlAttribute('placeholder', 'muj.email@email.cz')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',32);
       

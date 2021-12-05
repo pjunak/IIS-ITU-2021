@@ -16,15 +16,17 @@
         </tr>
     </thead>
     <tbody id="data">
-        <tr n:foreach="$users as $thisUser">
+        {foreach $users as $thisUser}
             {if $thisUser->typ_osoby == $typOsoby}
-            <td>{$thisUser->id}</td>
-            <td><span class="company-name-link"><a n:href="User: $thisUser->id">{$thisUser->jmeno} {$thisUser->prijmeni}</a></span></td>
-            <td>{$thisUser->id_ucastnika}</td>
-            <td>{if $thisUser->telefon != NULL}<a href="tel:{$thisUser->telefon}">{$thisUser->telefon}</a>{/if}</td>
-            <td>{if $thisUser->email != NULL}<a href="mailto:{$thisUser->email}">{$thisUser->email}</a>{/if}</td>
+                <tr>
+                    <td>{$thisUser->id}</td>
+                    <td><span class="company-name-link"><a n:href="User: $thisUser->id">{$thisUser->jmeno} {$thisUser->prijmeni}</a></span></td>
+                    <td>{$thisUser->id_ucastnika}</td>
+                    <td>{if $thisUser->telefon != NULL}<a href="tel:{$thisUser->telefon}">{$thisUser->telefon}</a>{/if}</td>
+                    <td>{if $thisUser->email != NULL}<a href="mailto:{$thisUser->email}">{$thisUser->email}</a>{/if}</td>
+                </tr>
             {/if}
-        </tr>
+        {/foreach}
     </tbody>
 </table>
 {/define}

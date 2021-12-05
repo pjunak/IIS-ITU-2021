@@ -50,6 +50,8 @@ V menu níže vyberte požadovanou výrobnu. Poté můžete prohlížet výkazy,
         <td>{$thisReport->od|date:'j. n. Y'} &ndash; {$thisReport->do|date:'j. n. Y'}</td>
         <td>{$thisReport->svorkova_vyroba_elektriny/1000000|number:4, ',', ' '} MWh</td>
         <td>{$thisReport->datum_cas_zadani_vykazu|date:'j. n. Y'}</td>
-        <td><span class="company-name-link"><a n:href="Report: $thisReport->id" class="btn-action">Zobrazit výkaz <i class="fas fa-angle-double-right"></i></a></span></td>
+        <td style="text-align: center;">
+            <span class="company-name-link"><a n:href="Report: $thisReport->id" class="btn-action">Zobrazit výkaz <i class="fas fa-angle-double-right"></i></a></span>
+        </td>
     </tr>
 </table>

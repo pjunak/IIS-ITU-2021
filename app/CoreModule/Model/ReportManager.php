@@ -92,11 +92,37 @@ class ReportManager extends DatabaseManager
      */
     public function saveReport(ArrayHash $report)
     {
-        if (empty($report[self::ID])) {
+        if (empty($report[self::ID]))
+        {
             unset($report[self::ID]);
-            $this->database->table(self::TABLE_NAME)->insert($report);
-        } else
-            $this->database->table(self::TABLE_NAME)->where(self::ID, $report[self::ID])->update($report);
+            $this->database->table(self::TABLE_NAME)->insert([
+                'id_osoby' => $report['id_osoby'],
+                'id_vyrobny' => $report['id_vyrobny'],
+                'od' => $report['od'],
+                'do' => $report['do'],
+                'datum_cas_zadani_vykazu' => $report['datum_cas_zadani_vykazu'],
+                'svorkova_vyroba_elektriny' => $report['svorkova_vyroba_elektriny']*1000,
+                'vlastni_spotreba_elektriny' => $report['vlastni_spotreba_elektriny']*1000,
+                'celkova_konecna_spotreba' => $report['celkova_konecna_spotreba']*1000,
+                'spotreba_z_toho_lokalni' => $report['spotreba_z_toho_lokalni']*1000,
+                'spotreba_z_toho_odber' => $report['spotreba_z_toho_odber']*1000
+            ]);
+        }
+        else
+        {
+            $this->database->query('UPDATE iis_vykaz SET', [
+                'id_osoby' => $report['id_osoby'],
+                'id_vyrobny' => $report['id_vyrobny'],
+                'od' => $report['od'],
+                'do' => $report['do'],
+                'datum_cas_zadani_vykazu' => $report['datum_cas_zadani_vykazu'],
+                'svorkova_vyroba_elektriny' => $report['svorkova_vyroba_elektriny']*1000,
+                'vlastni_spotreba_elektriny' => $report['vlastni_spotreba_elektriny']*1000,
+                'celkova_konecna_spotreba' => $report['celkova_konecna_spotreba']*1000,
+                'spotreba_z_toho_lokalni' => $report['spotreba_z_toho_lokalni']*1000,
+                'spotreba_z_toho_odber' => $report['spotreba_z_toho_odber']*1000
+            ], 'WHERE id = ?', $report['id']);
+        }   
     }
 
     /**

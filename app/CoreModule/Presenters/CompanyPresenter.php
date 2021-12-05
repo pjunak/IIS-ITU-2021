@@ -109,7 +109,7 @@ class CompanyPresenter extends BasePresenter
     public function actionRemove(string $rut = null)
     {
         $this->companyManager->removeCompany($rut);
-        $this->flashMessage('Firma byla úspěšně odstraněn.');
+        $this->flashMessage('Firma byla úspěšně odstraněna.');
         $this->redirect('Company:list');
     }
 
@@ -198,7 +198,7 @@ class CompanyPresenter extends BasePresenter
         $form = new Form;
         $form->addGroup('Základní údaje');
         $form->addHidden('rut_id');
-        array_push($helparr, $form->addInteger('ean', Html::el()->setHtml('EAN <span data-toggle="tooltip" data-placement="top" title="Kód EAN (European Article Number) je mezinárodní číslo obchodní doložky. Najdete ho ve faktuře u adresy odběrného místa. Slouží k jednoznačné identifikaci odběrného místa, resp. místa spotřeby energie. Jde o 18místné číslo. "><i class="fas fa-info-circle"></i></span>'))
+        array_push($helparr, $form->addInteger('ean', Html::el()->setHtml('EAN <span data-toggle="tooltip" data-placement="top" title="Kód EAN (European Article Number) je mezinárodní číslo obchodní doložky. Najdete ho ve faktuře u adresy odběrného místa. Slouží k jednoznačné identifikaci odběrného místa, resp. místa spotřeby energie. Jde o 18 místné číslo. "><i class="fas fa-info-circle"></i></span>'))
         ->setHtmlAttribute('placeholder', '123456789')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',18));
         $form->addText('nazev', 'Název')->setRequired('%label je nutné vyplnit')->setHtmlAttribute('placeholder', 'Jméno firmy')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',128);
         array_push($helparr, $form->addInteger('ic', Html::el()->setHtml('IČ <span data-toggle="tooltip" data-placement="top" title="Identifikační číslo osoby (správně zkratkou IČO, někdy také uváděno IČ) je v České republice unikátní osmimístné identifikační číslo právnické osoby, podnikající fyzické osoby nebo organizační složky státu."><i class="fas fa-info-circle"></i></span>'))
@@ -208,7 +208,7 @@ class CompanyPresenter extends BasePresenter
         $form->addEmail('email', 'Email')->setHtmlAttribute('placeholder', 'muj.email@email.cz')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',64);
         $dateTime = new DateTime;
         $date = $dateTime->format('Y-m-d');
-        $form->addText('datum_vytvoreni', 'Datum Vytvoření')->setHtmlType('date')->setDefaultValue($date)->setRequired('%label je nutné vyplnit');
+        array_push($helparr, $form->addText('datum_vytvoreni', 'Datum vytvoření')->setHtmlType('date')->setDefaultValue($date)->setRequired('%label je nutné vyplnit'));
 
         $form->addGroup('Adresa firmy');
         $form->addText('ulice', 'Ulice')->setHtmlAttribute('placeholder', 'Ulicová')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',32);
@@ -218,7 +218,7 @@ class CompanyPresenter extends BasePresenter
         $form->addInteger('psc', 'PSČ')->setHtmlAttribute('placeholder', '77700')->addRule($form::LENGTH, 'Délka %label je %d',5);
 
         $form->addGroup('Bankovní spojení');
-        $form->addInteger('predcisli', Html::el()->setHtml('Předčíslí <span data-toggle="tooltip" data-placement="top" title="Ne všechny účty mají předčíslí."><i class="fas fa-info-circle"></i></span>'))
+        $form->addInteger('predcisli', Html::el()->setHtml('Předčíslí <span data-toggle="tooltip" data-placement="top" title="Bankovní účet nemusí obsahovat předčíslí."><i class="fas fa-info-circle"></i></span>'))
         ->setHtmlAttribute('placeholder', '000000')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',6);
         $form->addInteger('cislo_uctu', 'Číslo účtu')->setRequired('%label je nutné vyplnit')->setHtmlAttribute('placeholder', '1234567890')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',10);
         $kody_banky = [

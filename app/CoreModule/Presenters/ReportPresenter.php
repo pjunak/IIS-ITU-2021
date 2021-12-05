@@ -156,7 +156,7 @@ class ReportPresenter extends BasePresenter
         }
         else
         {
-            $form->addSelect('vyrobna', 'Jméno výrobny')->setItems($seznam_vyroven)->setRequired()->setAttribute('onChange', 'submit()');
+            $form->addSelect('vyrobna', 'Název výrobny')->setItems($seznam_vyroven)->setRequired()->setAttribute('onChange', 'submit()');
             $form->onSuccess[] = [$this,'vykazy'];            
         }
         return $form;

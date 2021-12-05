@@ -372,3 +372,11 @@ input[type=text].filter-input
   border-radius: 5px;
   border: 1px solid #aaa;
 }
+
+select
+{
+    padding: 12px 7px;
+    border-radius: 5px;
+    border: 1px solid #aaa;
+    background-color: #fff;
+}

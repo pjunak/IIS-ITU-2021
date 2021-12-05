@@ -7,10 +7,6 @@
 {block title}{$request->predmet}{/block}
 {block content}
 
-{if !$user->isInRole('disponent') && $request->status == 'podan'}
-    <a n:href="reply $request->id" class="btn-action"><i class="fas fa-reply"></i>&nbsp;&nbsp;Odpovědět na požadavek</a>
-{/if}
-
 <table class="list-item">
     <tr>   
         <td><label>Datum vytvoření</label></td>
@@ -44,5 +40,13 @@
     <tr>   
         <td><label>Odpověď</label><br></td>
         <td><textarea rows="5" cols="50" disabled>{$request->odpoved}</textarea></td>
+    </tr>
+    <tr>   
+        <td></td>
+        <td>
+        {if !$user->isInRole('disponent') && $request->status == 'podan'}
+            <a n:href="reply $request->id" class="btn-action"><i class="fas fa-reply"></i>&nbsp;&nbsp;Otevřít formulář odpovědi</a>
+        {/if}
+        </td>
     </tr>
 </table>

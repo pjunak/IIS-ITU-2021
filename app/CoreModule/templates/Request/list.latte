@@ -17,9 +17,6 @@
                     <th>Datum vyřízení</th>
                 {/if}
                 <th></th>
-                {if!$user->isInRole('disponent')}
-                    <th></th>
-                {/if}
             </tr>
         </thead>
         <tbody id="data">
@@ -33,10 +30,11 @@
                     {if $statusPozadavku != 'podan'}
                         <td>{$requestFe->datum_uzavreni|date:'j. n. Y'}</td>
                     {/if}
-                    <td><span class="company-name-link"><a n:href="Request: $requestFe->id" class="btn-action">Zobrazit požadavek &raquo;</a></span></td>
+                    <td><span class="company-name-link"><a n:href="Request: $requestFe->id" class="btn-action">Zobrazit požadavek &nbsp;<i class="fas fa-angle-double-right"></i></a></span>
                     {if $statusPozadavku == 'podan' && !$user->isInRole('disponent')}
-                        <td><a n:href=":reply $requestFe->id" class="btn-action"><i class="fas fa-reply"></i>&nbsp;&nbsp;Odpovědět na požadavek</a></td>
+                        <a n:href=":reply $requestFe->id" class="btn-action"><i class="fas fa-reply"></i>&nbsp;&nbsp;Odpovědět na požadavek</a>
                     {/if}
+                    </td>
                 {/if}
             </tr>
         </tbody>

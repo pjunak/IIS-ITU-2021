@@ -65,5 +65,6 @@ final class SignPresenter extends BasePresenter
 	{
 		$this->getUser()->logout();
 		$this->session->destroy();
+		$this->flashMessage('Byl jste úspěšně odhlášen!', 'success');
 	}
 }

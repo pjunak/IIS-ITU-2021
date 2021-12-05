@@ -7,19 +7,18 @@
 {block title}{$request->predmet}{/block}
 {block content}
 
+{if !$user->isInRole('disponent') && $request->status == 'podan'}
+    <a n:href="reply $request->id" class="btn-action"><i class="fas fa-reply"></i>&nbsp;&nbsp;Odpovědět na požadavek</a>
+{/if}
+
 <table class="list-item">
-    <tr class="btn-bar">
-    {if !$user->isInRole('disponent') && $request->status == 'poslan'}
-        <a class="btn-action" n:href="editor $request->id"><i class="fas fa-edit"></i>Odpovědět</a>
-    {/if}
-    </tr>
     <tr>   
         <td><label>Datum vytvoření</label></td>
         <td><input type="date" value="{$request->datum_vytvoreni|date:'Y-m-d'}" disabled></td>
     </tr>
     {if $request->datum_uzavreni != NULL}
     <tr>   
-        <td><label>Datum uzavření</label></td>
+        <td><label>Datum vyřízení</label></td>
         <td><input type="date" value="{$request->datum_uzavreni|date:'Y-m-d'}" disabled></td>
     </tr>
     {/if}
@@ -28,10 +27,15 @@
         <td><input type="text" value="{$request->predmet}" disabled></td>
     </tr>
     <tr>
-        <td><label for="status">Status</label></td>
-        <td><select id="status" disabled>
-            <option value="">{$request->status}</option>
-        </select></td>
+        <td><label>Status</label></td>
+        {switch $request->status}
+            {case 'podan'}
+                <td><input type="text" value="Podán" disabled></td>
+            {case 'vyrizen'}
+                <td><input type="text" value="Vyřízen" disabled></td>
+            {default}
+                <td><input type="text" value="Neznámý stav" disabled></td>
+        {/switch}
     </tr>
     <tr>   
         <td><label>Obsah požadavku</label><br></td>

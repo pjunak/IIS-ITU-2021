@@ -154,7 +154,7 @@ class FactoryPresenter extends BasePresenter
 
         //kategorie VÝROBNÍ ZDROJ
         $form->addGroup('Výrobní zdroj');
-        $form->addText('kratky_nazev', 'Krátký název')->setRequired()->setHtmlAttribute('placeholder', 'Moje výrobna')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',64);;
+        $form->addText('kratky_nazev', 'Krátký název')->setRequired('Krátký název je potřeba vyplnit')->setHtmlAttribute('placeholder', 'Moje výrobna')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',64);;
         $form->addHidden('id');
         $form->addInteger('id_vyrobniho_zdroje', 'ID výrobního zdroje')->setHtmlAttribute('placeholder', '123456')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);;
         $form->addInteger('id_site', Html::el()->setHtml('ID sítě <span data-toggle="tooltip" data-placement="top" title="ID sítě nalzenete v dokumentech od Vašeho lokálního distributora elektřiny."><i class="fas fa-info-circle"></i></span>'))->setHtmlAttribute('placeholder', '123456')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);
@@ -178,7 +178,7 @@ class FactoryPresenter extends BasePresenter
             '400' => '400',
             'ostatní' => 'ostatní'
         ];
-        $form->addSelect('napetova_hladina', 'Napěťová hladina')->setItems($napetove_hladiny)->setRequired()->setOption('description', Html::el('span class="jednotky"')
+        $form->addSelect('napetova_hladina', 'Napěťová hladina')->setItems($napetove_hladiny)->setRequired('Napěťovou hladinu je nutné vyplnit')->setOption('description', Html::el('span class="jednotky"')
 		->setHtml('&nbsp;kV'));
         $zpusoby_pripojeni = $this->factoryManager->get_enum_values('zpusob_pripojeni');
         $form->addSelect('zpusob_pripojeni', 'Způsob připojení')->setItems($zpusoby_pripojeni)->setRequired();

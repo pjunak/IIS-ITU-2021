@@ -113,35 +113,27 @@ class UserPresenter extends BasePresenter
                     $this['editorForm']['id_ucastnika']->setDisabled();
                     $this['editorForm']['jmeno']->setDisabled();
                     $this['editorForm']['prijmeni']->setDisabled();
-                    $this['editorForm']['telefon']->setRequired();
-                    $this['editorForm']['email']->setRequired();
 
                     $this['editorFormUrednik']['id_ucastnika']->setDisabled();
                     $this['editorFormUrednik']['jmeno']->setDisabled();
                     $this['editorFormUrednik']['prijmeni']->setDisabled();
-                    $this['editorFormUrednik']['telefon']->setRequired();
-                    $this['editorFormUrednik']['email']->setRequired();
 
                     $this['editorFormUrednik']['kancelar']->setDisabled();
                     $this['editorFormUrednik']['pozice']->setDisabled();
                     $this['editorFormUrednik']['plat']->setDisabled();
                 } else 
                 {
-                    $this['editorForm']['id_ucastnika']->setRequired();
-                    $this['editorForm']['jmeno']->setRequired();
-                    $this['editorForm']['prijmeni']->setRequired();
+                    $this['editorForm']['id_ucastnika']->setRequired('ID účastníka je nutné vyplnit');
+                    $this['editorForm']['jmeno']->setRequired('Jméno je nutné vyplnit');
+                    $this['editorForm']['prijmeni']->setRequired('Příjmení je nutné vyplnit');
                     $this['editorForm']['telefon']->setDisabled();
                     $this['editorForm']['email']->setDisabled();
 
-                    $this['editorFormUrednik']['id_ucastnika']->setRequired();
-                    $this['editorFormUrednik']['jmeno']->setRequired();
-                    $this['editorFormUrednik']['prijmeni']->setRequired();
+                    $this['editorFormUrednik']['id_ucastnika']->setRequired('ID účastníkaje nutné vyplnit');
+                    $this['editorFormUrednik']['jmeno']->setRequired('Jméno je nutné vyplnit');
+                    $this['editorFormUrednik']['prijmeni']->setRequired('Příjmení je nutné vyplnit');
                     $this['editorFormUrednik']['telefon']->setDisabled();
                     $this['editorFormUrednik']['email']->setDisabled();
-
-                    $this['editorFormUrednik']['kancelar']->setRequired();
-                    $this['editorFormUrednik']['pozice']->setRequired();
-                    $this['editorFormUrednik']['plat']->setRequired();
                 }
             }
         }
@@ -390,8 +382,8 @@ class UserPresenter extends BasePresenter
         $form->addHidden('id_ucastnika');
         $form->addHidden('typ_osoby', 'urednik');
         $form->addHidden('login');
-        $form->addText('jmeno', 'Jméno')->setRequired()->setHtmlAttribute('placeholder', 'Jan')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',64);
-        $form->addText('prijmeni', 'Příjmení')->setRequired()->setHtmlAttribute('placeholder', 'Novák')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',64);
+        $form->addText('jmeno', 'Jméno')->setRequired('Jméno je nutné vyplnit')->setHtmlAttribute('placeholder', 'Jan')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',64);
+        $form->addText('prijmeni', 'Příjmení')->setRequired('Příjmení je nutné vyplnit')->setHtmlAttribute('placeholder', 'Novák')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',64);
         $form->addInteger('telefon', 'Telefonní číslo')->setHtmlAttribute('placeholder', '111222333')->addRule($form::LENGTH, 'Délka %label je %d',9);
         $form->addEmail('email', 'E-mail')->setHtmlAttribute('placeholder', 'muj.email@email.cz')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',32);
       

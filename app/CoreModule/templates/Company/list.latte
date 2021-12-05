@@ -12,7 +12,10 @@
 {/if}
 {/block}
 {block content}
-    <input class="form-control filter-input" id="myInput" type="text" placeholder="Filtrovat řádky tabulky...">
+    <div class="lista-nad-menu">
+        {if !$user->isInRole('disponent')}<a class="btn-action" n:href="editor"><i class="fas fa-building"></i> Vložit firmu</a>{/if}
+        <input class="form-control filter-input" id="myInput" type="text" placeholder="Filtrovat řádky tabulky...">
+    </div>
     <table class="list-entities table table-striped table-hover">
         <thead>
             <tr>
@@ -31,5 +34,4 @@
             </tr>
         </tbody>
     </table>
-    {if !$user->isInRole('disponent')}<a class="btn-action" n:href="editor"><i class="fas fa-building"></i> Vložit firmu</a>{/if}
 {/block}

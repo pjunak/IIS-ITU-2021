@@ -43,6 +43,8 @@
     {if $user->isInRole('disponent')}
         Uživatel nemá mít k této záložce přístup.
     {else}
+    <a class="btn-action" n:href="creator, NULL, 'disponent'"><i class="fas fa-user-plus"></i> Vložit uživatele</a>
+    {if $user->isInRole('reditel')}<a class="btn-action" n:href="creator, NULL, 'urednik'"><i class="fas fa-user-plus"></i> Vložit úředníka</a>{/if}
         <h3>Zákazníci</h3>
         <hr>
         {include tabulkaOsob, 'disponent'}
@@ -50,9 +52,6 @@
         <h3>Úředníci</h3>
         <hr>
         {include tabulkaOsob, 'urednik'}
-
-    <a class="btn-action" n:href="creator, NULL, 'disponent'"><i class="fas fa-user-plus"></i> Vložit uživatele</a>
-    {if $user->isInRole('reditel')}<a class="btn-action" n:href="creator, NULL, 'urednik'"><i class="fas fa-user-plus"></i> Vložit úředníka</a>{/if}
     {/if}
 {/block}
 

@@ -307,6 +307,12 @@ hr
 
 input.filter-input
 {
-    margin-bottom: 10px;
     width: 400px;
+}
+
+.lista-nad-menu
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }

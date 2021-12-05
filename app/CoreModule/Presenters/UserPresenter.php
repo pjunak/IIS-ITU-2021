@@ -299,7 +299,7 @@ class UserPresenter extends BasePresenter
         $form->addPassword('heslo_new', 'Heslo')->setRequired('%label je nutné vyplnit')
         ->addRule($form::MIN_LENGTH, 'Heslo musí mít alespoň %d znaků', 6)
         ->addRule($form::MAX_LENGTH, 'Heslo nemůže mít víc, než %d znaků', 255)
-        ->addRule($form::PATTERN, 'Musí obsahovat číslici', '.*[0-9].*');
+        ->addRule($form::PATTERN, 'Heslo musí obsahovat číslici', '.*[0-9].*');
         $form->addPassword('heslo_new_check', 'Ověření hesla')->setRequired('%label je nutné vyplnit')
         ->addRule($form::MIN_LENGTH, 'Heslo musí mít alespoň %d znaků', 6)
         ->addRule($form::MAX_LENGTH, 'Heslo nemůže mít víc, než %d znaků', 255)

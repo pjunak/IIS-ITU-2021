@@ -207,7 +207,8 @@ class UserPresenter extends BasePresenter
         $form->addInteger('telefon', 'Telefonní číslo')->setHtmlAttribute('placeholder', '111222333')->addRule($form::LENGTH, 'Délka %label je %d',9);
         $form->addEmail('email', 'E-mail')->setHtmlAttribute('placeholder', 'muj.email@email.cz')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',32);
 
-        $form->addSubmit('save', 'Uložit uživatele');
+        //$form->addSubmit('save', 'Uložit uživatele');
+        $form->addSubmit('save', 'Uložit uživatele')->getControlPrototype()->setName('button')->setHtml('Uložit uživatele&nbsp;&nbsp;<i class="fa fa-save fa-lg"></i>')->setAttribute('class', 'button');
 
         // Funkce se vykonaná při úspěšném odeslání formuláře a zpracuje zadané hodnoty.
         $form->onSuccess[] = function (Form $form, ArrayHash $values) {
@@ -296,7 +297,8 @@ class UserPresenter extends BasePresenter
         ->addRule($form::MAX_LENGTH, 'Heslo nemůže mít víc, než %d znaků', 255)
         ->addRule($form::PATTERN, 'Musí obsahovat číslici', '.*[0-9].*');
         
-        $form->addSubmit('save', 'Změnit heslo');
+        //$form->addSubmit('save', 'Změnit heslo');
+        $form->addSubmit('save', 'Změnit heslo')->getControlPrototype()->setName('button')->setHtml('Změnit heslo&nbsp;&nbsp;<i class="fa fa-key fa-lg"></i>')->setAttribute('class', 'button');
 
         // Funkce se vykonaná při úspěšném odeslání formuláře a zpracuje zadané hodnoty.
         $form->onSuccess[] = function (Form $form, ArrayHash $values) {
@@ -341,7 +343,8 @@ class UserPresenter extends BasePresenter
         $form->addInteger('telefon', 'Telefonní číslo')->setHtmlAttribute('placeholder', '111222333')->addRule($form::LENGTH, 'Délka %label je %d',9);
         $form->addEmail('email', 'E-mail')->setHtmlAttribute('placeholder', 'muj.email@email.cz')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',32);
 
-        $form->addSubmit('save', 'Uložit uživatele');
+        //$form->addSubmit('save', 'Uložit uživatele');
+        $form->addSubmit('save', 'Uložit uživatele')->getControlPrototype()->setName('button')->setHtml('Uložit uživatele&nbsp;&nbsp;<i class="fa fa-save fa-lg"></i>')->setAttribute('class', 'button');
 
         // Funkce se vykonaná při úspěšném odeslání formuláře a zpracuje zadané hodnoty.
         $form->onSuccess[] = function (Form $form, ArrayHash $values) {
@@ -387,7 +390,8 @@ class UserPresenter extends BasePresenter
         $form->addText('pozice', 'Pozice')->setHtmlAttribute('placeholder', 'Technická podpora')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',32);
         $form->addInteger('plat', 'Plat')->setHtmlAttribute('placeholder', '28000')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);
         
-        $form->addSubmit('save', 'Uložit úředníka');
+        //$form->addSubmit('save', 'Uložit úředníka');
+        $form->addSubmit('save', 'Uložit úpravy')->getControlPrototype()->setName('button')->setHtml('Uložit úpravy&nbsp;&nbsp;<i class="fa fa-save fa-lg"></i>')->setAttribute('class', 'button');
 
         // Funkce se vykonaná při úspěšném odeslání formuláře a zpracuje zadané hodnoty.
         $form->onSuccess[] = function (Form $form, ArrayHash $values) {

@@ -47,7 +47,7 @@ final class SignInFormFactory
 
 		$form->addCheckbox('remember', Nette\Utils\Html::el()->setHtml('Zapamatovat si přihlášení. <span data-toggle="tooltip" data-placement="top" title="Portál si zapamatuje Vaše přístupové údaje na 14 dní."><i class="fas fa-info-circle"></i></span>'));
 
-		$form->addSubmit('send', 'Přihlásit se');
+		$form->addSubmit('send', 'Přihlásit se')->setAttribute('id', 'login-submit');
 
 		$form->onSuccess[] = function (Form $form, \stdClass $values) use ($onSuccess): void {
 			try {

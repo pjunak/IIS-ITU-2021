@@ -186,7 +186,8 @@ class ReportPresenter extends BasePresenter
         $form->addInteger('celkova_konecna_spotreba', 'Celková spotřeba elektřiny')->setHtmlAttribute('placeholder', '9500')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);;
         $form->addInteger('spotreba_z_toho_lokalni', 'Spotřeba z toho lokální')->setHtmlAttribute('placeholder', '2500')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);;
         $form->addInteger('spotreba_z_toho_odber', 'Spotřeba z toho odběr')->setHtmlAttribute('placeholder', '4500')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);;
-        $form->addSubmit('save', 'Uložit výkaz');
+        //$form->addSubmit('save', 'Uložit výkaz');
+        $form->addSubmit('save', 'Uložit výkaz')->getControlPrototype()->setName('button')->setHtml('Uložit výkaz&nbsp;&nbsp;<i class="fa fa-save fa-lg"></i>')->setAttribute('class', 'button');
 
         // Funkce se vykonaná při úspěšném odeslání formuláře a zpracuje zadané hodnoty.
         $form->onSuccess[] = function (Form $form, ArrayHash $values) {

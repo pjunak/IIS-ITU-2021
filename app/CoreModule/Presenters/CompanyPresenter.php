@@ -259,7 +259,8 @@ class CompanyPresenter extends BasePresenter
         ];
         
         $form->addSelect('kod_banky', 'Kód Banky')->setItems($kody_banky)->setRequired('%label je nutné vyplnit');
-        $form->addSubmit('save', 'Uložit úpravy');
+        //$form->addSubmit('save', 'Uložit úpravy');
+        $form->addSubmit('save', 'Uložit úpravy')->getControlPrototype()->setName('button')->setHtml('Uložit úpravy&nbsp;&nbsp;<i class="fa fa-save fa-lg"></i>')->setAttribute('class', 'button');
 
         foreach($helparr as $unit)
         {

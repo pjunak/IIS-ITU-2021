@@ -155,7 +155,8 @@ class RequestPresenter extends BasePresenter
             ->setRequired()->setHtmlAttribute('placeholder', 'Žádost o změnu údaje')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',128);
             $form->addHidden('status', 'Status')->setDefaultValue('podan');
             $form->addTextArea('obsah_pozadavku', 'Obsah požadavku')->setRequired();
-            $form->addSubmit('save', 'Vložit požadavek');
+            //$form->addSubmit('save', 'Vložit požadavek');
+            $form->addSubmit('save', 'Vložit požadavek')->getControlPrototype()->setName('button')->setHtml('Vložit požadavek&nbsp;&nbsp;<i class="fas fa-paper-plane fa-lg"></i>')->setAttribute('class', 'button');
         }
         else
         {
@@ -166,7 +167,8 @@ class RequestPresenter extends BasePresenter
             $form->addHidden('status', 'Status')->setDefaultValue('vyrizen');
             $form->addTextArea('obsah_pozadavku', 'Obsah požadavku')->setDisabled();
             $form->addTextArea('odpoved', 'Odpověď');
-            $form->addSubmit('save', 'Odpovědět na požadavek');
+            //$form->addSubmit('save', 'Odpovědět na požadavek');
+            $form->addSubmit('save', 'Odpovědět na požadavek')->getControlPrototype()->setName('button')->setHtml('Odpovědět na požadavek&nbsp;&nbsp;<i class="fas fa-reply fa-lg"></i>')->setAttribute('class', 'button');
         }
 
         // Funkce se vykonaná při úspěšném odeslání formuláře a zpracuje zadané hodnoty.

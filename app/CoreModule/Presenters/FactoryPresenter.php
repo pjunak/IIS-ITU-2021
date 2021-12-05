@@ -209,7 +209,8 @@ class FactoryPresenter extends BasePresenter
         $form->addText('datum_prvniho_pripojeni', 'Datum prvního připojení')->setHtmlType('date')->setDefaultValue($date)->setRequired('%label je nutné vyplnit');
         $form->addText('datum_uvedeni_do_provozu', 'Datum uvedení do provozu')->setHtmlType('date')->setDefaultValue($date)->setRequired('%label je nutné vyplnit');
 
-        $form->addSubmit('save', 'Registrovat výrobnu');
+        //$form->addSubmit('save', 'Registrovat výrobnu');
+        $form->addSubmit('save', 'Registrovat výrobnu')->getControlPrototype()->setName('button')->setHtml('Registrovat výrobnu&nbsp;&nbsp;<i class="fa fa-save fa-lg"></i>')->setAttribute('class', 'button');
 
         // Funkce se vykonaná při úspěšném odeslání formuláře a zpracuje zadané hodnoty.
         $form->onSuccess[] = function (Form $form, ArrayHash $values) {

@@ -30,6 +30,7 @@ body {
 h1 {
     color: #444444;
     margin-bottom: 1em;
+    word-break: break-all;
 }
 
 h3
@@ -77,14 +78,19 @@ nav a.active
     text-decoration: none;
 }
 
-input[type="submit"] {
+input[type="submit"],
+button[type="submit"]
+{
     background: #1A3873;
     color: white;
     padding: 5px 10px;
     border: 0;
+    font-weight: normal;
 }
 
-input[type="submit"]:hover {
+input[type="submit"]:hover,
+button[type="submit"]:hover
+{
     background: #43b9c2;
     color: #EEEEEE;
     cursor: pointer;
@@ -100,10 +106,21 @@ input[type="datetime"]
     padding: 0.3em;
 }
 
-input[type="submit"] {
-    padding: 10px 25px;
+input[type="submit"]#login-submit
+{
+    border-radius: 0;
+}
+
+input[type="submit"]:not#login-submit
+{
+    width: 100%;
+}
+
+input[type="submit"],
+button[type="submit"]
+{
+    padding: 10px 35px;
     display: block;
-    font-weight: bold;
 }
 
 textarea {

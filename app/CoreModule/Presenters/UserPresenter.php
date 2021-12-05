@@ -202,10 +202,6 @@ class UserPresenter extends BasePresenter
         $form->addInteger('id_ucastnika', Html::el()->setHtml('ID účastníka <span data-toggle="tooltip" data-placement="top" title="ID účastníka pro Lorem ipsum najdete v Dolor sir amet."><i class="fas fa-info-circle"></i></span>'));
         $form->addHidden('typ_osoby', 'disponent');
         $form->addText('login', 'Login')->setRequired()->setHtmlAttribute('placeholder', 'Pepega')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',64);
-        $form->addPassword('heslo', 'Heslo')->setRequired('%label je nutné vyplnit')
-        ->addRule($form::MIN_LENGTH, 'Heslo musí mít alespoň %d znaků', 6)
-        ->addRule($form::MAX_LENGTH, 'Heslo nemůže mít víc, než %d znaků', 255);
-        // Pro zjednodušení kontroly odstraněno ->addRule($form::PATTERN, 'Musí obsahovat číslici', '.*[0-9].*');
         $form->addText('jmeno', 'Jméno')->setRequired()->setHtmlAttribute('placeholder', 'Jan')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',64);
         $form->addText('prijmeni', 'Příjmení')->setRequired()->setHtmlAttribute('placeholder', 'Novák')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',64);
         $form->addInteger('telefon', 'Telefonní číslo')->setHtmlAttribute('placeholder', '111222333')->addRule($form::LENGTH, 'Délka %label je %d',9);
@@ -246,10 +242,6 @@ class UserPresenter extends BasePresenter
         $form->addInteger('id_ucastnika', Html::el()->setHtml('ID účastníka <span data-toggle="tooltip" data-placement="top" title="ID účastníka pro Lorem ipsum najdete v Dolor sir amet."><i class="fas fa-info-circle"></i></span>'));
         $form->addHidden('typ_osoby', 'urednik');
         $form->addText('login', 'Login')->setRequired()->setHtmlAttribute('placeholder', 'Pepega')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',64);
-        $form->addPassword('heslo', 'Heslo')->setRequired('%label je nutné vyplnit')
-        ->addRule($form::MIN_LENGTH, 'Heslo musí mít alespoň %d znaků', 6)
-        ->addRule($form::MAX_LENGTH, 'Heslo nemůže mít víc, než %d znaků', 255);
-        // Pro zjednodušení kontroly odstraněno ->addRule($form::PATTERN, 'Musí obsahovat číslici', '.*[0-9].*');
         $form->addText('jmeno', 'Jméno')->setRequired()->setHtmlAttribute('placeholder', 'Jan')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',64);
         $form->addText('prijmeni', 'Příjmení')->setRequired()->setHtmlAttribute('placeholder', 'Novák')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',64);
         $form->addInteger('telefon', 'Telefonní číslo')->setHtmlAttribute('placeholder', '111222333')->addRule($form::LENGTH, 'Délka %label je %d',9);
@@ -258,7 +250,7 @@ class UserPresenter extends BasePresenter
         $form->addGroup('Firemní údaje');
         $form->addText('kancelar', 'Kancelář')->setHtmlAttribute('placeholder', '8B')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',32);
         $form->addText('pozice', 'Pozice')->setHtmlAttribute('placeholder', 'Technická podpora')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',32);
-        $form->addInteger('plat', 'Plat')->setHtmlAttribute('placeholder', '28000')->addRule($form::LENGTH, 'Délka %label je %d',11);
+        $form->addInteger('plat', 'Plat')->setHtmlAttribute('placeholder', '28000')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);
         
         $form->addSubmit('save', 'Uložit úředníka');
 
@@ -354,7 +346,7 @@ class UserPresenter extends BasePresenter
         // Funkce se vykonaná při úspěšném odeslání formuláře a zpracuje zadané hodnoty.
         $form->onSuccess[] = function (Form $form, ArrayHash $values) {
             try {
-                $this->userManager->saveUser($values);
+                $this->userManager->updateUser($values);
                 $this->flashMessage('Uživatel byl úspěšně uložen.');
                 if(isset($values->id))
                 {
@@ -393,14 +385,14 @@ class UserPresenter extends BasePresenter
         $form->addGroup('Firemní údaje');
         $form->addText('kancelar', 'Kancelář')->setHtmlAttribute('placeholder', '8B')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',32);
         $form->addText('pozice', 'Pozice')->setHtmlAttribute('placeholder', 'Technická podpora')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',32);
-        $form->addInteger('plat', 'Plat')->setHtmlAttribute('placeholder', '28000')->addRule($form::LENGTH, 'Délka %label je %d',11);
+        $form->addInteger('plat', 'Plat')->setHtmlAttribute('placeholder', '28000')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);
         
         $form->addSubmit('save', 'Uložit úředníka');
 
         // Funkce se vykonaná při úspěšném odeslání formuláře a zpracuje zadané hodnoty.
         $form->onSuccess[] = function (Form $form, ArrayHash $values) {
             try {
-                $this->userManager->saveUser($values);
+                $this->userManager->updateUser($values);
                 $this->flashMessage('Úředník byl úspěšně uložen.');
                 if(isset($values->id))
                 {

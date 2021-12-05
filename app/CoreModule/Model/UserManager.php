@@ -139,17 +139,7 @@ class UserManager extends DatabaseManager
     public function updateUser(ArrayHash $user)
     {
         //aktualizace stávajícího uživatele
-        if($user['typ_osoby'] == 'disponent')
-        {
-            $this->database->query('UPDATE iis_osoba SET', [
-                'id_ucastnika' => $user['id_ucastnika'],
-                'typ_osoby' => $user['typ_osoby'],
-                'jmeno' => $user['jmeno'],
-                'prijmeni' => $user['prijmeni'],
-                'telefon' => $user['telefon'],
-                'email' => $user['email'],
-            ], 'WHERE id = ?', $user['id']);
-        }
+        $this->database->table(self::TABLE_NAME)->where(self::ID, $user[self::ID])->update($user);
     }
 
     /**

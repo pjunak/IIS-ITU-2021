@@ -29,78 +29,79 @@
 </head>
 
 <body>
-    <header class="main-header">
-        <div class="left-side">
-            <div class="logo"><a n:href=:Sign:in><img src="{$basePath}/img/Logo_OTE.jpg"></a></div>
-            <div class="description">Spojujeme trhy a příležitosti</div>
-        </div>
-        <div class="right-side">
-                {if !$presenter->isLinkCurrent(':Sign:')}
-                    {if $user->isLoggedIn()}
-                        <span class="inline-item"><a n:href=":Core:User:default $user->id"><i class="fas fa-user"></i> {$user->getIdentity()->jmeno} {$user->getIdentity()->prijmeni}</a></span>
-                            <span class="inline-item"><a n:href=":Sign:out">Odhlásit <i class="fas fa-sign-out-alt"></i></a></span>
-                    {else}
-                        <span class="inline-item"><a n:href=":Sign:in"><i class="fas fa-sign-in-alt"></i> Přihlásit se</a></span>
+    <div id="main-content">
+        <header class="main-header">
+            <div class="left-side">
+                <div class="logo"><a n:href=:Sign:in><img src="{$basePath}/img/Logo_OTE.jpg"></a></div>
+                <div class="description">Spojujeme trhy a příležitosti</div>
+            </div>
+            <div class="right-side">
+                    {if !$presenter->isLinkCurrent(':Sign:')}
+                        {if $user->isLoggedIn()}
+                            <span class="inline-item"><a n:href=":Core:User:default $user->id"><i class="fas fa-user"></i> {$user->getIdentity()->jmeno} {$user->getIdentity()->prijmeni}</a></span>
+                                <span class="inline-item"><a n:href=":Sign:out">Odhlásit <i class="fas fa-sign-out-alt"></i></a></span>
+                        {else}
+                            <span class="inline-item"><a n:href=":Sign:in"><i class="fas fa-sign-in-alt"></i> Přihlásit se</a></span>
+                        {/if}
                     {/if}
-                {/if}
-                |
-                <span class="inline-item"><a target="_blank" href="https://www.ote-cr.cz/cs/poze/registrace/registrace-vyrobce">Nápověda portálu</a></span>
-                |
-                <span class="inline-item"><a target="_blank" href="#">EN</a></span>
+                    |
+                    <span class="inline-item"><a target="_blank" href="https://www.ote-cr.cz/cs/poze/registrace/registrace-vyrobce">Nápověda portálu</a></span>
+                    |
+                    <span class="inline-item"><a target="_blank" href="#">EN</a></span>
+                </ul>
+            </div>
+        </header>
+
+        <!-- Menu pro prihlasene -->
+        <nav n:if="$user->isLoggedIn()" class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item"><a n:class="nav-link, $presenter->isLinkCurrent(':Administration:') ? active" n:href=:Administration:><i class="fas fa-home"></i>&nbsp;&nbsp;Úvod</a></li>
+                    {if $user->isInRole('disponent')}
+                    <!-- Menu pro disponenta -->
+                        <li class="nav-item"><a n:class="nav-link, $presenter->isLinkCurrent(':Core:Company:*') ? active" n:href=:Core:Company:list>Moje firmy</a></li>
+                        <li class="nav-item"><a n:class="nav-link, $presenter->isLinkCurrent(':Core:Factory:*') ? active" n:href=:Core:Factory:list>Výrobny</a></li>
+                        <li class="nav-item"><a n:class="nav-link, $presenter->isLinkCurrent(':Core:Report:*') ? active" n:href=:Core:Report:list>Měsíční výkazy</a></li>
+                        <li class="nav-item"><a n:class="nav-link, $presenter->isLinkCurrent(':Core:Request:*') ? active" n:href=:Core:Request:list>Reklamace</a></li>
+                    {else}
+                    <!-- Menu pro urednika/reditele -->
+                        <li class="nav-item"><a n:class="nav-link, $presenter->isLinkCurrent(':Core:Company:*') ? active" n:href=:Core:Company:list>Firmy</a></li>
+                        <li class="nav-item"><a n:class="nav-link, $presenter->isLinkCurrent(':Core:User:*') ? active" n:href=:Core:User:list>Osoby</a></li>
+                        <li class="nav-item"><a n:class="nav-link, $presenter->isLinkCurrent(':Core:Factory:*') ? active" n:href=:Core:Factory:list>Výrobny</a></li>
+                        <li class="nav-item"><a n:class="nav-link, $presenter->isLinkCurrent(':Core:Report:*') ? active" n:href=:Core:Report:list>Výkazy</a></li>
+                        <li class="nav-item"><a n:class="nav-link, $presenter->isLinkCurrent(':Core:Request:*') ? active" n:href=:Core:Request:list>Požadavky</a></li>
+                    {/if}
             </ul>
+        </nav>
+
+        <!-- Menu pro odhlasene -->
+        <nav n:if="!$user->isLoggedIn()" class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item"><a class="nav-link" n:href=:Sign:in><i class="fas fa-home"></i></a></li>
+                <li class="nav-item"><a class="nav-link" href="https://www.ote-cr.cz/cs">Aktuality OTE</a></li>
+                <li class="nav-item"><a class="nav-link" href="https://www.ote-cr.cz/cs/o-spolecnosti/zakladni-udaje">O společnosti OTE</a></li>
+            </ul>
+        </nav>
+
+        <div class=container>
+            {* Výpis flash zpráv. *}
+            <div n:foreach="$flashes as $flash" n:class="alert, 'alert-' . $flash->type">{$flash->message}</div>
+
+            <br style="clear: both;">
+            <article>
+                <header>
+                    <h1>{include title}</h1>
+                </header>
+                <section>
+                    {include content} {* Vložení obsahu do šablony. *}
+                </section>
+            </article>
         </div>
-    </header>
-
-    <!-- Menu pro prihlasene -->
-    <nav n:if="$user->isLoggedIn()" class="collapse navbar-collapse">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item"><a class="nav-link" n:href=:Administration:><i class="fas fa-home"></i></a></li>
-                {if $user->isInRole('disponent')}
-                <!-- Menu pro disponenta -->
-                    <li class="nav-item"><a class="nav-link" n:href=:Core:Company:list>Moje firmy</a></li>
-                    <li class="nav-item"><a class="nav-link" n:href=:Core:Factory:list>Výrobny</a></li>
-                    <li class="nav-item"><a class="nav-link" n:href=:Core:Report:list>Měsíční výkazy</a></li>
-                    <li class="nav-item"><a class="nav-link" n:href=:Core:Request:list>Reklamace</a></li>
-                {else}
-                <!-- Menu pro urednika/reditele -->
-                    <li class="nav-item"><a class="nav-link" n:href=:Core:Company:list>Firmy</a></li>
-                    <li class="nav-item"><a class="nav-link" n:href=:Core:User:list>Osoby</a></li>
-                    <li class="nav-item"><a class="nav-link" n:href=:Core:Factory:list>Výrobny</a></li>
-                    <li class="nav-item"><a class="nav-link" n:href=:Core:Report:list>Výkazy</a></li>
-                    <li class="nav-item"><a class="nav-link" n:href=:Core:Request:list>Požadavky</a></li>
-                {/if}
-        </ul>
-    </nav>
-
-    <!-- Menu pro odhlasene -->
-    <nav n:if="!$user->isLoggedIn()" class="collapse navbar-collapse">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item"><a class="nav-link" n:href=:Sign:in><i class="fas fa-home"></i></a></li>
-            <li class="nav-item"><a class="nav-link" href="https://www.ote-cr.cz/cs">Aktuality OTE</a></li>
-            <li class="nav-item"><a class="nav-link" href="https://www.ote-cr.cz/cs/o-spolecnosti/zakladni-udaje">O společnosti OTE</a></li>
-        </ul>
-    </nav>
-
-    <div class=container>
-        {* Výpis flash zpráv. *}
-        <div n:foreach="$flashes as $flash" n:class="alert, 'alert-' . $flash->type">{$flash->message}</div>
-
-        <br style="clear: both;">
-        <article>
-            <header>
-                <h1>{include title}</h1>
-            </header>
-            <section>
-                {include content} {* Vložení obsahu do šablony. *}
-            </section>
-        </article>
     </div>
-
     <footer>
     <p>
         &copy; 2021 Informační systém OTE, a.s., &bull; Projekt do předmětu IIS (Informační systémy), ak. rok 2021/22. &bull; &#123;xcasek01, xherma33, xjunak01&#125;@stud.fit.vutbr.cz
     </p>
-</footer>
+    </footer>
 
     {block scripts}
         <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>

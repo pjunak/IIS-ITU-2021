@@ -35,7 +35,7 @@
     </tr>
     <tr n:foreach="$reports as $thisReport">
         <td>{$thisReport->od|date:'j. n. Y'} &ndash; {$thisReport->do|date:'j. n. Y'}</td>
-        <td>{$thisReport->svorkova_vyroba_elektriny/1000000}MWh</td>
+        <td>{$thisReport->svorkova_vyroba_elektriny/1000000|number:4, ',', ' '} MWh</td>
         <td>{$thisReport->datum_cas_zadani_vykazu|date:'j. n. Y'}</td>
         <td><span class="company-name-link"><a n:href="Report: $thisReport->id" class="btn-action">Zobrazit výkaz &raquo;</a></span></td>
     </tr>

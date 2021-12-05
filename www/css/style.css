@@ -17,6 +17,11 @@ body {
     margin: 0 auto;
 }
 
+#main-content
+{
+    min-height: calc(100vh - 38px);
+}
+
 h1 {
     color: #444444;
     margin-bottom: 1em;
@@ -66,7 +71,9 @@ nav a {
     padding: 0 1em
 }
 
-nav a:hover {
+nav a:hover,
+nav a.active
+{
     color: #fff;
     background-color: #43b9c2;
     text-decoration: none;

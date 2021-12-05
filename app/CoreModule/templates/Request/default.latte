@@ -9,7 +9,10 @@
 
 {if !$user->isInRole('disponent') && $request->status == 'podan'}
 <div class="lista-nad-menu">
-    <a n:href="reply $request->id" class="btn-action">Odpovědět na požadavek&nbsp;&nbsp;<i class="fas fa-share"></i></a>
+    <div>
+        <a class="btn-action" n:href="list"><i class="far fa-arrow-alt-circle-left"></i> Zpět</a>
+        <a n:href="reply $request->id" class="btn-action">Odpovědět na požadavek&nbsp;&nbsp;<i class="fas fa-share"></i></a>
+    </div>
     <label></label>
 </div>
 {/if}

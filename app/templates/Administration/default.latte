@@ -11,11 +11,11 @@
 {if $user->isInRole('disponent')}
     <h3>Kam dál?</h3>
     <div class="kam-dal">
-        <a class="button1" n:href="Core:Factory:list">Chci registrovat výrobnu&nbsp;&raquo;</a>
-        <a class="button1" n:href="Core:Report:list">Chci vyplnit měsíční výkaz&nbsp;&raquo;</a>
-        <a class="button1" n:href="Core:Company:list">Správa firemních údajů&nbsp;&raquo;</a>
-        <!--<a class="button1 zde-poprve"></i>Jsem zde poprvé&nbsp;&raquo;</a>-->
-        <button type="button" class="button1 zde-poprve" data-toggle="modal" data-target="#myModal1">Jsem zde poprvé&nbsp;&raquo;</button>
+        <a class="button1" n:href="Core:Factory:list">Chci registrovat výrobnu&nbsp;<i class="fas fa-angle-double-right"></i></a>
+        <a class="button1" n:href="Core:Report:list">Chci vyplnit měsíční výkaz&nbsp;<i class="fas fa-angle-double-right"></i></a>
+        <a class="button1" n:href="Core:Company:list">Správa firemních údajů&nbsp;<i class="fas fa-angle-double-right"></i></a>
+        <!--<a class="button1 zde-poprve"></i>Jsem zde poprvé&nbsp;<i class="fas fa-angle-double-right"></i></a>-->
+        <button type="button" class="button1 zde-poprve" data-toggle="modal" data-target="#myModal1">Jsem zde poprvé&nbsp;<i class="fas fa-angle-double-right"></i></button>
     </div>
 
 
@@ -252,8 +252,8 @@
 {else}
    <h3>Rychlé odkazy</h3>
    <div class="kam-dal">
-      <a class="button1" n:href="Core:User:creator, NULL, 'disponent'">Přidat zákazníka&nbsp;&raquo;</a>
-      <a class="button1" n:href="Core:Company:editor">Přidat firmu&nbsp;&raquo;</a>
+      <a class="button1" n:href="Core:User:creator, NULL, 'disponent'">Vložit nového zákazníka&nbsp;<i class="fas fa-angle-double-right"></i></a>
+      <a class="button1" n:href="Core:Company:editor">Vložit novou firmu&nbsp;<i class="fas fa-angle-double-right"></i></a>
    </div>
    <h3>Statistiky</h3>
 

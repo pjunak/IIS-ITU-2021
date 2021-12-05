@@ -22,6 +22,11 @@ body {
     min-height: calc(100vh - 38px);
 }
 
+.right-side a
+{
+    color:#3ABEC9;
+}
+
 h1 {
     color: #444444;
     margin-bottom: 1em;
@@ -38,13 +43,6 @@ article {
 nav ul {
     list-style-type: none;
 }
-
-/*
-nav li {
-    float: left;
-    margin-right: 15px;
-}
-*/
 
 ul.navbar-nav.mr-auto
 {
@@ -305,4 +303,10 @@ hr
 {
     margin-top: 0;
     margin-bottom: 10px;
+}
+
+input.filter-input
+{
+    margin-bottom: 10px;
+    width: 400px;
 }

@@ -87,6 +87,14 @@ class ReportPresenter extends BasePresenter
     public function renderList()
     {
         $this->template->reports = $this->reportManager->getReportsWhereFactory($this->vybrana_vyrobna);
+        $seznam_vyroven = $this->reportManager->get_factories($this->user);
+        if ($seznam_vyroven == NULL)
+        {
+            $this->template->vyrobna_exists = false;
+        } else
+        {
+            $this->template->vyrobna_exists = true;     
+        }
     }
 
     /**

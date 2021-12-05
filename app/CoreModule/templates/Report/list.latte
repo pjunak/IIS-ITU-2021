@@ -7,22 +7,26 @@
 {block title}Měsíční výkazy{/block}
 {block description}Výpis výkazů{/block}
 {block content}
-{block subtitle}V menu níže vyberte požadovanou výrobnu. Poté můžete vložit nový výkaz k dané výrobně, či prohlížet starší záznamy.{/block subtitle}
-
 {* Formulář pro editaci. *}
+{if $user->isInRole('disponent') && $vyrobna_exists}
+V menu níže vyberte požadovanou výrobnu. Poté můžete vložit nový výkaz k dané výrobně, či prohlížet starší záznamy.
 <table>
     <tr>
         <td>
             <h3>Výběr výrobny</h3>
             <tr>{control dropdownVyrobny}</tr>
-            {if $user->isInRole('disponent')}
-                <h3>Vytvoření nového výkazu</h3>
-                <tr>{control editorForm}</tr>
-            {/if}
+            <h3>Vytvoření nového výkazu</h3>
+            <tr>{control editorForm}</tr>
         </td>
     </tr>
 </table>
-
+{elseif $user->isInRole('urednik')}
+V menu níže vyberte požadovanou výrobnu Poté můžete prohlížet výkazy, které se jí týkají.
+    <h3>Výběr výrobny</h3>
+        <tr>{control dropdownVyrobny}</tr>
+{else}
+    Nemáte zádné schválené výrobny, nelze tedy přidávat výkazy.
+{/if}
 <br>
 <h3>Výkazy z uplynulých měsíců</h3> 
 <table class="table table-striped table-hover">

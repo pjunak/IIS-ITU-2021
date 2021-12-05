@@ -39,22 +39,22 @@
     </tr>
     <tr>   
         <th><label>Svorková výroba elektřiny <label><span data-toggle="tooltip" data-placement="top" title="Význam všech údajů lze najít v manuálu Vaší výrobny, nebo v rejstříku pojmů"> <i class="fas fa-info-circle"></i></span></th>
-        <td><input type="number" value="{$report->svorkova_vyroba_elektriny}" disabled> <span class="unit">kWh</span></td>
+        <td><input type="number" value="{$report->svorkova_vyroba_elektriny/1000}" disabled> <span class="unit">kWh</span></td>
     </tr>
     <tr>   
         <th><label>Vlastní spotřeba elektřiny<label></th>
-        <td><input type="number" value="{$report->vlastni_spotreba_elektriny}" disabled> <span class="unit">kWh</span></td>
+        <td><input type="number" value="{$report->vlastni_spotreba_elektriny/1000}" disabled> <span class="unit">kWh</span></td>
     </tr>
     <tr>   
         <th><label>Celková spotřeba elektřiny<label></th>
-        <td><input type="number" value="{$report->celkova_konecna_spotreba}" disabled> <span class="unit">kWh</span></td>
+        <td><input type="number" value="{$report->celkova_konecna_spotreba/1000}" disabled> <span class="unit">kWh</span></td>
     </tr>
     <tr>   
         <th><label>Spotřeba z toho lokální<label></th>
-        <td><input type="number" value="{$report->spotreba_z_toho_lokalni}" disabled> <span class="unit">kWh</span></td>
+        <td><input type="number" value="{$report->spotreba_z_toho_lokalni/1000}" disabled> <span class="unit">kWh</span></td>
     </tr>
     <tr>   
         <th><label>Spotřeba z toho odběr<label></th>
-        <td><input type="number" value="{$report->spotreba_z_toho_odber}" disabled> <span class="unit">kWh</span></td>
+        <td><input type="number" value="{$report->spotreba_z_toho_odber/1000}" disabled> <span class="unit">kWh</span></td>
     </tr>
 </table>

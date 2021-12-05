@@ -165,7 +165,7 @@ class FactoryPresenter extends BasePresenter
         $form->addInteger('EAN_vyrobny', Html::el()->setHtml('EAN výrobny <span data-toggle="tooltip" data-placement="top" title="Kód EAN (European Article Number) je mezinárodní číslo obchodní doložky. Najdete ho ve faktuře u adresy odběrného místa. Slouží k jednoznačné identifikaci odběrného místa, resp. místa spotřeby energie. Jde o 18místné číslo. "><i class="fas fa-info-circle"></i></span>'))
         ->setHtmlAttribute('placeholder', '123456')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',18);
         $form->addInteger('vykon_zdroje', 'Výkon zdroje')->setHtmlAttribute('placeholder', '7820')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11)->setOption('description', Html::el('span class="jednotky"')
-		->setHtml('&nbsp;Wh'));
+		->setHtml('&nbsp;W'));
         $napetove_hladiny = [
             '0,4' => '0,4',
             '3' => '3',

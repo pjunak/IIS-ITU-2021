@@ -7,6 +7,7 @@
 {block title}Úprava osoby{/block}
 {block description}Editor uživatele.{/block}
 {block content}
+<a class="btn-action" n:href="default $userFe->id"><i class="far fa-arrow-alt-circle-left"></i> Zrušit a vrátit se</a>
     {if $user->getID() == $userFe->id && !$user->isInRole('reditel')}
         <table>
             <tr>

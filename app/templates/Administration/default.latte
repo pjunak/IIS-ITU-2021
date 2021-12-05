@@ -250,14 +250,20 @@
 
 
 {else}
-    <h3>Rychlé odkazy</h3>
-    <div class="kam-dal">
-        <a class="button1" n:href="Core:User:creator, NULL, 'disponent'">Přidat zákazníka&nbsp;&raquo;</a>
-        <a class="button1" n:href="Core:Company:editor">Přidat firmu&nbsp;&raquo;</a>
-    </div>
-    <h3>Statistiky</h3>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
-    <canvas id="myChart" style="width:100%;max-width:600px; display: inline-block;"></canvas>
+   <h3>Rychlé odkazy</h3>
+   <div class="kam-dal">
+      <a class="button1" n:href="Core:User:creator, NULL, 'disponent'">Přidat zákazníka&nbsp;&raquo;</a>
+      <a class="button1" n:href="Core:Company:editor">Přidat firmu&nbsp;&raquo;</a>
+   </div>
+   <h3>Statistiky</h3>
+
+   <!--
+   Nasledujici vykreslovani grafu bylo prevzato z nasledujici URL:
+   https://www.w3schools.com/js/js_graphics_chartjs.asp
+   Pro vykreslovani je vyuzivana knihovna Chart.js
+   -->
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+   <canvas id="myChart" style="width:100%;max-width:600px; display: inline-block;"></canvas>
 
    <script>
    var xValues = ["sluneční", "vodní", "přečerpávací", "větrná"];
@@ -289,28 +295,28 @@
 
    <canvas id="myChart2" style="width:100%;max-width:500px; display: inline-block;"></canvas>
 
-<script n:syntax="off">
-var xValues = ["leden", "únor", "březen", "duben"];
-var yValues = [24, 32, 45, 60];
-var barColors = ["#b91d47", "#43b9c2","#1A3873","#EFB402"];
+   <script n:syntax="off">
+   var xValues = ["leden", "únor", "březen", "duben"];
+   var yValues = [24, 32, 45, 60];
+   var barColors = ["#b91d47", "#43b9c2","#1A3873","#EFB402"];
 
-new Chart("myChart2", {
-  type: "bar",
-  data: {
-    labels: xValues,
-    datasets: [{
-      backgroundColor: barColors,
-      data: yValues
-    }]
-  },
-  options: {
-    legend: {display: false},
-    title: {
-      display: true,
-      text: "Přehled vyrobené energie dle měsíců"
-    }
-  }
-});
-</script>
+   new Chart("myChart2", {
+   type: "bar",
+   data: {
+      labels: xValues,
+      datasets: [{
+         backgroundColor: barColors,
+         data: yValues
+      }]
+   },
+   options: {
+      legend: {display: false},
+      title: {
+         display: true,
+         text: "Přehled vyrobené energie dle měsíců"
+      }
+   }
+   });
+   </script>
    
 {/if}

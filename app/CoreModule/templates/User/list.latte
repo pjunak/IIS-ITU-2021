@@ -21,8 +21,8 @@
             <td>{$thisUser->id}</td>
             <td><span class="company-name-link"><a n:href="User: $thisUser->id">{$thisUser->jmeno} {$thisUser->prijmeni}</a></span></td>
             <td>{$thisUser->id_ucastnika}</td>
-            <td>{$thisUser->telefon}</td>
-            <td>{$thisUser->email}</td>
+            <td>{if $thisUser->telefon != NULL}<a href="tel:{$thisUser->telefon}">{$thisUser->telefon}</a>{/if}</td>
+            <td>{if $thisUser->email != NULL}<a href="mailto:{$thisUser->email}">{$thisUser->email}</a>{/if}</td>
             {/if}
         </tr>
     </tbody>
@@ -51,7 +51,10 @@
                     <a class="btn-action" n:href="creator, NULL, 'urednik'"><i class="fas fa-user-plus"></i> Vložit úředníka</a>
                 {/if}
             </div>
-            <input class="form-control filter-input" id="myInput" type="text" placeholder="Filtrovat řádky tabulky...">
+            <div class="fontsearch">
+                <input class="form-control filter-input" id="myInput" type="text" placeholder="Filtrovat řádky tabulky...">
+                <i class="fa fa-search"></i>
+            </div>
         </div>
         <h3>Zákazníci</h3>
         <hr>

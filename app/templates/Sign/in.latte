@@ -9,4 +9,29 @@
 
 {include bootstrap-form signInForm}
 
-<p>Nemáte zatím přístup do Portálu OTE, a.s.? Přečtěte si, <a href="https://www.ote-cr.cz/cs/poze/registrace/registrace-vyrobce">jak začít</a>.</p>
+<p>Nemáte zatím přístup do Portálu OTE, a.s.? Přečtěte si, <a href="" data-toggle="modal" data-target="#jakZacitModal1">jak začít</a>.</p>
+
+<!-- Modal -->
+<div class="modal fade" id="jakZacitModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Jak získat přístup do porálu?</h4>
+         </div>
+         <div class="modal-body">
+            Pro záskání přístupu do porálu CS OTE, a.s. je potřeba vyplnit <a target="_blank" rel="noopener noreferrer" href="https://www.ote-cr.cz/cs/poze/files_ke_stazeni/registracni-formular.pdf">tento formulář</a>.
+            Prosím, postupujte dle <a target="_blank" rel="noopener noreferrer" href="https://www.ote-cr.cz/cs/poze/ke-stazeni/files_ke_stazeni/registrace-ic.pdf">tohoto návodu</a>.<br><br>
+            <i>
+                <b>POZOR!</b><br>
+                Pro potřeby ITU není potřeba žádný formulář vyplňovat. Ukázkové osoby jsou v systému již registrovány, můžete se přihlásit pod jejími loginy.
+                Pokud chcete registrovat nového uživatele, přihlaste se jako úředník a zvolte v systému "Přidat zákazníka".<br><br>
+                Seznam ukázkových uživatelů s přístupovými údaji naleznete <a target="_blank" rel="noopener noreferrer" href="http://www.stud.fit.vutbr.cz/~xcasek01/IIS">zde</a>.
+            </i>    
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Zavřít</button>
+         </div>
+      </div>
+   </div>
+</div>

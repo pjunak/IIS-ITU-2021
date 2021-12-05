@@ -19,11 +19,11 @@
         <td>
             <table class="list-item">
                 <tr>
-                    <td><label>RUT ID</label></td>
+                    <td><label>RUT ID</label><span data-toggle="tooltip" data-placement="top" title="Generované identifikační číslo pro firmu"> <i class="fas fa-info-circle"></i></span></td>
                     <td><input type="number" value="{$company->rut_id}" disabled></td>
                 </tr>
                 <tr>
-                    <td><label>EAN</label></td>
+                    <td><label>EAN</label><span data-toggle="tooltip" data-placement="top" title="Kód EAN (European Article Number) je mezinárodní číslo obchodní doložky. Najdete ho ve faktuře u adresy odběrného místa. Slouží k jednoznačné identifikaci odběrného místa, resp. místa spotřeby energie. Jde o 18místné číslo. "> <i class="fas fa-info-circle"></i></span></td>
                     <td><input type="number" value="{$company->ean}" disabled></td>
                 </tr>
                 <tr>

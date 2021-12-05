@@ -23,22 +23,24 @@
             </tr>
         </thead>
         <tbody id="data">
-            <tr n:foreach="$requests as $requestFe">
+            {foreach $requests as $requestFe}
                 {if $requestFe->status == $statusPozadavku}
-                    {if !$user->isInRole('disponent')}
-                        <td>{$requestFe->jmeno} {$requestFe->prijmeni}</td>
-                    {/if}
-                    <td>{$requestFe->predmet}</td>
-                    <td>{$requestFe->datum_vytvoreni|date:'j. n. Y'}</td>
-                    {if $statusPozadavku != 'podan'}
-                        <td>{$requestFe->datum_uzavreni|date:'j. n. Y'}</td>
-                    {/if}
-                    <td><span class="company-name-link"><a n:href="Request: $requestFe->id" class="btn-action">Zobrazit požadavek &raquo;</a></span></td>
-                    {if $statusPozadavku == 'podan' && !$user->isInRole('disponent')}
-                        <td><a n:href=":reply $requestFe->id" class="btn-action"><i class="fas fa-reply"></i>&nbsp;&nbsp;Odpovědět na požadavek</a></td>
-                    {/if}
+                    <tr>
+                        {if !$user->isInRole('disponent')}
+                            <td>{$requestFe->jmeno} {$requestFe->prijmeni}</td>
+                        {/if}
+                        <td>{$requestFe->predmet}</td>
+                        <td>{$requestFe->datum_vytvoreni|date:'j. n. Y'}</td>
+                        {if $statusPozadavku != 'podan'}
+                            <td>{$requestFe->datum_uzavreni|date:'j. n. Y'}</td>
+                        {/if}
+                        <td><span class="company-name-link"><a n:href="Request: $requestFe->id" class="btn-action">Zobrazit požadavek &raquo;</a></span></td>
+                        {if $statusPozadavku == 'podan' && !$user->isInRole('disponent')}
+                            <td><a n:href=":reply $requestFe->id" class="btn-action"><i class="fas fa-reply"></i>&nbsp;&nbsp;Odpovědět na požadavek</a></td>
+                        {/if}
+                    </tr>
                 {/if}
-            </tr>
+            {/foreach}
         </tbody>
     </table>
     <br>

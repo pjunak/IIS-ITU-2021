@@ -310,9 +310,31 @@ input.filter-input
     width: 400px;
 }
 
+.fontsearch {
+    position: relative;
+}
+  
+.fontsearch i{
+    position: absolute;
+    left: 15px;
+    bottom: 10px;
+    color: gray;
+}
+
+input[type=text].filter-input
+{ 
+    padding: 12px 40px; 
+    margin: 8px 0; 
+} 
+
 .lista-nad-menu
 {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.alert
+{
+    margin-top: 10px;
 }

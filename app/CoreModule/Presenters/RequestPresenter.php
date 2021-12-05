@@ -168,7 +168,7 @@ class RequestPresenter extends BasePresenter
             $form->addTextArea('obsah_pozadavku', 'Obsah požadavku')->setDisabled();
             $form->addTextArea('odpoved', 'Odpověď');
             //$form->addSubmit('save', 'Odpovědět na požadavek');
-            $form->addSubmit('save', 'Odpovědět na požadavek')->getControlPrototype()->setName('button')->setHtml('Odpovědět na požadavek&nbsp;&nbsp;<i class="fas fa-reply fa-lg"></i>')->setAttribute('class', 'button');
+            $form->addSubmit('save', 'Odpovědět na požadavek')->getControlPrototype()->setName('button')->setHtml('Odpovědět na požadavek&nbsp;&nbsp;<i class="fas fa-share fa-lg"></i>')->setAttribute('class', 'button');
         }
 
         // Funkce se vykonaná při úspěšném odeslání formuláře a zpracuje zadané hodnoty.

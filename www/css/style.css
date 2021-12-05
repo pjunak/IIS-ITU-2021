@@ -356,8 +356,19 @@ input[type=text].filter-input
     margin-top: 10px;
 }
 
+.textarea-div td
+{
+    vertical-align: top;
+}
+
 .scrolling-div
 {
-  width: (číslo);
+  width: 800px;
   height: auto;
+  margin-top: 10px;
+  background-color: #EBEBE4;
+  padding: 0.3em;
+  text-align: justify;
+  border-radius: 5px;
+  border: 1px solid #aaa;
 }

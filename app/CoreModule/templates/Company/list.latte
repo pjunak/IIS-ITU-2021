@@ -37,7 +37,7 @@
             <tr n:foreach="$companies as $company">
                 <td><span class="company-name-link"><a n:href="Company: $company->rut_id">{$company->nazev}</a></span></td>
                 <td>{$company->rut_id}</td>
-                <td>{if $company->ic != NULL}<a href="https://or.justice.cz/ias/ui/rejstrik-$firma?ico={$company->ic}">{$company->ic}</a> <i class="fas fa-external-link-alt fa-xs" style="vertical-align: middle;"></i>{/if}</td>
+                <td>{if $company->ic != NULL}<a href="https://or.justice.cz/ias/ui/rejstrik-$firma?ico={$company->ic}" target="_blank">{$company->ic}</a> <i class="fas fa-external-link-alt fa-xs" style="vertical-align: middle;"></i>{/if}</td>
                 <td>{$company->ulice} {if $company->cislo_o != NULL}{$company->cislo_o}/{/if}{$company->cislo_p}{if $company->ulice != NULL},{/if} {$company->psc} {$company->obec}</td>
             </tr>
         </tbody>

@@ -380,3 +380,8 @@ select
     border: 1px solid #aaa;
     background-color: #fff;
 }
+
+.jednotky
+{
+    font-weight: bold;
+}

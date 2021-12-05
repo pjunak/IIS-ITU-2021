@@ -164,7 +164,8 @@ class FactoryPresenter extends BasePresenter
         ->setHtmlAttribute('placeholder', '123456')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',18);
         $form->addInteger('EAN_vyrobny', Html::el()->setHtml('EAN výrobny <span data-toggle="tooltip" data-placement="top" title="Kód EAN (European Article Number) je mezinárodní číslo obchodní doložky. Najdete ho ve faktuře u adresy odběrného místa. Slouží k jednoznačné identifikaci odběrného místa, resp. místa spotřeby energie. Jde o 18místné číslo. "><i class="fas fa-info-circle"></i></span>'))
         ->setHtmlAttribute('placeholder', '123456')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',18);
-        $form->addInteger('vykon_zdroje', 'Výkon zdroje')->setHtmlAttribute('placeholder', '7820')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);
+        $form->addInteger('vykon_zdroje', 'Výkon zdroje')->setHtmlAttribute('placeholder', '7820')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11)->setOption('description', Html::el('span class="jednotky"')
+		->setHtml('&nbsp;Wh'));
         $napetove_hladiny = [
             '0,4' => '0,4',
             '3' => '3',
@@ -177,7 +178,8 @@ class FactoryPresenter extends BasePresenter
             '400' => '400',
             'ostatní' => 'ostatní'
         ];
-        $form->addSelect('napetova_hladina', 'Napěťová hladina')->setItems($napetove_hladiny)->setRequired();
+        $form->addSelect('napetova_hladina', 'Napěťová hladina')->setItems($napetove_hladiny)->setRequired()->setOption('description', Html::el('span class="jednotky"')
+		->setHtml('&nbsp;kV'));
         $zpusoby_pripojeni = $this->factoryManager->get_enum_values('zpusob_pripojeni');
         $form->addSelect('zpusob_pripojeni', 'Způsob připojení')->setItems($zpusoby_pripojeni)->setRequired();
     

@@ -177,15 +177,20 @@ class ReportPresenter extends BasePresenter
         $date = $dateTime->format('Y-m-d');
         $form->addText('od', Html::el()->setHtml('Od <span data-toggle="tooltip" data-placement="top" title="První den měsíce, ve kterém byla vrobna v provozu"><i class="fas fa-info-circle"></i></span>'))
         ->setHtmlType('date')->setDefaultValue($date)->setRequired('%label je nutné vyplnit');
-        $form->addText('do', Html::el()->setHtml('DO <span data-toggle="tooltip" data-placement="top" title="Poslední den měsíce, ve kterém byla výrobna v provozu"><i class="fas fa-info-circle"></i></span>'))
+        $form->addText('do', Html::el()->setHtml('Do <span data-toggle="tooltip" data-placement="top" title="Poslední den měsíce, ve kterém byla výrobna v provozu"><i class="fas fa-info-circle"></i></span>'))
         ->setHtmlType('date')->setDefaultValue($date)->setRequired('%label je nutné vyplnit');
         $form->addHidden('datum_cas_zadani_vykazu')->setDefaultValue($dateTime)->setRequired(); // Je nastaveno automaticky podle aktuálního data a času
         $form->addInteger('svorkova_vyroba_elektriny', Html::el()->setHtml('Svorková výroba elektřiny <span data-toggle="tooltip" data-placement="top" title="Všechny údaje lze zjistit přímo z měřiče umístěného na výrobně."><i class="fas fa-info-circle"></i></span>'))
-        ->setRequired()->setHtmlAttribute('placeholder', '12500')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);
-        $form->addInteger('vlastni_spotreba_elektriny', 'Vlastní spotřeba elektřiny')->setHtmlAttribute('placeholder', '7000')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);;
-        $form->addInteger('celkova_konecna_spotreba', 'Celková spotřeba elektřiny')->setHtmlAttribute('placeholder', '9500')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);;
-        $form->addInteger('spotreba_z_toho_lokalni', 'Spotřeba z toho lokální')->setHtmlAttribute('placeholder', '2500')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);;
-        $form->addInteger('spotreba_z_toho_odber', 'Spotřeba z toho odběr')->setHtmlAttribute('placeholder', '4500')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11);;
+        ->setRequired()->setHtmlAttribute('placeholder', '12500')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11)->setOption('description', Html::el('span class="jednotky"')
+		->setHtml('&nbsp;kWh'));
+        $form->addInteger('vlastni_spotreba_elektriny', 'Vlastní spotřeba elektřiny')->setHtmlAttribute('placeholder', '7000')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11)->setOption('description', Html::el('span class="jednotky"')
+		->setHtml('&nbsp;kWh'));
+        $form->addInteger('celkova_konecna_spotreba', 'Celková spotřeba elektřiny')->setHtmlAttribute('placeholder', '9500')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11)->setOption('description', Html::el('span class="jednotky"')
+		->setHtml('&nbsp;kWh'));
+        $form->addInteger('spotreba_z_toho_lokalni', 'Spotřeba z toho lokální')->setHtmlAttribute('placeholder', '2500')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11)->setOption('description', Html::el('span class="jednotky"')
+		->setHtml('&nbsp;kWh'));
+        $form->addInteger('spotreba_z_toho_odber', 'Spotřeba z toho odběr')->setHtmlAttribute('placeholder', '4500')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11)->setOption('description', Html::el('span class="jednotky"')
+		->setHtml('&nbsp;kWh'));
         //$form->addSubmit('save', 'Uložit výkaz');
         $form->addSubmit('save', 'Uložit výkaz')->getControlPrototype()->setName('button')->setHtml('Uložit výkaz&nbsp;&nbsp;<i class="fa fa-save fa-lg"></i>')->setAttribute('class', 'button');
 

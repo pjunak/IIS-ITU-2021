@@ -339,6 +339,7 @@ class UserPresenter extends BasePresenter
     {
         // Vytvoření formuláře a definice jeho polí.
         $form = new Form;
+        $form->addGroup('Základní údaje');
         $form->addHidden('id');
         $form->addHidden('login');
         $form->addHidden('id_ucastnika');

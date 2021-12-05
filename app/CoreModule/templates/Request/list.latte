@@ -34,7 +34,7 @@
                         <td style="text-align: right;">
                             <span class="company-name-link"><a n:href="Request: $requestFe->id" class="btn-action">Zobrazit požadavek &nbsp;<i class="fas fa-angle-double-right"></i></a></span>
                             {if $statusPozadavku == 'podan' && !$user->isInRole('disponent')}
-                                <a n:href=":reply $requestFe->id" class="btn-action"><i class="fas fa-reply"></i>&nbsp;&nbsp;Odpovědět na požadavek</a>
+                                <a n:href=":reply $requestFe->id" class="btn-action">Odpovědět na požadavek&nbsp;&nbsp;<i class="fas fa-share"></i></a>
                             {/if}
                         </td>
                     </tr>

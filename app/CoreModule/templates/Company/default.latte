@@ -7,7 +7,15 @@
 {block title}{$company->nazev}{/block}
 {block content}
 
-<a class="btn-action" n:href="editor $company->rut_id"><i class="fas fa-edit"></i> Editovat</a>
+<div class="lista-nad-menu">
+    <div>
+        <a class="btn-action" n:href="editor $company->rut_id"><i class="fas fa-toolbox"></i> Upravit firmu</a>
+        {if !$user->isInRole('disponent')}
+            <a class="btn-action" n:href="add $company->rut_id"><i class="fas fa-users-cog"></i> Upravit zaměstnance</a>
+        {/if}
+    </div>
+    <label></label>
+</div>
 {*
 {if $user->isInRole('urednik')}
 <a class="btn-action" onclick="return confirm('Opravdu chcete tuto společnost smazat?');" n:href="remove $company->rut_id"><i class="fas fa-trash-alt"></i> Odstranit</a>
@@ -64,14 +72,13 @@
         <td>
             <table>
                 <tr>
-                    <th><h3>Osoby ve firmě</h3></th>
-                    {if $user->isInRole('urednik')}
-                        <th><a class="btn-action" n:href="add $company->rut_id"><i class="fas fa-users-cog"></i> Upravit zaměstnance</a></span></th>
-                    {/if}
+                    <th>
+                        <h3>Osoby ve firmě</h3>
+                    </th>
                 </tr>
             </table>
             <hr>
-            <table class="list-entities">
+            <table class="list-entities table table-striped table-hover">
                 <tr>
                     <th>ID</th>
                     <th>Jméno a příjmení</th>

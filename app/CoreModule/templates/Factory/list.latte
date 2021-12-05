@@ -17,18 +17,20 @@
             <th>Uvedení do provozu</th>
         </tr>
     </thead>
-    <tbody>
-        <tr n:foreach="$factories as $thisFactory">
+    <tbody id="data">
+        {foreach $factories as $thisFactory}
             {if $thisFactory->stav == $stavVyrobny}
-            <td><span class="company-name-link"><a n:href="Factory: $thisFactory->id">{$thisFactory->kratky_nazev}</a></span></td>
-            <td>{$thisFactory->id}</td>
-            <td>{$thisFactory->druh_vyrobny}</td>
-            <td>{$thisFactory->vykon_zdroje/1000000|number:4, ',', ' '} MW</td>
-            <td>{$thisFactory->napetova_hladina} kV</td>
-            <td>{$thisFactory->ulice} {if $thisFactory->cislo_o != NULL}{$thisFactory->cislo_o}/{/if}{$thisFactory->cislo_p}{if $thisFactory->ulice != NULL},{/if} {$thisFactory->psc} {$thisFactory->obec}</td>
-            <td>{$thisFactory->datum_uvedeni_do_provozu|date:'j. n. Y'}</td>
+            <tr>
+                <td><span class="company-name-link"><a n:href="Factory: $thisFactory->id">{$thisFactory->kratky_nazev}</a></span></td>
+                <td>{$thisFactory->id}</td>
+                <td>{$thisFactory->druh_vyrobny}</td>
+                <td>{$thisFactory->vykon_zdroje/1000000|number:4, ',', ' '} MW</td>
+                <td>{$thisFactory->napetova_hladina} kV</td>
+                <td>{$thisFactory->ulice} {if $thisFactory->cislo_o != NULL}{$thisFactory->cislo_o}/{/if}{$thisFactory->cislo_p}{if $thisFactory->ulice != NULL},{/if} {$thisFactory->psc} {$thisFactory->obec}</td>
+                <td>{$thisFactory->datum_uvedeni_do_provozu|date:'j. n. Y'}</td>
+            </tr>
             {/if}
-        </tr>
+        {/foreach}
     </tbody>
 </table>
 <br>

@@ -26,7 +26,7 @@
                 <td>{$thisFactory->druh_vyrobny}</td>
                 <td>{$thisFactory->vykon_zdroje/1000000|number:4, ',', ' '} MW</td>
                 <td>{$thisFactory->napetova_hladina} kV</td>
-                <td>{$thisFactory->ulice} {if $thisFactory->cislo_o != NULL}{$thisFactory->cislo_o}/{/if}{$thisFactory->cislo_p}, {$thisFactory->psc} {$thisFactory->obec}</td>
+                <td>{$thisFactory->ulice} {if $thisFactory->cislo_o != NULL}{$thisFactory->cislo_o}/{/if}{$thisFactory->cislo_p}{if $thisFactory->ulice != NULL},{/if} {$thisFactory->psc} {$thisFactory->obec}</td>
                 <td>{$thisFactory->datum_uvedeni_do_provozu|date:'j. n. Y'}</td>
             </tr>
             {/if}

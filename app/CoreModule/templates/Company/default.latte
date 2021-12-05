@@ -60,7 +60,7 @@
                 </tr>
                 <tr>
                     <td><label>Adresa</label></td>
-                    <td><input type="text" value="{$company->ulice} {if $company->cislo_o != NULL}{$company->cislo_o}/{/if}{$company->cislo_p}, {$company->psc} {$company->obec}" disabled></td>
+                    <td><input type="text" value="{$company->ulice} {if $company->cislo_o != NULL}{$company->cislo_o}/{/if}{$company->cislo_p}{if $company->ulice != NULL},{/if} {$company->psc} {$company->obec}" disabled></td>
                 </tr>
                 <tr>
                     <td><label>Bankoví spojení</label></td>

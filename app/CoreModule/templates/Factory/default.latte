@@ -42,7 +42,7 @@
         <td><input type="text" value="{$factory->id_vyrobniho_zdroje}" disabled></td>
     </tr>
     <tr>
-        <td><label>ID sítě</label><span data-toggle="tooltip" data-placement="top" title="ID sítě je Lorem ipsum a naleznete ho v Dolor sin amet"> <i class="fas fa-info-circle"></i></span></td>
+        <td><label>ID sítě</label><span data-toggle="tooltip" data-placement="top" title="ID sítě nalzenete v dokumentech od Vašeho lokálního distributora elektřiny."> <i class="fas fa-info-circle"></i></span></td>
         <td><input type="number" value="{$factory->id_site}" disabled></td>
     </tr>
     <tr> 
@@ -80,7 +80,7 @@
 <table class="list-item">
     <tr> 
         <td><label>Adresa</label></td>
-        <td><input type="text" value="{$factory->ulice} {if $factory->cislo_o != NULL}{$factory->cislo_o}/{/if}{$factory->cislo_p}, {$factory->psc} {$factory->obec}" disabled></td>
+        <td><input type="text" value="{$factory->ulice} {if $factory->cislo_o != NULL}{$factory->cislo_o}/{/if}{$factory->cislo_p}{if $factory->ulice != NULL},{/if} {$factory->psc} {$factory->obec}" disabled></td>
     </tr>
     <tr> 
         <td><label>Kraj</label></td>

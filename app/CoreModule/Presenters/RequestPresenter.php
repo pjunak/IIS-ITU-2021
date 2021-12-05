@@ -155,8 +155,8 @@ class RequestPresenter extends BasePresenter
             ->setRequired()->setHtmlAttribute('placeholder', 'Žádost o změnu údaje')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',128);
             $form->addHidden('status', 'Status')->setDefaultValue('podan');
             $form->addTextArea('obsah_pozadavku', 'Obsah požadavku')->setRequired();
-            //$form->addSubmit('save', 'Vložit požadavek');
-            $form->addSubmit('save', 'Vložit požadavek')->getControlPrototype()->setName('button')->setHtml('Vložit požadavek&nbsp;&nbsp;<i class="fas fa-paper-plane fa-lg"></i>')->setAttribute('class', 'button');
+            //$form->addSubmit('save', 'Odeslat požadavek');
+            $form->addSubmit('save', 'Odeslat požadavek')->getControlPrototype()->setName('button')->setHtml('Odeslat požadavek&nbsp;&nbsp;<i class="fas fa-paper-plane fa-lg"></i>')->setAttribute('class', 'button');
         }
         else
         {

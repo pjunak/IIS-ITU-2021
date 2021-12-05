@@ -44,7 +44,16 @@
 {block description}Přehled výroben{/block}
 {block content}
 
-{if $user->isInRole('disponent')}<a class="btn-action" n:href="editor"><i class="fas fa-bolt"></i> Registrovat novou výrobnu</a>{/if}
+<div class="lista-nad-menu">
+    <div>
+        {if $user->isInRole('disponent')}
+            <a class="btn-action" n:href="editor"><i class="fas fa-bolt"></i> Registrovat novou výrobnu</a>
+        {else}
+            <label></label>
+        {/if}
+    </div>
+    <input class="form-control filter-input" id="myInput" type="text" placeholder="Filtrovat řádky tabulky...">
+</div>
 
 <h3>Schválené výrobny</h3>
 <hr>

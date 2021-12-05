@@ -15,7 +15,7 @@
             <th>E-mailová adresa</th>
         </tr>
     </thead>
-    <tbody>
+    <tbody id="data">
         <tr n:foreach="$users as $thisUser">
             {if $thisUser->typ_osoby == $typOsoby}
             <td>{$thisUser->id}</td>
@@ -29,6 +29,8 @@
 </table>
 {/define}
 
+
+
 {block title}
 {if $user->isInRole('disponent')}
     Uživatel nemá mít k této záložce přístup.
@@ -38,13 +40,19 @@
     Přehled uživatelů a úředníků
 {/if}
 {/block}
-
 {block content}   
     {if $user->isInRole('disponent')}
         Uživatel nemá mít k této záložce přístup.
     {else}
-    <a class="btn-action" n:href="creator, NULL, 'disponent'"><i class="fas fa-user-plus"></i> Vložit uživatele</a>
-    {if $user->isInRole('reditel')}<a class="btn-action" n:href="creator, NULL, 'urednik'"><i class="fas fa-user-plus"></i> Vložit úředníka</a>{/if}
+        <div class="lista-nad-menu">
+            <div>
+                <a class="btn-action" n:href="creator, NULL, 'disponent'"><i class="fas fa-user-plus"></i> Vložit uživatele</a>
+                {if $user->isInRole('reditel')}
+                    <a class="btn-action" n:href="creator, NULL, 'urednik'"><i class="fas fa-user-plus"></i> Vložit úředníka</a>
+                {/if}
+            </div>
+            <input class="form-control filter-input" id="myInput" type="text" placeholder="Filtrovat řádky tabulky...">
+        </div>
         <h3>Zákazníci</h3>
         <hr>
         {include tabulkaOsob, 'disponent'}

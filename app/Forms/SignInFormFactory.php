@@ -31,6 +31,10 @@ final class SignInFormFactory
 	}
 
 
+	/**
+     * Vytváří a vrací formulář pro přihlášení uživatele.
+     * @return Form formulář pro přihlášení uživatele
+     */
 	public function create(callable $onSuccess): Form
 	{
 		$form = $this->factory->create();

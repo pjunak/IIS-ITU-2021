@@ -35,11 +35,15 @@
     </tr>
     <tr>   
         <td><label>Obsah požadavku</label><br></td>
-        <td><textarea readonly rows="5" cols="50">{$request->obsah_pozadavku}</textarea></td>
+        <td><div  class="scrolling-div">{$request->obsah_pozadavku}</div></td>
     </tr>
+    <tr>
+    <hr>
+    </tr>  
+
     <tr>   
         <td><label>Odpověď</label><br></td>
-        <td><textarea rows="5" cols="50" disabled>{$request->odpoved}</textarea></td>
+        <td><div class="scrolling-div" >{$request->odpoved}</div></td>
     </tr>
     <tr>   
         <td></td>

@@ -355,3 +355,9 @@ input[type=text].filter-input
 {
     margin-top: 10px;
 }
+
+.scrolling-div
+{
+  width: (číslo);
+  height: auto;
+}

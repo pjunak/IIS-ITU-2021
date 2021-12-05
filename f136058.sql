@@ -37,10 +37,10 @@ SET time_zone = "+00:00";
 
 DROP TABLE IF EXISTS `iis_firma`;
 CREATE TABLE `iis_firma` (
-  `rut_id` int(11) NOT NULL,
-  `ean` int(18) DEFAULT NULL,
+  `rut_id` bigint(11) NOT NULL,
+  `ean` bigint(18) DEFAULT NULL,
   `nazev` varchar(128) COLLATE utf8_czech_ci NOT NULL,
-  `ic` int(11) DEFAULT NULL,
+  `ic` bigint(11) DEFAULT NULL,
   `dic` varchar(11) DEFAULT NULL,
   `web` varchar(64) COLLATE utf8_czech_ci DEFAULT NULL,
   `email` varchar(64) COLLATE utf8_czech_ci DEFAULT NULL,
@@ -49,9 +49,9 @@ CREATE TABLE `iis_firma` (
   `cislo_p` varchar(8) COLLATE utf8_czech_ci DEFAULT NULL,
   `cislo_o` varchar(8) COLLATE utf8_czech_ci DEFAULT NULL,
   `obec` varchar(32) COLLATE utf8_czech_ci DEFAULT NULL,
-  `psc` int(11) DEFAULT NULL,
-  `predcisli` int(11) DEFAULT NULL,
-  `cislo_uctu` int(32) NOT NULL,
+  `psc` bigint(11) DEFAULT NULL,
+  `predcisli` bigint(11) DEFAULT NULL,
+  `cislo_uctu` bigint(10) NOT NULL,
   `kod_banky` varchar(4) COLLATE utf8_czech_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
@@ -72,9 +72,9 @@ INSERT INTO `iis_firma` (`rut_id`, `ean`, `nazev`, `ic`, `dic`, `web`, `email`, 
 
 DROP TABLE IF EXISTS `iis_firma_osoba`;
 CREATE TABLE `iis_firma_osoba` (
-  `id` int(11) NOT NULL,
-  `firma` int(11) NOT NULL,
-  `osoba` int(11) NOT NULL
+  `id`bigint(11) NOT NULL,
+  `firma`bigint(11) NOT NULL,
+  `osoba`bigint(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 --
@@ -94,18 +94,18 @@ INSERT INTO `iis_firma_osoba` (`id`, `firma`, `osoba`) VALUES(4, 518468138, 6);
 
 DROP TABLE IF EXISTS `iis_osoba`;
 CREATE TABLE `iis_osoba` (
-  `id` int(11) NOT NULL,
-  `id_ucastnika` int(11) DEFAULT NULL UNIQUE,
+  `id`bigint(11) NOT NULL,
+  `id_ucastnika`bigint(11) DEFAULT NULL UNIQUE,
   `typ_osoby` enum('disponent','urednik','reditel') COLLATE utf8_czech_ci NOT NULL,
   `jmeno` varchar(64) COLLATE utf8_czech_ci NOT NULL,
   `prijmeni` varchar(64) COLLATE utf8_czech_ci NOT NULL,
-  `telefon` int(11) DEFAULT NULL,
+  `telefon`bigint(11) DEFAULT NULL,
   `email` varchar(32) COLLATE utf8_czech_ci DEFAULT NULL,
   `login` varchar(64) COLLATE utf8_czech_ci NOT NULL UNIQUE,
   `heslo` varchar(255) COLLATE utf8_czech_ci NOT NULL,
   `kancelar` varchar(32) COLLATE utf8_czech_ci DEFAULT NULL,
   `pozice` varchar(32) COLLATE utf8_czech_ci DEFAULT NULL,
-  `plat` int(11) DEFAULT NULL
+  `plat`bigint(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 --
@@ -127,8 +127,8 @@ INSERT INTO `iis_osoba` (`id`, `id_ucastnika`, `typ_osoby`, `jmeno`, `prijmeni`,
 
 DROP TABLE IF EXISTS `iis_pozadavek`;
 CREATE TABLE `iis_pozadavek` (
-  `id` int(11) NOT NULL,
-  `id_osoby` int(11) NOT NULL,
+  `id`bigint(11) NOT NULL,
+  `id_osoby`bigint(11) NOT NULL,
   `datum_vytvoreni` date NOT NULL,
   `datum_uzavreni` date DEFAULT NULL,
   `predmet` varchar(128) COLLATE utf8_czech_ci NOT NULL,
@@ -152,17 +152,17 @@ INSERT INTO `iis_pozadavek` (`id`, `id_osoby`, `datum_vytvoreni`, `predmet`, `st
 
 DROP TABLE IF EXISTS `iis_vykaz`;
 CREATE TABLE `iis_vykaz` (
-  `id` int(11) NOT NULL,
-  `id_osoby` int(11) NOT NULL,
-  `id_vyrobny` int(11) NOT NULL,
+  `id`bigint(11) NOT NULL,
+  `id_osoby`bigint(11) NOT NULL,
+  `id_vyrobny`bigint(11) NOT NULL,
   `od` date DEFAULT NULL,
   `do` date DEFAULT NULL,
   `datum_cas_zadani_vykazu` datetime NOT NULL,
-  `svorkova_vyroba_elektriny` int(11) NOT NULL,
-  `vlastni_spotreba_elektriny` int(11) DEFAULT NULL,
-  `celkova_konecna_spotreba` int(11) DEFAULT NULL,
-  `spotreba_z_toho_lokalni` int(11) DEFAULT NULL,
-  `spotreba_z_toho_odber` int(11) DEFAULT NULL
+  `svorkova_vyroba_elektriny`bigint(11) NOT NULL,
+  `vlastni_spotreba_elektriny`bigint(11) DEFAULT NULL,
+  `celkova_konecna_spotreba`bigint(11) DEFAULT NULL,
+  `spotreba_z_toho_lokalni`bigint(11) DEFAULT NULL,
+  `spotreba_z_toho_odber`bigint(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 --
@@ -179,10 +179,10 @@ INSERT INTO `iis_vykaz` (`id`, `id_osoby`, `id_vyrobny`, `od`, `do`, `datum_cas_
 
 DROP TABLE IF EXISTS `iis_vyrobna`;
 CREATE TABLE `iis_vyrobna` (
-  `id` int(11) NOT NULL,
-  `id_vyrobniho_zdroje` int(11) DEFAULT NULL,
-  `id_site` int(11) DEFAULT NULL,
-  `id_firmy` int(11) NOT NULL,
+  `id`bigint(11) NOT NULL,
+  `id_vyrobniho_zdroje`bigint(11) DEFAULT NULL,
+  `id_site`bigint(11) DEFAULT NULL,
+  `id_firmy`bigint(11) NOT NULL,
   `kratky_nazev` varchar(64) COLLATE utf8_czech_ci NOT NULL,
   `ulice` varchar(32) COLLATE utf8_czech_ci DEFAULT NULL,
   `cislo_p` varchar(8) COLLATE utf8_czech_ci DEFAULT NULL,
@@ -190,15 +190,15 @@ CREATE TABLE `iis_vyrobna` (
   `kraj` varchar(32) DEFAULT NULL,
   `okres` varchar(32) DEFAULT NULL,
   `obec` varchar(32) COLLATE utf8_czech_ci DEFAULT NULL,
-  `psc` int(11) DEFAULT NULL,
+  `psc`bigint(11) DEFAULT NULL,
   `parcela` varchar(16) COLLATE utf8_czech_ci DEFAULT NULL,
   `gps_n` decimal(15,5) DEFAULT NULL,
   `gps_e` decimal(15,5) DEFAULT NULL,
   `druh_vyrobny` enum('sluneční','sluneční budova','vodní','přečerpávací','jaderná','plynová','geotermalní','větrná','biomasa') COLLATE utf8_czech_ci NOT NULL,
   `stav` enum('podano','neschvaleno','schvaleno') COLLATE utf8_czech_ci NOT NULL,
-  `vyrobni_EAN` int(18) DEFAULT NULL,
-  `EAN_vyrobny` int(18) DEFAULT NULL,
-  `vykon_zdroje` int(11) DEFAULT NULL,
+  `vyrobni_EAN`bigint(18) DEFAULT NULL,
+  `EAN_vyrobny`bigint(18) DEFAULT NULL,
+  `vykon_zdroje`bigint(11) DEFAULT NULL,
   `napetova_hladina` varchar(10) COLLATE utf8_czech_ci DEFAULT NULL,
   `zpusob_pripojeni` enum('přímo','nepřímo','ostrovní výroba') COLLATE utf8_czech_ci NOT NULL,
   `vykaz_za_opm` enum('ano','ne') COLLATE utf8_czech_ci NOT NULL,
@@ -264,37 +264,37 @@ ALTER TABLE `iis_vyrobna`
 -- AUTO_INCREMENT pro tabulku `iis_firma`
 --
 ALTER TABLE `iis_firma`
-  MODIFY `rut_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=234567893;
+  MODIFY `rut_id`bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=234567893;
 
 --
 -- AUTO_INCREMENT pro tabulku `iis_firma_osoba`
 --
 ALTER TABLE `iis_firma_osoba`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id`bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT pro tabulku `iis_osoba`
 --
 ALTER TABLE `iis_osoba`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id`bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT pro tabulku `iis_pozadavek`
 --
 ALTER TABLE `iis_pozadavek`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id`bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT pro tabulku `iis_vykaz`
 --
 ALTER TABLE `iis_vykaz`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id`bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT pro tabulku `iis_vyrobna`
 --
 ALTER TABLE `iis_vyrobna`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id`bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

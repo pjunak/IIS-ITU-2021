@@ -15,6 +15,7 @@
 {/block}
 
 {block content}
+    <a class="btn-action" n:href="list"><i class="far fa-arrow-alt-circle-left"></i> Zrušit a vrátit se</a>
     {if $user->isInRole('disponent')}
         Nemáte práva k vkládání uživatelů do systému.
     {elseif $userFe->typ_osoby == 'disponent'}

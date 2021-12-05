@@ -14,6 +14,12 @@
 {block description}Editor firmy{/block}
 {block content}
     {* Formulář pro editaci. *}
+    {if isset($company)}
+        <a class="btn-action" n:href="default $company->rut_id"><i class="far fa-arrow-alt-circle-left"></i> Zrušit a vrátit se</a>
+    {else}
+        <a class="btn-action" n:href="list"><i class="far fa-arrow-alt-circle-left"></i> Zrušit a vrátit se</a>
+    {/if}
+    
     {control editorForm}
 {/block}
 

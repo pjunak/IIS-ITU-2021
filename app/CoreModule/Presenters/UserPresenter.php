@@ -205,7 +205,7 @@ class UserPresenter extends BasePresenter
         $form->addPassword('heslo', 'Heslo')->setRequired('%label je nutné vyplnit')
         ->addRule($form::MIN_LENGTH, 'Heslo musí mít alespoň %d znaků', 6)
         ->addRule($form::MAX_LENGTH, 'Heslo nemůže mít víc, než %d znaků', 255)
-        ->addRule($form::PATTERN, 'Musí obsahovat číslici', '.*[0-9].*');
+        ->addRule($form::PATTERN, 'Heslo musí obsahovat číslici', '.*[0-9].*');
         $form->addText('jmeno', 'Jméno')->setRequired()->setHtmlAttribute('placeholder', 'Jan')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',64);
         $form->addText('prijmeni', 'Příjmení')->setRequired()->setHtmlAttribute('placeholder', 'Novák')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',64);
         $form->addInteger('telefon', 'Telefonní číslo')->setHtmlAttribute('placeholder', '111222333')->addRule($form::LENGTH, 'Délka %label je %d',9);
@@ -250,7 +250,7 @@ class UserPresenter extends BasePresenter
         $form->addPassword('heslo', 'Heslo')->setRequired('%label je nutné vyplnit')
         ->addRule($form::MIN_LENGTH, 'Heslo musí mít alespoň %d znaků', 6)
         ->addRule($form::MAX_LENGTH, 'Heslo nemůže mít víc, než %d znaků', 255)
-        ->addRule($form::PATTERN, 'Musí obsahovat číslici', '.*[0-9].*');
+        ->addRule($form::PATTERN, 'Heslo musí obsahovat číslici', '.*[0-9].*');
         $form->addText('jmeno', 'Jméno')->setRequired()->setHtmlAttribute('placeholder', 'Jan')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',64);
         $form->addText('prijmeni', 'Příjmení')->setRequired()->setHtmlAttribute('placeholder', 'Novák')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',64);
         $form->addInteger('telefon', 'Telefonní číslo')->setHtmlAttribute('placeholder', '111222333')->addRule($form::LENGTH, 'Délka %label je %d',9);

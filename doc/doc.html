@@ -30,12 +30,13 @@
 		Návrh a implementace databáze, implementace frontendu, návrh a implementace backendu, pøíprava formuláøù, zabezpeèování, dokumentace a diagramy
 	</dd>
 	<dt>URL aplikace</dt>
-	<dd><a href="kristianherman.cz/iis/www">kristianherman.cz/iis/www</a></dd>
-	<dd>(pokud má aplikace více vstupních stránek, napi¹te obdobnì dal¹í URL)</dd>
+	<dd><a href="https://kristianherman.cz/iis/www/prihlaseni">Vstup do portálu OTE</a></dd>
+	<dd style="color:red">6.12. byla vlo¾ena aktualizovaná verze systému.</dd>
 </dl>
 
 <h2>U¾ivatelé systému pro testování</h2>
-<p>Loginy zástupcù jsou schálnì zjednodu¹eny pro usnadnìní kontroly. Také u jména firem, èi výroben pøidáno èíslo, pro sna¾¹í rozli¹itelnost.</p>
+<p>Loginy zástupcù jsou schválnì zjednodu¹eny pro usnadnìní kontroly. Také u jména firem, èi výroben bylo pøidáno èíslo, pro sna¾¹í rozli¹itelnost.</p>
+<p>Lze pøidávat nové u¾ivatele s libovolným loginem a heslem, nebo stávajícímu uzivateli upravit heslo.</p>
 <table>
 <tbody><tr><th>Login</th><th>Heslo</th><th>Role</th></tr>
 <tr><td>reditel</td><td>reditel</td><td>Øeditel</td></tr>
@@ -62,7 +63,7 @@
 
 	<li>Soubory *Manager.php zprostøedkovávají práce s databází</li>
 	<li>Soubory *Presenter.php zprostøedkovávají tvorbu formuláøù a pøedávání dat do frontendu</li>
-	<li>Soubory .latte obsahují html a pho kod jednotlivých zobrazení.</li>
+	<li>Soubory .latte obsahují html a php kód jednotlivých zobrazení</li>
 
 	<li>Soubor SingInFormFactory.php obsahuje pøihlá¹ení a nastavení délky session</li>
 </ul>
@@ -86,7 +87,7 @@ Struèný popis:
 	<ul>
 		<li>PHP verze 7.4</li>
 		<li>Pro spu¹tìní projektu staèí webový prohlí¾eè.</li>
-		<li>Pro instalaci lokálnì je tøeba MySQL server, nebo napøíklad MariaDB. My jsme pou¾ívali XAMPP. Zde je také tøeba webový prohlí¾eè</li>
+		<li>Pro instalaci lokálnì je tøeba MySQL server, nebo napøíklad MariaDB. My jsme pou¾ívali XAMPP. Zde je také tøeba webový prohlí¾eè.</li>
 	</ul>
 	<li>jak rozbalit, konfigurovat, inicializovat databázi, ...</li>
 	<ul>
@@ -101,9 +102,9 @@ Struèný popis:
 	<ul>
 		<li>Z èasových dùvodù opraveno jenom èásteènì. U¾ivatel nemù¾e prohlí¾et a upravovat u¾ivatele, ke kterým nemá pøístup, na jiných místech ale problém setrvává.</li>
 	</ul>
-	<li>Z dùvodu nepromy¹lené zmìny na poslední chvíli není mo¾né pøidat u¾ivatele k více firmám zároveò, jak máme v diagramu. Chybu zpùsobila oprava jiné èásti kódu a v¹imli jsme si jí a¾ pøíli¹ blízko deadlinu.</li>
+	<li><del>Z dùvodu nepromy¹lené zmìny na poslední chvíli není mo¾né pøidat u¾ivatele k více firmám zároveò, jak máme v diagramu. Chybu zpùsobila oprava jiné èásti kódu a v¹imli jsme si jí a¾ pøíli¹ blízko deadlinu.</del></li>
 	<ul>
-		<li>Ten samý zásah do kódu taky zpùsobuil, ¾e u¾ivatel si mù¾e upravit vlastní pøíslu¹nost k fimì.</li>
+		<li><del>Ten samý zásah do kódu taky zpùsobuil, ¾e u¾ivatel si mù¾e upravit vlastní pøíslu¹nost k fimì.</del></li>
 	</ul>
 </ul>
 

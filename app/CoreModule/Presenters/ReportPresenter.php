@@ -138,15 +138,6 @@ class ReportPresenter extends BasePresenter
         }
     }
 
-    public function handleChangeVariable()
-    {
-        //$this->anyVariable = 'changed value via ajax';
-        if ($this->isAjax()) {
-            $this->anyVariable = 'OPRAVDU AJAX';
-            $this->redrawControl('ajaxChange');
-        }
-    }
-
     /**
      * Po zavolání vloží do proměnné $this->vybrana_vyrobna údaj z dropdown menu
      * @param value hodnota z dropdown menu poslaná AJAX voláním

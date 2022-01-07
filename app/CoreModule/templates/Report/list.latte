@@ -8,6 +8,7 @@
 {block description}Výpis výkazů{/block}
 {block content}
 {* Formulář pro editaci. *}
+
 {if $user->isInRole('disponent') && $vyrobna_exists}
 V menu níže vyberte požadovanou výrobnu. Poté můžete vložit nový výkaz k dané výrobně, či prohlížet starší záznamy.
 <table>
@@ -37,7 +38,8 @@ V menu níže vyberte požadovanou výrobnu. Poté můžete prohlížet výkazy,
     </div>
 </div>
 
-<h3>Výkazy z uplynulých měsíců</h3> 
+<h3>Výkazy z uplynulých měsíců</h3>
+{snippet ajaxRedraw}
 <table class="table table-striped table-hover">
     <tr>
         <th>Období</th>
@@ -55,3 +57,22 @@ V menu níže vyberte požadovanou výrobnu. Poté můžete prohlížet výkazy,
         </td>
     </tr>
 </table>
+{/snippet}
+{/block}
+{block scripts}
+	{include parent}
+    <!-- Skript, který nasadí sledovací funkci na pole pro dropdown menu, aby se při každé změně volala AJAXem funkce zpracování -->
+	<script>
+    $(function(){
+        $.nette.init();
+        $('#testAja').change(function() {
+            $.ajax({
+                method: 'get',
+                url: {link vykazy!},
+                data: { value: $(this).val() }
+            });
+            $('input[name="id_vyrobny"]').val($(this).val());
+        });
+    });
+	</script>
+{/block}

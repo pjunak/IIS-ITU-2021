@@ -159,7 +159,7 @@ class CompanyPresenter extends BasePresenter
     {
         $this->companyManager->addUserToCompany($rut, $id);
         $this->handleUpdate($rut);
-        $this->flashMessage('Uživatel úspěšně přidán do firmy.');
+        //$this->flashMessage('Uživatel úspěšně přidán do firmy.');
     }
 
     /**
@@ -171,7 +171,7 @@ class CompanyPresenter extends BasePresenter
     {
         $this->companyManager->removeUserFromCompany($rut, $id);
         $this->handleUpdate($rut);
-        $this->flashMessage('Uživatel úspěšně odebrán z firmy.');
+        //$this->flashMessage('Uživatel úspěšně odebrán z firmy.');
     }
 
     /**
@@ -196,6 +196,7 @@ class CompanyPresenter extends BasePresenter
 
         // Vytvoření formuláře a definice jeho polí.
         $form = new Form;
+        //$form->getElementPrototype()->addClass('ajax');
         $form->addGroup('Základní údaje');
         $form->addHidden('rut_id');
         array_push($helparr, $form->addInteger('ean', Html::el()->setHtml('EAN <span data-toggle="tooltip" data-placement="top" title="Kód EAN (European Article Number) je mezinárodní číslo obchodní doložky. Najdete ho ve faktuře u adresy odběrného místa. Slouží k jednoznačné identifikaci odběrného místa, resp. místa spotřeby energie. Jde o 18 místné číslo. "><i class="fas fa-info-circle"></i></span>'))

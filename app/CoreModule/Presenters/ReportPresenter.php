@@ -19,6 +19,7 @@ use Nette\Database\UniqueConstraintViolationException;
 use Nette\Utils\ArrayHash;
 use Nette\Utils\DateTime;
 use Nette\Utils\Html;
+use Nette;
 
 /**
  * Presenter pro vykreslování výkazů.
@@ -38,6 +39,7 @@ class ReportPresenter extends BasePresenter
     /** @var vybrana_vyrobna Pro identifikaci uživatele */
     private $vybrana_vyrobna = 0;
 
+    private $anyVariable;
 
     /**
      * Konstruktor s nastavením URL výchozího výkazu a injektovaným modelem pro správu výkazů.
@@ -67,6 +69,7 @@ class ReportPresenter extends BasePresenter
         }
     }
     
+    
     /**
      * Načte a předá výkaz do šablony podle jeho URL.
      * @param string|null $id URL výkazu
@@ -95,6 +98,11 @@ class ReportPresenter extends BasePresenter
         {
             $this->template->vyrobna_exists = true;     
         }
+
+        if ($this->anyVariable === NULL) {
+            $this->anyVariable = 'default value';
+        }
+        $this->template->anyVariable = $this->anyVariable;
     }
 
     /**
@@ -130,14 +138,24 @@ class ReportPresenter extends BasePresenter
         }
     }
 
+    public function handleChangeVariable()
+    {
+        //$this->anyVariable = 'changed value via ajax';
+        if ($this->isAjax()) {
+            $this->anyVariable = 'OPRAVDU AJAX';
+            $this->redrawControl('ajaxChange');
+        }
+    }
+
     /**
-     * Po zavolání vloží do proměnné $this->vybrana_vyrobna údaj z formu vyrobna['vyrobna']
-     * @return Form formulář pro editaci výkazů
+     * Po zavolání vloží do proměnné $this->vybrana_vyrobna údaj z dropdown menu
+     * @param value hodnota z dropdown menu poslaná AJAX voláním
      */
-    public function vykazy(Form $form) {
+    public function handleVykazy($value)
+    {
         $this->user = $this->getUser();
-        $vyrobna = $form->getValues();
-        $this->vybrana_vyrobna = $vyrobna['vyrobna'];
+        $this->vybrana_vyrobna = $value; // uložení hodnoty do vybrane_vyrobny
+        $this->redrawControl('ajaxRedraw'); // invalidace a překreslení výřezu s výkazy
     }
 
     /**
@@ -156,8 +174,8 @@ class ReportPresenter extends BasePresenter
         }
         else
         {
-            $form->addSelect('vyrobna', 'Název výrobny')->setItems($seznam_vyroven)->setRequired()->setAttribute('onChange', 'submit()');
-            $form->onSuccess[] = [$this,'vykazy'];            
+            $form->addSelect('vyrobna', 'Název výrobny')->setItems($seznam_vyroven)->setRequired()
+            ->setAttribute('class', 'ajax')->setAttribute('id', 'testAja');            
         }
         return $form;
     }

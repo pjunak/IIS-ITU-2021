@@ -17,6 +17,7 @@
 
 <h3>Osoby ve firmě</h3>
 <hr>
+{snippet companyUsers}
 <table class="list-entities table table-striped table-hover">
     <thead>
         <tr>
@@ -28,7 +29,6 @@
             <th></th>
         </tr>
     </thead>
-    {snippet companyUsers}
     <tbody id="data">
         <tr n:foreach="$companyUsers as $thisUser">
             <td>{$thisUser->id}</td>
@@ -36,14 +36,15 @@
             <td>{$thisUser->id_ucastnika}</td>
             <td>{$thisUser->telefon}</td>
             <td>{$thisUser->email}</td>
-            <td><span class="company-name-link"><a n:href="removeUser! $company->rut_id, $thisUser->id"><i class="far fa-minus-square"></i> Odebrat z firmy</a></span></td>
+            <td><span class="company-name-link"><a n:href="removeUser! $company->rut_id, $thisUser->id" class="ajax"><i class="far fa-minus-square"></i> Odebrat z firmy</a></span></td>
         </tr>
     </tbody>
-    {/snippet}  
 </table>
+{/snippet}  
 
 <h3>Ostatní osoby</h3> 
 <hr>
+{snippet otherUsers}
 <table class="list-entities table table-striped table-hover">
     <thead>
         <tr>
@@ -55,7 +56,6 @@
             <th></th>
         </tr>
     </thead>
-    {snippet otherUsers}
     <tbody id="data">
         <tr n:foreach="$otherUsers as $thisUser">
             <td>{$thisUser->id}</td>
@@ -63,8 +63,8 @@
             <td>{$thisUser->id_ucastnika}</td>
             <td>{$thisUser->telefon}</td>
             <td>{$thisUser->email}</td>
-            <td><span class="company-name-link"><a n:href="addUser! $company->rut_id, $thisUser->id"><i class="far fa-plus-square"></i> Přidat do firmy</a></span></td>
+            <td><span class="company-name-link"><a n:href="addUser! $company->rut_id, $thisUser->id" class="ajax"><i class="far fa-plus-square"></i> Přidat do firmy</a></span></td>
         </tr>
     </tbody>
-    {/snippet}
 </table>
+{/snippet}

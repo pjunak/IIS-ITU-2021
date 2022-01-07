@@ -387,3 +387,8 @@ select
 {
     font-weight: bold;
 }
+
+.text-danger
+{
+    color: #b91d47;
+}

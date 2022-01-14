@@ -2,7 +2,7 @@
 
 /*
 //	Projekt do předmětu ITU - Zákaznický portál OTE, a.s.
-//	Datum: 5.12.2021
+//	Datum: 14.12.2021
 //	Autor: Kristián Heřman, xherma33
 */
 
@@ -19,6 +19,7 @@ use Nette\Database\UniqueConstraintViolationException;
 use Nette\Utils\ArrayHash;
 use Nette\Utils\DateTime;
 use Nette\Utils\Html;
+use Nette;
 
 /**
  * Presenter pro vykreslování požadavků.
@@ -57,6 +58,26 @@ class RequestPresenter extends BasePresenter
         }
     }
     
+    public function getFilledForm(string $id = null, int $cnt = 0)
+    {
+        if ($id) {
+            if (!($request = $this->requestManager->getRequest($id)))
+                $this->flashMessage('Request nebyl nalezen.'); // Výpis chybové hlášky.
+            else 
+            {
+                $this['editorForm']->setDefaults($request); // Předání hodnot požadavku do editačního formuláře.
+                $this['editorForm']['datum_vytvoreni']->setDefaultValue($request->datum_vytvoreni->format('Y-m-d'));
+                $this['editorForm']['datum_uzavreni']->setDefaultValue($request->datum_vytvoreni->format('Y-m-d'));
+                $this['editorForm']['status']->setValue('vyrizen');
+                $concat = 'form-no-' . $cnt;
+                $this['editorForm']->setHtmlAttribute('id', $concat);
+                $this['editorForm']['save']->setHtmlAttribute('formmethod', 'post');
+            }
+        }
+
+        return $this['editorForm'];
+    }
+
     /**
      * Načte a předá požadavek do šablony podle jeho URL.
      * @param string|null $id URL požadavku
@@ -76,6 +97,11 @@ class RequestPresenter extends BasePresenter
     /** Načte a předá seznam požadavků do šablony. */
     public function renderList()
     {
+        if (!isset($this->template->currentIdClicked))
+        {
+            $this->template->currentIdClicked = null;
+        }
+
         if($this->user->isInRole('disponent'))
         {
             $this->template->requests = $this->requestManager->getRequestsByUser($this->user->getID());
@@ -83,6 +109,19 @@ class RequestPresenter extends BasePresenter
         else
         {
             $this->template->requests = $this->requestManager->getRequests();
+
+        /*
+            $this->template->filledForms = array();
+            $i = 0;
+            foreach($this->template->requests as $requestBe)
+            {
+                if ($requestBe->status == "podan")
+                {
+                    array_push($this->template->filledForms, (string)$this->getFilledForm((string)$requestBe->id, $i));
+                    $i++;
+                }
+            }
+        */
         }
     }
 
@@ -138,6 +177,48 @@ class RequestPresenter extends BasePresenter
     }
 
     /**
+     * Ošetří volání AJAXu - uloží odpověď na požadavek do DB přes datový model
+     * a invaliduje (překreslí) tabulky s podanými/vyřízenými požadavky
+     */
+    public function handleAjax($values)
+    {
+        // nasledujici radek pracuje s datovym modelem (preda mu data z formulare pro ulozeni pozadavku)
+        $this->requestManager->saveRequest($values);
+        
+        if ($this->isAjax())
+        {
+            $this->redrawControl('ajaxPoza'); // prekresli se tabulka s podanymi pozadavky
+            $this->redrawControl('ajaxVyr'); // prekresli se tabulka s vyresenymi pozadavky
+        }
+        else
+        {
+            $this->redirect('Request:list');
+        }
+    }
+
+    /**
+     * Nastaví údaje do formuláře, který se přilepí za rozkliknutý požadavek.
+     * Současně nastaví currentIdClicked pro šablonu.
+     */
+    public function handleView(string $id = null)
+    {
+        if ($id) {
+            if (!($request = $this->requestManager->getRequest($id)))
+                $this->flashMessage('Request nebyl nalezen.'); // Výpis chybové hlášky.
+            else 
+            {
+                $this['editorForm']->setDefaults($request); // Předání hodnot požadavku do editačního formuláře.
+                $this['editorForm']['datum_vytvoreni']->setDefaultValue($request->datum_vytvoreni->format('Y-m-d'));
+                $this['editorForm']['datum_uzavreni']->setDefaultValue(date("Y-m-d"));
+                $this['editorForm']['status']->setValue('vyrizen');
+            }
+        }
+
+        $this->template->currentIdClicked = $id;
+        $this->redrawControl('ajaxPoza'); // invalidace a překreslení výřezu s výkazy
+    }
+
+    /**
      * Vytváří a vrací formulář pro editaci požadavků.
      * @return Form formulář pro editaci požadavků
      */
@@ -155,8 +236,8 @@ class RequestPresenter extends BasePresenter
             ->setRequired()->setHtmlAttribute('placeholder', 'Žádost o změnu údaje')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',128);
             $form->addHidden('status', 'Status')->setDefaultValue('podan');
             $form->addTextArea('obsah_pozadavku', 'Obsah požadavku')->setRequired();
-            //$form->addSubmit('save', 'Odeslat požadavek');
-            $form->addSubmit('save', 'Odeslat požadavek')->getControlPrototype()->setName('button')->setHtml('Odeslat požadavek&nbsp;&nbsp;<i class="fas fa-paper-plane fa-lg"></i>')->setAttribute('class', 'button');
+            $form->addSubmit('save', 'Odeslat požadavek')->getControlPrototype()->setName('button')->setHtml('Odeslat požadavek&nbsp;&nbsp;<i class="fas fa-paper-plane fa-lg"></i>')->
+            setAttribute('class', 'button');
         }
         else
         {
@@ -167,21 +248,25 @@ class RequestPresenter extends BasePresenter
             $form->addHidden('status', 'Status')->setDefaultValue('vyrizen');
             $form->addTextArea('obsah_pozadavku', 'Obsah požadavku')->setDisabled();
             $form->addTextArea('odpoved', 'Odpověď');
-            //$form->addSubmit('save', 'Odpovědět na požadavek');
-            $form->addSubmit('save', 'Odpovědět na požadavek')->getControlPrototype()->setName('button')->setHtml('Odpovědět na požadavek&nbsp;&nbsp;<i class="fas fa-share fa-lg"></i>')->setAttribute('class', 'button');
+            $form->addSubmit('save', 'Odpovědět na požadavek')->getControlPrototype()->setName('button')->setHtml('Odpovědět na požadavek&nbsp;&nbsp;<i class="fas fa-share fa-lg"></i>')
+            ->setAttribute('class', 'button ajax');
         }
 
         // Funkce se vykonaná při úspěšném odeslání formuláře a zpracuje zadané hodnoty.
+        // Aktualne se tato cast nevyuziva, AJAX je odbaven ve funkci handleAjax
         $form->onSuccess[] = function (Form $form, ArrayHash $values) {
             try {
                 $this->requestManager->saveRequest($values);
-                $this->flashMessage('Požadavek byl úspěšně uložen.');
-                if(isset($values->id))
-                {
-                    $this->redirect('Request:', $values->id);
-                }else
+                
+                if(!isset($values->id))
                 {
                     $this->redirect('Request:list');
+                }
+                else
+                {
+                    $this->redrawControl('ajaxPoza'); // prekresli se tabulka s vykazy
+                    $this->redrawControl('ajaxVyr'); // prekresli se tabulka s vykazy
+                    // a zde se jiz nevola stary redirect
                 }
             } catch (UniqueConstraintViolationException $e) {
                 $this->flashMessage('Požadavek s tímto ID již existuje.');

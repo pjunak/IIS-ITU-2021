@@ -166,7 +166,7 @@ class ReportPresenter extends BasePresenter
         else
         {
             $form->addSelect('vyrobna', 'Název výrobny')->setItems($seznam_vyroven)->setRequired()
-            ->setAttribute('class', 'ajax')->setAttribute('id', 'testAja');            
+            ->setAttribute('class', 'ajax')->setAttribute('id', 'vyrobnaDropdown');            
         }
         return $form;
     }
@@ -201,7 +201,8 @@ class ReportPresenter extends BasePresenter
         $form->addInteger('spotreba_z_toho_odber', 'Spotřeba z toho odběr')->setHtmlAttribute('placeholder', '4500')->addRule($form::MAX_LENGTH, 'Maximální délka %label je %d',11)->setOption('description', Html::el('span class="jednotky"')
 		->setHtml('&nbsp;kWh'));
         //$form->addSubmit('save', 'Uložit výkaz');
-        $form->addSubmit('save', 'Uložit výkaz')->getControlPrototype()->setName('button')->setHtml('Uložit výkaz&nbsp;&nbsp;<i class="fa fa-save fa-lg"></i>')->setAttribute('class', 'button');
+        $form->addSubmit('save', 'Uložit výkaz')->getControlPrototype()->setName('button')->setHtml('Uložit výkaz&nbsp;&nbsp;<i class="fa fa-save fa-lg"></i>')
+        ->setAttribute('class', 'button ajax');
 
         // Funkce se vykonaná při úspěšném odeslání formuláře a zpracuje zadané hodnoty.
         $form->onSuccess[] = function (Form $form, ArrayHash $values) {
@@ -211,9 +212,12 @@ class ReportPresenter extends BasePresenter
                 if(isset($values->id))
                 {
                     $this->redirect('Report:', $values->id);
-                }else
+                }
+                else
                 {
-                    $this->redirect('Report:list');
+                    $this->vybrana_vyrobna = $values['id_vyrobny']; // nastavi se ID vyrobny pro nasledne generovani seznamu
+                    $this->redrawControl('ajaxRedraw'); // prekresli se tabulka s vykazy
+                    // a zde se jiz nevola stary redirect
                 }
             } catch (UniqueConstraintViolationException $e) {
                 $this->flashMessage('Výkaz s tímto ID již existuje.');

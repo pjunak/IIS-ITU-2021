@@ -1,6 +1,6 @@
 {*
 **	Projekt do předmětu ITU - Zákaznický portál OTE, a.s.
-**	Datum: 5.12.2021
+**	Datum: 14.12.2021
 **	Autor: Kristián Heřman, xherma33
 *}
 
@@ -34,18 +34,26 @@
                         <td style="text-align: right;">
                             <span class="company-name-link"><a n:href="Request: $requestFe->id" class="btn-action">Zobrazit požadavek &nbsp;<i class="fas fa-angle-double-right"></i></a></span>
                             {if $statusPozadavku == 'podan' && !$user->isInRole('disponent')}
-                                <a n:href=":reply $requestFe->id" class="btn-action">Odpovědět na požadavek&nbsp;&nbsp;<i class="fas fa-share"></i></a>
+                                <!-- verze bez AJAXu -->
+                                <!--<a n:href=":reply $requestFe->id" class="btn-action">Odpovědět na požadavek&nbsp;&nbsp;<i class="fas fa-share"></i></a>-->
+
+                                <!-- verze s AJAXem -->
+                                <a n:href=":view! $requestFe->id" class="btn-action ajax">Odpovědět na požadavek&nbsp;&nbsp;<i class="fas fa-share"></i></a>
                             {/if}
                         </td>
                     </tr>
+                    <!-- Zobrazeni okna pro odpoved u kliknuteho pozadavku -->
+                    {if $requestFe->id == $currentIdClicked}
+                    <tr>
+                        <td colspan="4">{control editorForm}</td>
+                    </tr>
+                    {/if}                    
                 {/if}
             {/foreach}
         </tbody>
     </table>
     <br>
 {/define}
-
-
 
 {block title}Přehled požadavků{/block}
 {block description}Přehled požadavků{/block}
@@ -65,7 +73,38 @@
 
 <h3>Podané požadavky</h3>
 <hr>
+    {snippet ajaxPoza}
     {include tabulkaPozadavku, 'podan'}
+    <script>
+        if (window.Nette != null)
+        {
+            window.Nette.initForm($('#frm-editorForm').get(0));
+        }
+    </script>
+    {/snippet}
 <h3>Vyřízené požadavky</h3>
 <hr>
+    {snippet ajaxVyr}
     {include tabulkaPozadavku, 'vyrizen'}
+    {/snippet}
+{/block}
+
+{block scripts}
+{include parent}
+
+<script>
+    // Po odeslani formulare se jde sem - zavola se knihovni funkce ajax, metodou POST, link do presenteru, funkce handleAjax
+    // Jako data se funkci odeslou vsechna data z formulare
+    $(function(){
+        $.nette.init();
+        $("#frm-editorForm").submit(function() {
+            $.ajax({
+                method: 'post',
+                url: {link ajax!},
+                data: { value: $(this).val() }
+            });
+        });
+    });
+</script>
+
+{/block}

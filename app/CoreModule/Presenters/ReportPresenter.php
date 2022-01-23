@@ -221,10 +221,10 @@ class ReportPresenter extends BasePresenter
                     if ($this->isAjax())
                     {
                         $this->vybrana_vyrobna = $vybrana_vyrobna; // nastavi se ID vyrobny pro nasledne generovani seznamu
-                        $this->redrawControl('ajaxRedraw'); // prekresli se tabulka s vykazy
-                        $this->redrawControl('ajaxForm');
-                        $this->redrawControl('flashMessages');
-                        $this->redrawControl('scriptDropdown');
+                        $this->redrawControl('ajaxRedraw');     // prekresli se tabulku se vsemi vykazy
+                        $this->redrawControl('ajaxForm');       // prekresli formular pro vyplneni vykazu
+                        $this->redrawControl('flashMessages');  // prekresli alerty v horni casti stranky
+                        $this->redrawControl('scriptDropdown'); // nasadi znovu event handler na dropdown vyrobny
                     }
                 }
             } catch (UniqueConstraintViolationException $e) {

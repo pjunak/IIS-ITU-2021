@@ -216,11 +216,13 @@ class ReportPresenter extends BasePresenter
                 }
                 else
                 {
-                    $vybrana_vyrobna = $values['id_vyrobny'];
-                    $form->setValues(["od" => date("Y-m-d"), "do" => date("Y-m-d"), "svorkova_vyroba_elektriny" => "", "id_vyrobny" => $vybrana_vyrobna, "vyrobna" => $vybrana_vyrobna], false);
+                    $this->vybrana_vyrobna = $values['id_vyrobny'];
+                    $form->setValues(["od" => date("Y-m-d"), "do" => date("Y-m-d"), "svorkova_vyroba_elektriny" => "",
+                    "vlastni_spotreba_elektriny" => "", "celkova_konecna_spotreba" => "", "spotreba_z_toho_lokalni" => "",
+                    "spotreba_z_toho_odber" => ""], false);
                     if ($this->isAjax())
                     {
-                        $this->vybrana_vyrobna = $vybrana_vyrobna; // nastavi se ID vyrobny pro nasledne generovani seznamu
+                        // = $vybrana_vyrobna; // nastavi se ID vyrobny pro nasledne generovani seznamu
                         $this->redrawControl('ajaxRedraw');     // prekresli se tabulku se vsemi vykazy
                         $this->redrawControl('ajaxForm');       // prekresli formular pro vyplneni vykazu
                         $this->redrawControl('flashMessages');  // prekresli alerty v horni casti stranky

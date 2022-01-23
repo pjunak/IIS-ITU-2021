@@ -147,6 +147,7 @@ class ReportPresenter extends BasePresenter
         $this->user = $this->getUser();
         $this->vybrana_vyrobna = $value; // uložení hodnoty do vybrane_vyrobny
         $this->redrawControl('ajaxRedraw'); // invalidace a překreslení výřezu s výkazy
+        $this->redrawControl('flashMessages');  // prekresli alerty v horni casti stranky
     }
 
     /**

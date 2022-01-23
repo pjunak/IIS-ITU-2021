@@ -217,7 +217,6 @@ class ReportPresenter extends BasePresenter
                 else
                 {
                     $vybrana_vyrobna = $values['id_vyrobny'];
-                    $this->vybrana_vyrobna = $values['id_vyrobny']; // nastavi se ID vyrobny pro nasledne generovani seznamu
                     $form->setValues(["od" => date("Y-m-d"), "do" => date("Y-m-d"), "svorkova_vyroba_elektriny" => "", "id_vyrobny" => $vybrana_vyrobna, "vyrobna" => $vybrana_vyrobna], false);
                     if ($this->isAjax())
                     {

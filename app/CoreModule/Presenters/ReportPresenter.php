@@ -215,9 +215,17 @@ class ReportPresenter extends BasePresenter
                 }
                 else
                 {
+                    $vybrana_vyrobna = $values['id_vyrobny'];
                     $this->vybrana_vyrobna = $values['id_vyrobny']; // nastavi se ID vyrobny pro nasledne generovani seznamu
-                    $this->redrawControl('ajaxRedraw'); // prekresli se tabulka s vykazy
-                    // a zde se jiz nevola stary redirect
+                    $form->setValues(["od" => date("Y-m-d"), "do" => date("Y-m-d"), "svorkova_vyroba_elektriny" => "", "id_vyrobny" => $vybrana_vyrobna, "vyrobna" => $vybrana_vyrobna], false);
+                    if ($this->isAjax())
+                    {
+                        $this->vybrana_vyrobna = $vybrana_vyrobna; // nastavi se ID vyrobny pro nasledne generovani seznamu
+                        $this->redrawControl('ajaxRedraw'); // prekresli se tabulka s vykazy
+                        $this->redrawControl('ajaxForm');
+                        $this->redrawControl('flashMessages');
+                        $this->redrawControl('scriptDropdown');
+                    }
                 }
             } catch (UniqueConstraintViolationException $e) {
                 $this->flashMessage('Výkaz s tímto ID již existuje.');

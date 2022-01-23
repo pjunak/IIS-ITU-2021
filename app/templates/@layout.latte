@@ -85,7 +85,9 @@
 
         <div class=container>
             {* Výpis flash zpráv. *}
+            {snippet flashMessages}
             <div n:foreach="$flashes as $flash" n:class="alert, 'alert-' . $flash->type">{$flash->message}</div>
+            {/snippet}
 
             <br style="clear: both;">
             <article>

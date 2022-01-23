@@ -16,11 +16,14 @@ V menu níže vyberte požadovanou výrobnu. Poté můžete vložit nový výkaz
         <td>
             <h3>Výběr výrobny</h3>
             <tr>{control dropdownVyrobny}</tr>
+            {snippet ajaxForm}
             <h3>Vytvoření nového výkazu</h3>
             <tr>{control editorForm}</tr>
+            {/snippet}
         </td>
     </tr>
 </table>
+
 {elseif $user->isInRole('urednik')}
 V menu níže vyberte požadovanou výrobnu. Poté můžete prohlížet výkazy, které se jí týkají.
     <h3>Výběr výrobny</h3>
@@ -65,6 +68,11 @@ V menu níže vyberte požadovanou výrobnu. Poté můžete prohlížet výkazy,
 	<script>
     $(function(){
         $.nette.init();
+    });
+	</script>
+    {snippet scriptDropdown}
+    <script>
+    $(function(){
         $('#vyrobnaDropdown').change(function() {
             $.ajax({
                 method: 'get',
@@ -75,4 +83,5 @@ V menu níže vyberte požadovanou výrobnu. Poté můžete prohlížet výkazy,
         });
     });
 	</script>
+    {/snippet}
 {/block}
